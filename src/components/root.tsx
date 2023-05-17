@@ -17,6 +17,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { signOut, useSession } from 'next-auth/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { uiAtom } from 'rca/utils/atoms';
+import AdminMenu from './adminMenu';
 
 interface IContainerProps extends PropsWithChildren {}
 const AppContainer: React.FC<IContainerProps> = ({ children }) => {
@@ -37,29 +38,6 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
     window.addEventListener('resize', setWindowWidth);
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
-
-  const subHeaderItems: MenuProps['items'] = [
-    {
-      key: 'subHeader1',
-      label: 'Users',
-      onClick: () => router.push('/admin/users'),
-    },
-    {
-      key: 'subHeader2',
-      label: 'Gallery',
-      onClick: () => router.push('/admin/gallery'),
-    },
-    {
-      key: 'subHeader3',
-      label: 'Events',
-      onClick: () => router.push('/admin/events'),
-    },
-    {
-      key: 'subHeader4',
-      label: 'Coaching',
-      onClick: () => router.push('/admin/coaching'),
-    },
-  ];
 
   const commonHeaderItems: MenuProps['items'] = [
     {
@@ -157,15 +135,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
           </div>
         </Layout.Header>
 
-        {session && (
-          <Menu
-            theme='light'
-            mode='horizontal'
-            items={subHeaderItems}
-            style={{ justifyContent: 'center' }}
-          />
-        )}
-
+        {session && <AdminMenu />}
         <Layout.Content style={{ minHeight: 'calc(100vh - 150px)' }}>
           {children}
         </Layout.Content>

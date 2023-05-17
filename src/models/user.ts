@@ -7,8 +7,7 @@ export interface IUser {
   _id?: string;
   name: string;
   password: string;
-  email?: string;
-  username?: string;
+  email: string;
   type: IUserType;
 }
 
@@ -25,9 +24,7 @@ const userSchema = new mongoose.Schema<IUser>(
     },
     email: {
       type: String,
-    },
-    username: {
-      type: String,
+      required: true,
     },
     type: {
       type: String,

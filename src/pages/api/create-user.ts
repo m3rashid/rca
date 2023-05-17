@@ -10,7 +10,7 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { name, username, email, password, devPassword } = req.body;
+  const { name, email, password, devPassword } = req.body;
 
   let userType: IUser['type'] = 'CO_ADMIN';
   const session = await getServerSession(req, res, authOptions);
@@ -28,25 +28,20 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  if (!name || !password || (!username && !email)) {
+  if (!name || !password || !email) {
     return res.status(400).json({ message: 'Bad request' });
   }
 
   const hash = await getHash(password);
-
   await connectDb();
 
-  const userExists = await User.findOne({
-    $or: [{ username }, { email }],
-  });
-
+  const userExists = await User.findOne({ email });
   if (userExists) {
     return res.status(400).json({ message: 'User already exists' });
   }
 
   const user = new User<IUser>({
     name,
-    username,
     email,
     password: hash,
     type: userType,

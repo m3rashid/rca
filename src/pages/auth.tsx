@@ -23,8 +23,8 @@ const Auth: NextPage = () => {
     try {
       setLoading(true);
 
-      const { username, email } = values;
-      if (!username && !email) {
+      const { email } = values;
+      if (!email) {
         form.setFields([
           {
             name: 'username',
@@ -83,11 +83,14 @@ const Auth: NextPage = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item label='Username' name='username'>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label='Email' name='email'>
+        <Form.Item
+          label='Email'
+          name='email'
+          rules={[
+            { required: true, message: 'Please enter your email' },
+            { type: 'email', message: 'Please enter a valid email' },
+          ]}
+        >
           <Input />
         </Form.Item>
 
