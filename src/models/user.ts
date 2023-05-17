@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { BaseModel } from '.';
 
-export const UserTypes = ['ADMIN', 'CO_ADMIN', 'OTHER'] as const;
+export const UserTypes = ['ADMIN', 'USER'] as const;
 export type IUserType = (typeof UserTypes)[number];
 
 export interface IUser extends BaseModel {

@@ -1,4 +1,10 @@
 {
   "editor.formatOnSave": false,
-  "cSpell.words": ["cloudinary", "coachings", "rca", "maxlength"]
+  "cSpell.words": [
+		"aadhar",
+		"cloudinary",
+		"coachings",
+		"maxlength",
+		"rca"
+	]
 }
