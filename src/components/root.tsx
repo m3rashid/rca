@@ -39,15 +39,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
     return () => window.removeEventListener('resize', setWindowWidth);
   }, []);
 
-  const commonHeaderItems: MenuProps['items'] = [
-    {
-      key: 'rightHeader1',
-      label: 'Language',
-      // TODO: open a modal to change the language of the website
-      // TODO: save the default language setting in localStorage
-      onClick: () => {},
-    },
-  ];
+  const commonHeaderItems: MenuProps['items'] = [];
 
   const rightHeaderItems: MenuProps['items'] = session
     ? [
@@ -63,15 +55,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
           onClick: () => router.push('/admin/change-password'),
         },
         // @ts-ignore
-        ...(session.user && session.user.type === 'ADMIN'
-          ? [
-              {
-                key: 'rightHeader4',
-                label: 'Add User',
-                onClick: () => router.push('/admin/add-user'),
-              },
-            ]
-          : []),
+        ...(session.user && session.user.type === 'ADMIN' ? [] : []),
         {
           key: 'rightHeader5',
           label: 'Logout',

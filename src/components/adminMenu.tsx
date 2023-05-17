@@ -8,11 +8,11 @@ const AdminMenu: React.FC<IProps> = () => {
   const router = useRouter();
 
   const subHeaderItems: MenuProps['items'] = [
-    {
-      key: 'subHeader1',
-      label: 'Users',
-      onClick: () => router.push('/admin/users'),
-    },
+    // {
+    //   key: 'subHeader1',
+    //   label: 'Users',
+    //   onClick: () => router.push('/admin/users'),
+    // },
     {
       key: 'subHeader2',
       label: 'Gallery',

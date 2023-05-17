@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import { BaseModel } from '.';
 
-export interface IEvent {
+export interface IEvent extends BaseModel {
   _id?: string;
   name: string;
   location: string;
