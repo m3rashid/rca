@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { BaseModel } from '.';
+import { BaseModel } from 'rca/models';
 
 export interface INotice extends BaseModel {
 	title: string;

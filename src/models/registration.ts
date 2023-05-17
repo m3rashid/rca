@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
-import { BaseModel } from '.';
+import { BaseModel } from 'rca/models';
+import { IUser } from 'rca/models/user';
+import { ITestCenter } from 'rca/models/testCenter';
 
 export interface IAddress {
   city: string;
@@ -11,31 +13,33 @@ export interface IAddress {
 export interface IEducation {
   degree: string;
   percentage: number;
-  division: number;
+  division?: number;
   board: string;
-  institutionName: string;
+  institutionName?: string;
   passYear: number;
 }
 
 export interface IEarlierCompetitiveExams {
-
+	name: string;
+	year: number;
+	cleared: boolean;
 }
 
 export interface IRegistration extends BaseModel {
   email: string;
+	user: IUser; // ObjectId
   currentStep: number;
   fullName: string;
   gender: string;
   fatherName: string;
   motherName: string;
-  dateOfBirth: Date;
-  age: number;
+  dateOfBirth: Date; // also calculate age from this
   mobileNumber: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   permanentAddress: IAddress;
   correspondenceAddress: IAddress;
   education: Array<IEducation>;
-  testCenter: string; // Objectid
+  testCenter: ITestCenter; // ObjectId
   agreeToTerms: {
     informationIsCorrect: boolean;
     rightToChange: boolean;
@@ -49,10 +53,56 @@ export interface IRegistration extends BaseModel {
   earlierCompetitiveExams: Array<IEarlierCompetitiveExams>;
 }
 
+export const genders = ['M', 'F', 'O'] as const 
+
+const addressSchema = {
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  postalCode: { type: String, required: true },
+  country: { type: String, required: true },
+};
+
 const registrationSchema = new mongoose.Schema<IRegistration>(
   {
-		
-	},
+    email: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    currentStep: { type: Number, default: 0 },
+    fullName: { type: String, required: true },
+    gender: { type: String, enum: genders, required: true },
+    fatherName: { type: String, required: true },
+    motherName: { type: String, required: true },
+    dateOfBirth: { type: Date, required: true },
+    mobileNumber: { type: String, required: true },
+    phoneNumber: { type: String },
+    permanentAddress: addressSchema,
+    correspondenceAddress: addressSchema,
+		education: [
+			{
+				degree: { type: String, required: true },
+				percentage: { type: Number, required: true },
+				division: { type: Number },
+				board: { type: String, required: true },
+				institutionName: { type: String },
+				passYear: { type: Number, required: true },
+			}
+		],
+		testCenter: { type: mongoose.Schema.Types.ObjectId, ref: 'TestCenter' },
+		agreeToTerms: {
+			informationIsCorrect: { type: Boolean, required: true },
+			rightToChange: { type: Boolean, required: true },
+		},
+		photograph: { type: String, required: true },
+		signature: { type: String, required: true },
+		aadharCard: { type: String, required: true },
+		lastSemesterCertificate: { type: String },
+		earlierCompetitiveExams: [
+			{
+				name: { type: String, required: true },
+				year: { type: Number, required: true },
+				cleared: { type: Boolean, required: true },
+			}
+		]
+  },
   { timestamps: true }
 );
 

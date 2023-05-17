@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { BaseModel } from '.';
+import { BaseModel } from 'rca/models';
 
 export const UserTypes = ['ADMIN', 'USER'] as const;
 export type IUserType = (typeof UserTypes)[number];
