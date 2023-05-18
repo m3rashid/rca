@@ -1,4 +1,3 @@
-import { ICoaching } from 'rca/models/coaching';
 import { IEvent } from 'rca/models/event';
 import { IGallery } from 'rca/models/gallery';
 import { IUser } from 'rca/models/user';
@@ -16,11 +15,6 @@ export const eventsAtom = atom<Array<Partial<IEvent>>>({
 
 export const galleryAtom = atom<Array<Partial<IGallery>>>({
   key: 'gallery',
-  default: [],
-});
-
-export const coachingsAtom = atom<Array<Partial<ICoaching>>>({
-  key: 'coachings',
   default: [],
 });
 
