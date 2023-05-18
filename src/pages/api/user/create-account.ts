@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from 'rca/pages/api/auth/[...nextauth]';
-import { User, IUser } from 'rca/models/user';
 import connectDb from 'rca/models';
+import { IUser, User } from 'rca/models/user';
 import { getHash } from 'rca/utils/auth';
 
 const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,25 +8,8 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { name, email, password, devPassword } = req.body;
-
-  let userType: IUser['type'] = 'CO_ADMIN';
-  const session = await getServerSession(req, res, authOptions);
-
-  if (session && (session.user as IUser).type !== 'ADMIN') {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  if (!session) {
-    if (!devPassword || devPassword !== process.env.DEV_PASSWORD) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    } else {
-      // created by dev
-      userType = 'ADMIN';
-    }
-  }
-
-  if (!name || !password || !email) {
+  const { email, password, name } = req.body;
+  if (!email || !password || !name) {
     return res.status(400).json({ message: 'Bad request' });
   }
 
@@ -44,7 +25,7 @@ const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     name,
     email,
     password: hash,
-    type: userType,
+    type: 'USER',
   });
 
   await user.save();

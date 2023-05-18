@@ -20,16 +20,14 @@ export interface IEducation {
 }
 
 export interface IEarlierCompetitiveExams {
-	name: string;
-	year: number;
-	cleared: boolean;
+  name: string;
+  year: number;
+  cleared: boolean;
 }
 
 export interface IRegistration extends BaseModel {
-  email: string;
-	user: IUser; // ObjectId
+  user: IUser; // ObjectId
   currentStep: number;
-  fullName: string;
   gender: string;
   fatherName: string;
   motherName: string;
@@ -40,6 +38,7 @@ export interface IRegistration extends BaseModel {
   correspondenceAddress: IAddress;
   education: Array<IEducation>;
   testCenter: ITestCenter; // ObjectId
+  earlierCompetitiveExams: Array<IEarlierCompetitiveExams>;
   agreeToTerms: {
     informationIsCorrect: boolean;
     rightToChange: boolean;
@@ -50,24 +49,21 @@ export interface IRegistration extends BaseModel {
   signature: string;
   aadharCard: string;
   lastSemesterCertificate?: string;
-  earlierCompetitiveExams: Array<IEarlierCompetitiveExams>;
 }
 
-export const genders = ['M', 'F', 'O'] as const 
+export const genders = ['M', 'F', 'O'] as const;
 
 const addressSchema = {
   city: { type: String, required: true },
   state: { type: String, required: true },
   postalCode: { type: String, required: true },
-  country: { type: String, required: true },
+  country: { type: String, default: 'India' },
 };
 
 const registrationSchema = new mongoose.Schema<IRegistration>(
   {
-    email: { type: String, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     currentStep: { type: Number, default: 0 },
-    fullName: { type: String, required: true },
     gender: { type: String, enum: genders, required: true },
     fatherName: { type: String, required: true },
     motherName: { type: String, required: true },
@@ -76,32 +72,32 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
     phoneNumber: { type: String },
     permanentAddress: addressSchema,
     correspondenceAddress: addressSchema,
-		education: [
-			{
-				degree: { type: String, required: true },
-				percentage: { type: Number, required: true },
-				division: { type: Number },
-				board: { type: String, required: true },
-				institutionName: { type: String },
-				passYear: { type: Number, required: true },
-			}
-		],
-		testCenter: { type: mongoose.Schema.Types.ObjectId, ref: 'TestCenter' },
-		agreeToTerms: {
-			informationIsCorrect: { type: Boolean, required: true },
-			rightToChange: { type: Boolean, required: true },
-		},
-		photograph: { type: String, required: true },
-		signature: { type: String, required: true },
-		aadharCard: { type: String, required: true },
-		lastSemesterCertificate: { type: String },
-		earlierCompetitiveExams: [
-			{
-				name: { type: String, required: true },
-				year: { type: Number, required: true },
-				cleared: { type: Boolean, required: true },
-			}
-		]
+    education: [
+      {
+        degree: { type: String, required: true },
+        percentage: { type: Number, required: true },
+        division: { type: Number },
+        board: { type: String, required: true },
+        institutionName: { type: String },
+        passYear: { type: Number, required: true },
+      },
+    ],
+    testCenter: { type: mongoose.Schema.Types.ObjectId, ref: 'TestCenter' },
+    agreeToTerms: {
+      informationIsCorrect: { type: Boolean, required: true },
+      rightToChange: { type: Boolean, required: true },
+    },
+    photograph: { type: String, required: true },
+    signature: { type: String, required: true },
+    aadharCard: { type: String, required: true },
+    lastSemesterCertificate: { type: String },
+    earlierCompetitiveExams: [
+      {
+        name: { type: String, required: true },
+        year: { type: Number, required: true },
+        cleared: { type: Boolean, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );

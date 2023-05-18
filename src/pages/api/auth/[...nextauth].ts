@@ -17,19 +17,14 @@ export const authOptions: AuthOptions = {
     CredentialProvider({
       name: 'credentials',
       credentials: {
-        username: { label: 'Username', type: 'text' },
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
       // @ts-ignore
       authorize: async (credentials) => {
-        if (
-          !credentials ||
-          (!credentials.username && !credentials.email) ||
-          !credentials.password
-        ) {
+        if (!credentials || !credentials.email || !credentials.password)
           return null;
-        }
+
         const { data, error } = await loginService(credentials);
         return error ? null : data;
       },

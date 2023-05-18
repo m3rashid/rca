@@ -56,6 +56,16 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
         },
         // @ts-ignore
         ...(session.user && session.user.type === 'ADMIN' ? [] : []),
+        // @ts-ignore
+        ...(session.user && session.user.type === 'USER'
+          ? [
+              {
+                key: 'rightHeader4',
+                label: 'Register',
+                onClick: () => router.push('/exam/register'),
+              },
+            ]
+          : []),
         {
           key: 'rightHeader5',
           label: 'Logout',
@@ -119,7 +129,8 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
           </div>
         </Layout.Header>
 
-        {session && <AdminMenu />}
+        {/* @ts-ignore */}
+        {session && session.user?.type === 'ADMIN' && <AdminMenu />}
         <Layout.Content style={{ minHeight: 'calc(100vh - 150px)' }}>
           {children}
         </Layout.Content>

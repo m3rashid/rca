@@ -11,24 +11,18 @@ type Data = {
 export const loginService = async (body: {
   email?: string;
   password: string;
-  username?: string;
 }): Promise<Data> => {
-  const { password, email, username } = body;
-  if (!password || (!email && !username)) {
+  const { password, email } = body;
+  if (!password || !email) {
     return { error: 'Missing email or username and password', data: null };
   }
   await connectDb();
 
-  const user = await User.findOne({ username });
-
-  if (!user) {
-    return { error: true, data: null };
-  }
+  const user = await User.findOne({ email });
+  if (!user) return { error: true, data: null };
 
   const passwordValid = await compareHash(password, user.password);
-  if (!passwordValid) {
-    return { error: true, data: null };
-  }
+  if (!passwordValid) return { error: true, data: null };
   return { error: false, data: user };
 };
 
@@ -50,8 +44,8 @@ export const getUserService = async ({
 
 const login = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (req.method === 'POST') {
-    const { email, password, username } = req.body;
-    const response = await loginService({ email, password, username });
+    const { email, password } = req.body;
+    const response = await loginService({ email, password });
 
     return res.status(200).json(response);
   } else {

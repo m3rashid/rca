@@ -1,3 +1,5 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap'); */
+
 @tailwind components;
 @tailwind utilities;
 
@@ -13,11 +15,31 @@ body {
   overflow-x: hidden;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
+.hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
 
+.style-scroll-bar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.style-scroll-bar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.style-scroll-bar::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 8px;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  @apply style-scroll-bar;
+}
+
 .center-all {
-	@apply flex justify-center items-center;
+  @apply flex justify-center items-center;
 }
