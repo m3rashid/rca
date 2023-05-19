@@ -255,8 +255,8 @@ export default function CustomTable<RecordType = unknown>({
           <Form
             form={form}
             name={addButtonLabel}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
             onFinish={handleFormFinish}
             onFinishFailed={handleFormFinishFailed}
