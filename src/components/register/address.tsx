@@ -15,7 +15,11 @@ const AddressContainer: React.FC<IInnerProps> = ({
 }) => {
   return (
     <Fragment>
-      <Form.Item name={`${name}.state`} label='State'>
+      <Form.Item
+        name={`${name}.state`}
+        label='State'
+        rules={[{ required: true }]}
+      >
         <Input
           size='large'
           placeholder='Enter State'
@@ -24,7 +28,11 @@ const AddressContainer: React.FC<IInnerProps> = ({
         />
       </Form.Item>
 
-      <Form.Item name={`${name}.city`} label='City'>
+      <Form.Item
+        name={`${name}.city`}
+        label='City'
+        rules={[{ required: true }]}
+      >
         <Input
           size='large'
           placeholder='Enter City'
@@ -33,7 +41,11 @@ const AddressContainer: React.FC<IInnerProps> = ({
         />
       </Form.Item>
 
-      <Form.Item name={`${name}.postalCode`} label='Postal Code'>
+      <Form.Item
+        name={`${name}.postalCode`}
+        label='Postal Code'
+        rules={[{ required: true }]}
+      >
         <InputNumber
           size='large'
           placeholder='Postal Code'

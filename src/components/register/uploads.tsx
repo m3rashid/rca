@@ -32,15 +32,27 @@ const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
 
   return (
     <Fragment>
-      <Form.Item name='photograph' label='Photograph'>
+      <Form.Item
+        name='photograph'
+        label='Photograph'
+        rules={[{ required: true }]}
+      >
         <DraggerUpload handleImageChange={handleImageChange} />
       </Form.Item>
 
-      <Form.Item name='aadharCard' label='Aadhar Card'>
+      <Form.Item
+        name='aadharCard'
+        label='Aadhar Card'
+        rules={[{ required: true }]}
+      >
         <DraggerUpload handleImageChange={handleImageChange} />
       </Form.Item>
 
-      <Form.Item name='signature' label='Signature'>
+      <Form.Item
+        name='signature'
+        label='Signature'
+        rules={[{ required: true }]}
+      >
         <DraggerUpload handleImageChange={handleImageChange} />
       </Form.Item>
 

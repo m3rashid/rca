@@ -18,7 +18,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       <Form.Item
         label='Father Name'
         name='fatherName'
-        rules={[{ required: true, message: "Father's name is Required" }]}
+        rules={[{ required: true }]}
       >
         <Input
           size='large'
@@ -31,7 +31,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       <Form.Item
         label='Mother Name'
         name='motherName'
-        rules={[{ required: true, message: "Mother's name is Required" }]}
+        rules={[{ required: true }]}
       >
         <Input
           size='large'
@@ -41,11 +41,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         />
       </Form.Item>
 
-      <Form.Item
-        name='gender'
-        label='Gender'
-        rules={[{ required: true, message: 'Gender is Required' }]}
-      >
+      <Form.Item name='gender' label='Gender' rules={[{ required: true }]}>
         <Select
           value={payload.gender}
           onChange={(val) => onChange('gender', val)}
@@ -62,7 +58,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       <Form.Item
         label='Date of Birth'
         name='dateOfBirth'
-        rules={[{ required: true, message: 'Date of Birth is Required' }]}
+        rules={[{ required: true }]}
       >
         <DatePicker
           style={{ width: '100%' }}
@@ -76,7 +72,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       <Form.Item
         label='Mobile Number'
         name='mobileNumber'
-        rules={[{ required: true, message: 'Mobile Number is Required' }]}
+        rules={[{ required: true }]}
       >
         <Input
           type='tel'

@@ -86,6 +86,7 @@ export const defaultPayload: IRegisterPayload = {
   currentStep: 0,
   testCenter: '' as any,
   payment: false,
+  transactionId: '',
 };
 
 const stepper = [
@@ -97,26 +98,3 @@ const stepper = [
   { payment: false },
   agreeToTerms,
 ];
-
-export const validate = (form: FormInstance<any>, currentStep: number) => {
-  const currentStepPayload = stepper[currentStep];
-  const keys = Object.keys(currentStepPayload);
-  const errors: any = {};
-  console.log({ keys });
-
-  keys.forEach((key) => {
-    const err = form.getFieldError(key);
-    console.log({ err });
-    if (err.length) {
-      errors[key] = {
-        errors: err,
-      };
-    }
-  });
-  if (errors.length) {
-    form.setFields(errors);
-    return false;
-  }
-
-  return true;
-};

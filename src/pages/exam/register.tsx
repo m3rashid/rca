@@ -14,7 +14,6 @@ import { useSession } from 'next-auth/react';
 import React, { Fragment, useEffect, useState } from 'react';
 
 import {
-  validate,
   defaultPayload,
   IRegisterPayload,
 } from 'rca/components/register/stepper';
@@ -52,15 +51,11 @@ const Register: React.FC<IProps> = () => {
 
   const goToPreviousStep = () => {
     if (payload.currentStep === 0) return;
-    const isPreviousStepValid = validate(form, payload.currentStep);
-    if (!isPreviousStepValid) return;
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep - 1 }));
   };
 
   const goToNextStep = () => {
     if (payload.currentStep === steps.length - 1) return;
-    const isPreviousStepValid = validate(form, payload.currentStep);
-    if (!isPreviousStepValid) return;
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep + 1 }));
   };
 

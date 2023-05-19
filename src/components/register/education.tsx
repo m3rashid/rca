@@ -32,7 +32,11 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
           <Fragment>
             {fields.map((field, index) => (
               <Fragment key={field.key}>
-                <Form.Item name='degree' label='Degree'>
+                <Form.Item
+                  name='degree'
+                  label='Degree'
+                  rules={[{ required: true }]}
+                >
                   <Input
                     size='large'
                     placeholder='Enter Degree'
@@ -43,7 +47,11 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   />
                 </Form.Item>
 
-                <Form.Item name='percentage' label='Percentage'>
+                <Form.Item
+                  name='percentage'
+                  label='Percentage'
+                  rules={[{ required: true }]}
+                >
                   <Input
                     size='large'
                     placeholder='Enter Degree'
@@ -54,7 +62,11 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   />
                 </Form.Item>
 
-                <Form.Item name='division' label='Division'>
+                <Form.Item
+                  name='division'
+                  label='Division'
+                  rules={[{ required: true }]}
+                >
                   <Input
                     size='large'
                     placeholder='Enter Division'
@@ -65,7 +77,11 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   />
                 </Form.Item>
 
-                <Form.Item name='board' label='Board'>
+                <Form.Item
+                  name='board'
+                  label='Board'
+                  rules={[{ required: true }]}
+                >
                   <Input
                     size='large'
                     placeholder='Enter Education Board'
@@ -76,7 +92,11 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   />
                 </Form.Item>
 
-                <Form.Item name='institutionName' label='Institution Name'>
+                <Form.Item
+                  name='institutionName'
+                  label='Institution Name'
+                  rules={[{ required: true }]}
+                >
                   <Input
                     size='large'
                     placeholder='Enter Institution Name'
@@ -91,7 +111,11 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   />
                 </Form.Item>
 
-                <Form.Item name='passYear' label='Pass Year'>
+                <Form.Item
+                  name='passYear'
+                  label='Pass Year'
+                  rules={[{ required: true }]}
+                >
                   <DatePicker
                     placeholder='Enter Passing Year'
                     style={{ width: '100%' }}

@@ -1,12 +1,11 @@
-import Head from 'next/head';
-import { Carousel, Typography } from 'antd';
-import HomeCarousel, { IHomeCarouselProps } from 'rca/components/homeCarousel';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { IEvent } from '../models/event';
-import { IGallery } from 'rca/models/gallery';
 import axios from 'axios';
-import EventsHome from 'rca/components/eventsHome';
+import Head from 'next/head';
+import { IEvent } from 'rca/models/event';
+import { Carousel, Typography } from 'antd';
 import { useEffect, useState } from 'react';
+import { IGallery } from 'rca/models/gallery';
+import EventsHome from 'rca/components/eventsHome';
+import HomeCarousel from 'rca/components/homeCarousel';
 
 const Home = () => {
   const [{ events, gallery }, setState] = useState<{

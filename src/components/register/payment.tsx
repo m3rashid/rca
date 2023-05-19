@@ -23,7 +23,11 @@ const Payment: React.FC<IProps> = ({ payload, setPayload }) => {
         Complete payment and enter the transaction ID below
       </Typography.Text>
 
-      <Form.Item name='transactionId' label='Transaction ID'>
+      <Form.Item
+        name='transactionId'
+        label='Transaction ID'
+        rules={[{ required: true }]}
+      >
         <Input
           size='large'
           placeholder='Enter Transaction Id of your payment'
