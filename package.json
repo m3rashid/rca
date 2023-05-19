@@ -25,6 +25,7 @@
     "react-dom": "18.2.0",
     "react-lottie": "^1.2.3",
     "react-quill": "^2.0.0",
+    "react-to-print": "^2.14.12",
     "recoil": "^0.7.7"
   },
   "devDependencies": {
