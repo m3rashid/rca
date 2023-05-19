@@ -15,9 +15,8 @@ import constants from 'rca/constants';
 import { useRouter } from 'next/router';
 import { UserOutlined } from '@ant-design/icons';
 import { signOut, useSession } from 'next-auth/react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { uiAtom } from 'rca/utils/atoms';
-import AdminMenu from './adminMenu';
 
 interface IContainerProps extends PropsWithChildren {}
 const AppContainer: React.FC<IContainerProps> = ({ children }) => {
@@ -26,7 +25,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
   } = theme.useToken();
   const router = useRouter();
   const [ui, setUi] = useRecoilState(uiAtom);
-  const { data: session } = useSession();
+  const session = useSession();
 
   useLayoutEffect(() => {
     const setWindowWidth = () => {
@@ -41,48 +40,57 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
 
   const commonHeaderItems: MenuProps['items'] = [];
 
-  const rightHeaderItems: MenuProps['items'] = session
-    ? [
-        ...commonHeaderItems,
-        {
-          key: 'rightHeader2',
-          label: 'Profile',
-          onClick: () => router.push('/admin/profile'),
-        },
-        {
-          key: 'rightHeader3',
-          label: 'Change Password',
-          onClick: () => router.push('/admin/change-password'),
-        },
-        // @ts-ignore
-        ...(session.user && session.user.type === 'ADMIN' ? [] : []),
-        // @ts-ignore
-        ...(session.user && session.user.type === 'USER'
-          ? [
-              {
-                key: 'rightHeader4',
-                label: 'Register',
-                onClick: () => router.push('/exam/register'),
-              },
-            ]
-          : []),
-        {
-          key: 'rightHeader5',
-          label: 'Logout',
-          onClick: async () => {
-            await signOut({ redirect: false });
-            router.push('/');
+  const adminHeaderItems: MenuProps['items'] =
+    // @ts-ignore
+    session.status === 'authenticated' && session.data.user?.type === 'ADMIN'
+      ? []
+      : [];
+
+  const userHeaderItems: MenuProps['items'] =
+    // @ts-ignore
+    session.status === 'authenticated' && session.data.user?.type === 'USER'
+      ? [
+          {
+            key: 'register',
+            label: 'Register for Exam',
+            onClick: () => router.push('/exam/register'),
           },
-        },
-      ]
-    : [
-        ...commonHeaderItems,
-        {
-          key: 'rightHeader2',
-          label: 'Login',
-          onClick: () => router.push('/auth'),
-        },
-      ];
+        ]
+      : [];
+
+  const rightHeaderItems: MenuProps['items'] =
+    session.status === 'authenticated'
+      ? [
+          ...commonHeaderItems,
+          {
+            key: 'profile',
+            label: 'Profile',
+            onClick: () => router.push('/admin/profile'),
+          },
+          {
+            key: 'changePassword',
+            label: 'Change Password',
+            onClick: () => router.push('/user/change-password'),
+          },
+          ...adminHeaderItems,
+          ...userHeaderItems,
+          {
+            key: 'logout',
+            label: 'Logout',
+            onClick: async () => {
+              await signOut({ redirect: false });
+              router.push('/');
+            },
+          },
+        ]
+      : [
+          ...commonHeaderItems,
+          {
+            key: 'login',
+            label: 'Login',
+            onClick: () => router.push('/auth'),
+          },
+        ];
 
   return (
     <ConfigProvider
@@ -121,7 +129,13 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
                 </Typography.Title>
               )}
             </div>
-            <Dropdown arrow menu={{ items: rightHeaderItems }}>
+            <Dropdown
+              arrow
+              menu={{
+                items: rightHeaderItems,
+                className: 'w-[200px]',
+              }}
+            >
               <Button icon={<UserOutlined />}>
                 {ui.isMobile ? '' : 'Options'}
               </Button>
@@ -129,8 +143,6 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
           </div>
         </Layout.Header>
 
-        {/* @ts-ignore */}
-        {session && session.user?.type === 'ADMIN' && <AdminMenu />}
         <Layout.Content style={{ minHeight: 'calc(100vh - 150px)' }}>
           {children}
         </Layout.Content>

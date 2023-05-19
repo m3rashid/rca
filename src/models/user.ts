@@ -13,24 +13,10 @@ export interface IUser extends BaseModel {
 
 const userSchema = new mongoose.Schema<IUser>(
   {
-    name: {
-      type: String,
-      required: true,
-      maxlength: 100,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-      enum: UserTypes,
-    },
+    name: { type: String, required: true, maxlength: 100 },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
+    type: { type: String, required: true, enum: UserTypes },
   },
   { timestamps: true }
 );
