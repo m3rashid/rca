@@ -1,6 +1,6 @@
 import { Checkbox, Form } from 'antd';
 import { IRegisterPayload } from 'rca/pages/exam/register';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -9,7 +9,7 @@ interface IProps {
 
 const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
-    <>
+    <Fragment>
       <Form.Item
         name='informationIsCorrect'
         label='Information given by me is correct'
@@ -23,7 +23,7 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
       >
         <Checkbox />
       </Form.Item>
-    </>
+    </Fragment>
   );
 };
 

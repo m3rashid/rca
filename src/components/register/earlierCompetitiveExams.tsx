@@ -12,7 +12,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
   setPayload,
 }) => {
   return (
-    <>
+    <Fragment>
       <Form.List name='earlierCompetitiveExams'>
         {(fields, { add, remove }) => (
           <Fragment>
@@ -51,7 +51,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
           </Fragment>
         )}
       </Form.List>
-    </>
+    </Fragment>
   );
 };
 

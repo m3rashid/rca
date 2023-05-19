@@ -1,17 +1,3 @@
-import { Button, Form, Steps, Typography, message } from 'antd';
-import { useSession } from 'next-auth/react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { IAddress } from 'rca/models/registration';
-import { IRegistration } from 'rca/models/registration';
-import React, { useEffect, useState } from 'react';
-
-import Address from 'rca/components/register/address';
-import Agreements from 'rca/components/register/agreements';
-import BasicInfo from 'rca/components/register/basicInfo';
-import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
-import Education from 'rca/components/register/education';
-import Uploads from 'rca/components/register/uploads';
 import {
   BookOutlined,
   FileImageOutlined,
@@ -20,47 +6,30 @@ import {
   ReconciliationOutlined,
   SolutionOutlined,
 } from '@ant-design/icons';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { Button, Form, Steps } from 'antd';
+import { useSession } from 'next-auth/react';
+import React, { Fragment, useEffect, useState } from 'react';
+
+import {
+  IRegisterPayload,
+  defaultPayload,
+} from 'rca/components/register/stepper';
+import Address from 'rca/components/register/address';
+import Uploads from 'rca/components/register/uploads';
+import Education from 'rca/components/register/education';
+import BasicInfo from 'rca/components/register/basicInfo';
+import Agreements from 'rca/components/register/agreements';
+import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
 
 interface IProps {}
-
-const defaultAddress: IAddress = {
-  city: '',
-  country: '',
-  postalCode: '',
-  state: '',
-};
-
-export type IRegisterPayload = Omit<IRegistration, 'user'> & {
-  user?: IRegistration['user'];
-};
-
-const initialRegistrationPayload: IRegisterPayload = {
-  currentStep: 0,
-  gender: '',
-  fatherName: '',
-  motherName: '',
-  dateOfBirth: '' as any,
-  mobileNumber: '',
-  phoneNumber: '',
-  permanentAddress: defaultAddress,
-  correspondenceAddress: defaultAddress,
-  education: [],
-  testCenter: '' as any,
-  earlierCompetitiveExams: [],
-  agreeToTerms: { informationIsCorrect: false, rightToChange: false },
-  photograph: '',
-  signature: '',
-  aadharCard: '',
-  lastSemesterCertificate: '',
-};
 
 const Register: React.FC<IProps> = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const session = useSession();
-  const [payload, setPayload] = useState<IRegisterPayload>(
-    initialRegistrationPayload
-  );
+  const [payload, setPayload] = useState<IRegisterPayload>(defaultPayload);
 
   useEffect(() => {
     if (session.status !== 'authenticated') {
@@ -103,7 +72,7 @@ const Register: React.FC<IProps> = () => {
   ];
 
   return (
-    <>
+    <Fragment>
       <Head>
         <title>RCA | Register</title>
       </Head>
@@ -184,7 +153,7 @@ const Register: React.FC<IProps> = () => {
           </Form>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

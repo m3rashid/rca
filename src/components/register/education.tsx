@@ -9,7 +9,7 @@ interface IProps {
 
 const Education: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
-    <>
+    <Fragment>
       <Form.List name='education'>
         {(fields, { add, remove }) => (
           <Fragment>
@@ -70,7 +70,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
           </Fragment>
         )}
       </Form.List>
-    </>
+    </Fragment>
   );
 };
 

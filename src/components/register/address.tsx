@@ -1,39 +1,93 @@
-import { Form, Input, Typography } from 'antd';
+import { Form, Input, InputNumber, Typography } from 'antd';
 import { IRegisterPayload } from 'rca/pages/exam/register';
-import React from 'react';
+import React, { Fragment } from 'react';
+
+interface IInnerProps {
+  address: IRegisterPayload['permanentAddress'];
+  onChange: (name: string, value: any) => void;
+  name: 'permanentAddress' | 'correspondenceAddress';
+}
+
+const AddressContainer: React.FC<IInnerProps> = ({
+  address,
+  onChange,
+  name,
+}) => {
+  return (
+    <Fragment>
+      <Form.Item name={`${name}.state`} label='State'>
+        <Input
+          size='large'
+          placeholder='Enter State'
+          value={address.state}
+          onChange={(e) => onChange('state', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item name={`${name}.city`} label='City'>
+        <Input
+          size='large'
+          placeholder='Enter City'
+          value={address.city}
+          onChange={(e) => onChange('city', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item name={`${name}.postalCode`} label='Postal Code'>
+        <InputNumber
+          size='large'
+          placeholder='Postal Code'
+          value={address.postalCode}
+          className='w-full'
+          onChange={(val) => onChange('postalCode', val)}
+        />
+      </Form.Item>
+    </Fragment>
+  );
+};
 
 interface IProps {
   payload: IRegisterPayload;
   setPayload: React.Dispatch<React.SetStateAction<IRegisterPayload>>;
 }
 
-const AddressContainer: React.FC<IProps> = ({ payload, setPayload }) => {
-  return (
-    <>
-      <Form.Item name='city' label='City'>
-        <Input size='large' />
-      </Form.Item>
-
-      <Form.Item name='state' label='State'>
-        <Input size='large' />
-      </Form.Item>
-
-      <Form.Item name='postalCode' label='Postal Code'>
-        <Input size='large' />
-      </Form.Item>
-    </>
-  );
-};
-
 const Address: React.FC<IProps> = ({ payload, setPayload }) => {
+  const onPermanentAddressChange = (name: string, value: any) => {
+    setPayload((prev) => ({
+      ...prev,
+      permanentAddress: {
+        ...prev.permanentAddress,
+        [name]: value,
+      },
+    }));
+  };
+
+  const onCorrespondenceAddressChange = (name: string, value: any) => {
+    setPayload((prev) => ({
+      ...prev,
+      correspondenceAddress: {
+        ...prev.correspondenceAddress,
+        [name]: value,
+      },
+    }));
+  };
+
   return (
-    <>
+    <Fragment>
       <Typography.Text>Permanent Address</Typography.Text>
-      <AddressContainer payload={payload} setPayload={setPayload} />
+      <AddressContainer
+        name='permanentAddress'
+        address={payload.permanentAddress}
+        onChange={onPermanentAddressChange}
+      />
 
       <Typography.Text>Correspondence Address</Typography.Text>
-      <AddressContainer payload={payload} setPayload={setPayload} />
-    </>
+      <AddressContainer
+        name='correspondenceAddress'
+        address={payload.correspondenceAddress}
+        onChange={onCorrespondenceAddressChange}
+      />
+    </Fragment>
   );
 };
 

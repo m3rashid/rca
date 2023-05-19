@@ -1,5 +1,5 @@
 import { IRegisterPayload } from 'rca/pages/exam/register';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -8,9 +8,9 @@ interface IProps {
 
 const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
-    <>
+    <Fragment>
       <div>Uploads</div>
-    </>
+    </Fragment>
   );
 };
 
