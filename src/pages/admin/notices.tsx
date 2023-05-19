@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import AdminContainer from "rca/components/adminContainer";
 import Head from "next/head";
-
-import 'react-quill/dist/quill.snow.css';
 import CustomTable from "rca/components/table";
 import { noticeAtom } from "rca/utils/atoms";
-import { Form, Input, TableProps } from "antd";
+import { TableProps } from "antd";
 import { INotice } from "rca/models/notice";
 import dynamic from "next/dynamic";
 
@@ -18,7 +16,8 @@ interface IProps {
 }
 
 const Notices: React.FC<IProps> = () => {
-    const [value, setValue] = useState('');
+    const [quillValue, setQuillValue] = useState('');
+
     const columns: TableProps<INotice>['columns'] = [
         { title: 'Title', dataIndex: 'title' },
         { title: 'Name', dataIndex: 'name' },
@@ -45,7 +44,7 @@ const Notices: React.FC<IProps> = () => {
                     addButtonLabel='Add Notice'
                     recoilAtom={noticeAtom}
                     AddFormInner={
-                        <NoticeForm quillValue={value} setValue={setValue}/>
+                        <NoticeForm quillValue={quillValue} setValue={setQuillValue}/>
                     }
                 />
             </div>

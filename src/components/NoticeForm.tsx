@@ -4,6 +4,8 @@ import { Form, Input } from "antd";
 import ReactQuill from "react-quill";
 import React from "react";
 
+import 'react-quill/dist/quill.snow.css';
+
 interface IProps {
     quillValue: string;
     setValue: (value: string) => void;
@@ -44,8 +46,10 @@ const NoticeForm: React.FC<IProps> = ({ quillValue, setValue }) => {
                     value={quillValue}
                     onChange={setValue}
                     style={
-                        { height: '100px',
-                            marginBottom: '40px',}
+                        {
+                            height: '100px',
+                            marginBottom: '40px',
+                        }
                     }
                 />
 
