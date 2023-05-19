@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { BaseModel } from 'rca/models';
 
 export interface IGallery extends BaseModel {
-  _id?: string;
   name: string;
   image: string;
   description?: string;
