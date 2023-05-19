@@ -28,10 +28,10 @@ const TestCentres: React.FC<IProps> = () => {
                 <CustomTable<ITestCenter>
                     tableTitle='Gallery'
                     endpoint={{
-                        get: '/api/admin/gallery',
-                        post: '/api/admin/gallery',
-                        put: '/api/admin/gallery',
-                        delete: '/api/admin/gallery',
+                        get: '/api/admin/test-centers',
+                        post: '/api/admin/test-centers',
+                        put: '/api/admin/test-centers',
+                        delete: '/api/admin/test-centers',
                     }}
                     scroll={{ x: 800 }}
                     tableColumns={columns}
@@ -74,16 +74,6 @@ const TestCentres: React.FC<IProps> = () => {
                                 name='email'
                                 rules={[
                                     { required: true, message: 'Please enter email' },
-                                ]}
-                            >
-                                <Input/>
-                            </Form.Item>
-
-                            <Form.Item
-                                label='Phone Number'
-                                name='phoneNumber'
-                                rules={[
-                                    { required: true, message: 'Please enter phone number' },
                                 ]}
                             >
                                 <Input/>
