@@ -43,7 +43,38 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
   const adminHeaderItems: MenuProps['items'] =
     // @ts-ignore
     session.status === 'authenticated' && session.data.user?.type === 'ADMIN'
-      ? []
+      ? [
+          {
+            key: 'current-affairs',
+            label: 'Admin - Current Affairs',
+            onClick: () => router.push('/admin/current-affairs'),
+          },
+          {
+            key: 'events',
+            label: 'Admin - Events',
+            onClick: () => router.push('/admin/events'),
+          },
+          {
+            key: 'gallery',
+            label: 'Admin - Gallery',
+            onClick: () => router.push('/admin/gallery'),
+          },
+          {
+            key: 'site-settings',
+            label: 'Admin - Site Settings',
+            onClick: () => router.push('/admin/site-settings'),
+          },
+          {
+            key: 'notices',
+            label: 'Admin - Notices',
+            onClick: () => router.push('/admin/notices'),
+          },
+          {
+            key: 'test-centres',
+            label: 'Admin - Test Centers',
+            onClick: () => router.push('/admin/test-centers'),
+          },
+        ]
       : [];
 
   const userHeaderItems: MenuProps['items'] =
@@ -55,6 +86,11 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
             label: 'Register for Exam',
             onClick: () => router.push('/exam/register'),
           },
+          {
+            key: 'profile',
+            label: 'Profile',
+            onClick: () => router.push('/user/profile'),
+          },
         ]
       : [];
 
@@ -62,11 +98,6 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
     session.status === 'authenticated'
       ? [
           ...commonHeaderItems,
-          {
-            key: 'profile',
-            label: 'Profile',
-            onClick: () => router.push('/admin/profile'),
-          },
           {
             key: 'changePassword',
             label: 'Change Password',
