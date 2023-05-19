@@ -1,13 +1,19 @@
 import { DatePicker, Form, Input, Select } from 'antd';
+import { IRegisterPayload } from 'rca/pages/exam/register';
 import React from 'react';
 
-interface IProps {}
+interface IProps {
+  payload: IRegisterPayload;
+  setPayload: React.Dispatch<React.SetStateAction<IRegisterPayload>>;
+}
 
-const BasicInfo = () => {
+const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
     <>
       <Form.Item name='gender' label='Gender'>
         <Select
+          placeholder='Select Gender'
+          size='large'
           options={[
             { label: 'Male', value: 'M' },
             { label: 'Female', value: 'F' },
@@ -17,23 +23,27 @@ const BasicInfo = () => {
       </Form.Item>
 
       <Form.Item label='Father Name' name='fatherName'>
-        <Input />
+        <Input size='large' placeholder="Enter Father's name" />
       </Form.Item>
 
       <Form.Item label='Mother Name' name='motherName'>
-        <Input />
+        <Input size='large' placeholder="Enter Mother's name" />
       </Form.Item>
 
       <Form.Item label='Date of Birth' name='dateOfBirth'>
-        <DatePicker />
+        <DatePicker
+          style={{ width: '100%' }}
+          size='large'
+          placeholder='Enter Date of Birth'
+        />
       </Form.Item>
 
       <Form.Item label='Mobile Number' name='mobileNumber'>
-        <Input type='tel' />
+        <Input type='tel' size='large' placeholder='Enter Mobile Number' />
       </Form.Item>
 
       <Form.Item label='Phone Number' name='phoneNumber'>
-        <Input type='tel' />
+        <Input type='tel' size='large' placeholder='Enter Phone Number' />
       </Form.Item>
     </>
   );

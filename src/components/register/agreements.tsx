@@ -1,9 +1,13 @@
 import { Checkbox, Form } from 'antd';
+import { IRegisterPayload } from 'rca/pages/exam/register';
 import React from 'react';
 
-interface IProps {}
+interface IProps {
+  payload: IRegisterPayload;
+  setPayload: React.Dispatch<React.SetStateAction<IRegisterPayload>>;
+}
 
-const Agreements = () => {
+const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
     <>
       <Form.Item

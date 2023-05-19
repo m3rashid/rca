@@ -1,34 +1,38 @@
 import { Form, Input, Typography } from 'antd';
+import { IRegisterPayload } from 'rca/pages/exam/register';
 import React from 'react';
 
-interface IProps {}
+interface IProps {
+  payload: IRegisterPayload;
+  setPayload: React.Dispatch<React.SetStateAction<IRegisterPayload>>;
+}
 
-const AddressContainer = () => {
+const AddressContainer: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
     <>
       <Form.Item name='city' label='City'>
-        <Input />
+        <Input size='large' />
       </Form.Item>
 
       <Form.Item name='state' label='State'>
-        <Input />
+        <Input size='large' />
       </Form.Item>
 
       <Form.Item name='postalCode' label='Postal Code'>
-        <Input />
+        <Input size='large' />
       </Form.Item>
     </>
   );
 };
 
-const Address = () => {
+const Address: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
     <>
       <Typography.Text>Permanent Address</Typography.Text>
-      <AddressContainer />
+      <AddressContainer payload={payload} setPayload={setPayload} />
 
       <Typography.Text>Correspondence Address</Typography.Text>
-      <AddressContainer />
+      <AddressContainer payload={payload} setPayload={setPayload} />
     </>
   );
 };

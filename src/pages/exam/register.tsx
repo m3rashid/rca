@@ -12,15 +12,14 @@ import BasicInfo from 'rca/components/register/basicInfo';
 import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
 import Education from 'rca/components/register/education';
 import Uploads from 'rca/components/register/uploads';
-
-const steps = [
-  <BasicInfo />,
-  <Address />,
-  <Education />,
-  <EarlierCompetitiveExamsContainer />,
-  <Uploads />,
-  <Agreements />,
-];
+import {
+  BookOutlined,
+  FileImageOutlined,
+  HomeOutlined,
+  InfoCircleOutlined,
+  ReconciliationOutlined,
+  SolutionOutlined,
+} from '@ant-design/icons';
 
 interface IProps {}
 
@@ -31,11 +30,11 @@ const defaultAddress: IAddress = {
   state: '',
 };
 
-type RegisterPayload = Omit<IRegistration, 'user'> & {
+export type IRegisterPayload = Omit<IRegistration, 'user'> & {
   user?: IRegistration['user'];
 };
 
-const initialRegistrationPayload: RegisterPayload = {
+const initialRegistrationPayload: IRegisterPayload = {
   currentStep: 0,
   gender: '',
   fatherName: '',
@@ -59,19 +58,23 @@ const Register: React.FC<IProps> = () => {
   const [form] = Form.useForm();
   const router = useRouter();
   const session = useSession();
-  const [payload, setPayload] = useState<RegisterPayload>(
+  const [payload, setPayload] = useState<IRegisterPayload>(
     initialRegistrationPayload
   );
 
   useEffect(() => {
-    if (session.status === 'unauthenticated') {
-      router.replace('/auth');
+    if (session.status !== 'authenticated') {
+      router.replace('/auth?redirect=exam-register');
     }
     // @ts-ignore
     else if (session.data?.user?.type === 'ADMIN') {
       router.replace('/auth');
     }
   }, []);
+
+  const setStep = (step: number) => () => {
+    setPayload((prev) => ({ ...prev, currentStep: step }));
+  };
 
   const goToPreviousStep = () => {
     if (payload.currentStep === 0) return;
@@ -83,6 +86,22 @@ const Register: React.FC<IProps> = () => {
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep + 1 }));
   };
 
+  const commonStepStyles: React.CSSProperties = {
+    cursor: 'pointer',
+  };
+
+  const steps = [
+    <BasicInfo payload={payload} setPayload={setPayload} />,
+    <Address payload={payload} setPayload={setPayload} />,
+    <Education payload={payload} setPayload={setPayload} />,
+    <EarlierCompetitiveExamsContainer
+      payload={payload}
+      setPayload={setPayload}
+    />,
+    <Uploads payload={payload} setPayload={setPayload} />,
+    <Agreements payload={payload} setPayload={setPayload} />,
+  ];
+
   return (
     <>
       <Head>
@@ -92,17 +111,52 @@ const Register: React.FC<IProps> = () => {
       <div className='flex gap-2 flex-col m-2 sm:m-4 sm:flex-row justify-center sm:mt-10'>
         <div className='p-2 sm:p-4 bg-white rounded-md shadow-md w-full sm:max-w-sm h-full'>
           <Steps
-            progressDot
             direction='vertical'
-            className='overflow-x-auto style-scroll-bar'
+            className='overflow-x-auto style-scroll-bar py-2'
             current={payload.currentStep}
             items={[
-              { title: 'Basic Information' },
-              { title: 'Addresses' },
-              { title: 'Education Details' },
-              { title: 'Previous Exams' },
-              { title: 'Uploads' },
-              { title: 'Agreement' },
+              {
+                title: 'Basic Information',
+                icon: <InfoCircleOutlined />,
+                subTitle: '',
+                onClick: setStep(0),
+                style: commonStepStyles,
+              },
+              {
+                title: 'Addresses',
+                icon: <HomeOutlined />,
+                subTitle: '',
+                onClick: setStep(1),
+                style: commonStepStyles,
+              },
+              {
+                title: 'Education Details',
+                icon: <BookOutlined />,
+                subTitle: '',
+                onClick: setStep(2),
+                style: commonStepStyles,
+              },
+              {
+                title: 'Previous Exams',
+                icon: <ReconciliationOutlined />,
+                subTitle: '',
+                onClick: setStep(3),
+                style: commonStepStyles,
+              },
+              {
+                title: 'Uploads',
+                icon: <FileImageOutlined />,
+                subTitle: '',
+                onClick: setStep(4),
+                style: commonStepStyles,
+              },
+              {
+                title: 'Agreement',
+                icon: <SolutionOutlined />,
+                subTitle: '',
+                onClick: setStep(5),
+                style: commonStepStyles,
+              },
             ]}
           />
         </div>
@@ -113,12 +167,14 @@ const Register: React.FC<IProps> = () => {
 
             <div className='flex justify-between gap-2 mt-10'>
               <Button
+                size='large'
                 disabled={payload.currentStep === 0}
                 onClick={goToPreviousStep}
               >
                 Previous
               </Button>
               <Button
+                size='large'
                 disabled={payload.currentStep === steps.length - 1}
                 onClick={goToNextStep}
               >

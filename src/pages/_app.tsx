@@ -10,9 +10,9 @@ import Loading from 'rca/components/loading';
 import { RecoilRoot } from 'recoil';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const [loading, setloading] = useState(false);
-  router.events.on('routeChangeStart', () => setloading(true));
-  router.events.on('routeChangeComplete', () => setloading(false));
+  const [loading, setLoading] = useState(false);
+  router.events.on('routeChangeStart', () => setLoading(true));
+  router.events.on('routeChangeComplete', () => setLoading(false));
 
   return (
     <>

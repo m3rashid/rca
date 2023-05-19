@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
-import { Form, Input, Button, Typography, message } from 'antd';
+import { Form, Input, Button, Typography, message, Modal, Alert } from 'antd';
 import Head from 'next/head';
 import Loading from 'rca/components/loading';
 import axios from 'axios';
@@ -17,6 +17,9 @@ const Auth: NextPage = () => {
   React.useEffect(() => {
     if (session) {
       router.replace('/');
+    }
+    if (router.query.redirect && router.query.redirect === 'exam-register') {
+      message.warning('Please Sign in First');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
@@ -51,6 +54,9 @@ const Auth: NextPage = () => {
       if (!res?.ok) throw new Error('Login failed!');
 
       message.success('Login successful!');
+      if (router.query.redirect && router.query.redirect === 'exam-register') {
+        router.replace('/exam/register');
+      }
     } catch (err: any) {
       message.error(err.message || 'Login failed!');
     } finally {
@@ -127,14 +133,14 @@ const Auth: NextPage = () => {
 
           <Form.Item>
             <div className='flex items-center justify-center gap-2'>
-              <Button type='primary' htmlType='submit'>
+              <Button type='primary' size='large' htmlType='submit'>
                 {authType === 'register' ? 'Create Account' : 'Login'}
               </Button>
 
               <Button onClick={reset}>Reset</Button>
 
               {authType === 'login' && (
-                <Button type='link' onClick={forgotPassword}>
+                <Button size='large' type='link' onClick={forgotPassword}>
                   Forgot password
                 </Button>
               )}
@@ -144,11 +150,19 @@ const Auth: NextPage = () => {
 
         <div className='flex items-center justify-center gap-2'>
           {authType === 'register' ? (
-            <Button type='link' onClick={() => setAuthType('login')}>
+            <Button
+              size='large'
+              type='link'
+              onClick={() => setAuthType('login')}
+            >
               Already Have an Account ? Login Here
             </Button>
           ) : (
-            <Button type='link' onClick={() => setAuthType('register')}>
+            <Button
+              size='large'
+              type='link'
+              onClick={() => setAuthType('register')}
+            >
               Don&apos;t Have an Account yet ? Create Account
             </Button>
           )}

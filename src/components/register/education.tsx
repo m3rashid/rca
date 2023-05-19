@@ -1,9 +1,13 @@
 import { Button, DatePicker, Form, Input } from 'antd';
+import { IRegisterPayload } from 'rca/pages/exam/register';
 import React, { Fragment } from 'react';
 
-interface IProps {}
+interface IProps {
+  payload: IRegisterPayload;
+  setPayload: React.Dispatch<React.SetStateAction<IRegisterPayload>>;
+}
 
-const Education = () => {
+const Education: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
     <>
       <Form.List name='education'>
@@ -12,23 +16,23 @@ const Education = () => {
             {fields.map((field, index) => (
               <Fragment key={field.key}>
                 <Form.Item name='degree' label='Degree'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item name='percentage' label='Percentage'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item name='division' label='Division'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item name='board' label='Board'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item name='institutionName' label='Institution Name'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item name='passYear' label='Pass Year'>
@@ -40,10 +44,12 @@ const Education = () => {
                     showSecond={false}
                     showTime={false}
                     showToday={false}
+                    size='large'
                   />
                 </Form.Item>
 
                 <Button
+                  size='large'
                   type='dashed'
                   onClick={() => remove(index)}
                   className='w-full mb-10'
@@ -53,7 +59,12 @@ const Education = () => {
               </Fragment>
             ))}
 
-            <Button type='dashed' onClick={() => add()} className='w-full'>
+            <Button
+              size='large'
+              type='dashed'
+              onClick={() => add()}
+              className='w-full'
+            >
               Add Education
             </Button>
           </Fragment>

@@ -1,9 +1,16 @@
 import { Button, Checkbox, Form, Input } from 'antd';
+import { IRegisterPayload } from 'rca/pages/exam/register';
 import React, { Fragment } from 'react';
 
-interface IProps {}
+interface IProps {
+  payload: IRegisterPayload;
+  setPayload: React.Dispatch<React.SetStateAction<IRegisterPayload>>;
+}
 
-const EarlierCompetitiveExamsContainer = () => {
+const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
+  payload,
+  setPayload,
+}) => {
   return (
     <>
       <Form.List name='earlierCompetitiveExams'>
@@ -12,24 +19,35 @@ const EarlierCompetitiveExamsContainer = () => {
             {fields.map((field, index) => (
               <Fragment>
                 <Form.Item label='Name' name='name'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item label='Year' name='year'>
-                  <Input />
+                  <Input size='large' />
                 </Form.Item>
 
                 <Form.Item label='Cleared' name='cleared'>
                   <Checkbox />
                 </Form.Item>
 
-                <Button type='dashed' onClick={() => remove(index)}>
+                <Button
+                  type='dashed'
+                  className='w-full mb-10'
+                  onClick={() => remove(index)}
+                >
                   Remove
                 </Button>
               </Fragment>
             ))}
 
-            <Button onClick={() => add()}>Add Earlier Competitive Exams</Button>
+            <Button
+              size='large'
+              type='dashed'
+              style={{ width: '100%' }}
+              onClick={() => add()}
+            >
+              Add Earlier Competitive Exams
+            </Button>
           </Fragment>
         )}
       </Form.List>

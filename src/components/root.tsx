@@ -71,7 +71,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
           label: 'Logout',
           onClick: async () => {
             await signOut({ redirect: false });
-            router.push('/auth');
+            router.push('/');
           },
         },
       ]
