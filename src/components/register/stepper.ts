@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { IRegistration } from 'rca/models/registration';
 
 export type IRegisterPayload = Omit<IRegistration, 'user'> & {

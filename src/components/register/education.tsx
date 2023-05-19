@@ -1,5 +1,6 @@
 import { Button, DatePicker, Form, Input } from 'antd';
-import { IRegisterPayload } from 'rca/pages/exam/register';
+import dayjs from 'dayjs';
+import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment } from 'react';
 
 interface IProps {
@@ -8,6 +9,22 @@ interface IProps {
 }
 
 const Education: React.FC<IProps> = ({ payload, setPayload }) => {
+  const onEducationChange = (name: string, value: any, index: number) => {
+    setPayload((prev) => ({
+      ...prev,
+      education: prev.education.map((edu, i) => {
+        if (i === index) {
+          return {
+            ...edu,
+            [name]: value,
+          };
+        }
+
+        return edu;
+      }),
+    }));
+  };
+
   return (
     <Fragment>
       <Form.List name='education'>
@@ -16,27 +33,67 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
             {fields.map((field, index) => (
               <Fragment key={field.key}>
                 <Form.Item name='degree' label='Degree'>
-                  <Input size='large' />
+                  <Input
+                    size='large'
+                    placeholder='Enter Degree'
+                    value={payload.education[index]?.degree}
+                    onChange={(e) => {
+                      onEducationChange('degree', e.target.value, index);
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item name='percentage' label='Percentage'>
-                  <Input size='large' />
+                  <Input
+                    size='large'
+                    placeholder='Enter Degree'
+                    value={payload.education[index]?.percentage}
+                    onChange={(e) => {
+                      onEducationChange('percentage', e.target.value, index);
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item name='division' label='Division'>
-                  <Input size='large' />
+                  <Input
+                    size='large'
+                    placeholder='Enter Division'
+                    value={payload.education[index]?.division}
+                    onChange={(e) => {
+                      onEducationChange('division', e.target.value, index);
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item name='board' label='Board'>
-                  <Input size='large' />
+                  <Input
+                    size='large'
+                    placeholder='Enter Education Board'
+                    value={payload.education[index]?.board}
+                    onChange={(e) => {
+                      onEducationChange('board', e.target.value, index);
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item name='institutionName' label='Institution Name'>
-                  <Input size='large' />
+                  <Input
+                    size='large'
+                    placeholder='Enter Institution Name'
+                    value={payload.education[index]?.institutionName}
+                    onChange={(e) => {
+                      onEducationChange(
+                        'institutionName',
+                        e.target.value,
+                        index
+                      );
+                    }}
+                  />
                 </Form.Item>
 
                 <Form.Item name='passYear' label='Pass Year'>
                   <DatePicker
+                    placeholder='Enter Passing Year'
                     style={{ width: '100%' }}
                     showHour={false}
                     showMinute={false}
@@ -45,6 +102,10 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                     showTime={false}
                     showToday={false}
                     size='large'
+                    value={dayjs(payload.education[index]?.institutionName)}
+                    onChange={(val) => {
+                      onEducationChange('institutionName', val, index);
+                    }}
                   />
                 </Form.Item>
 

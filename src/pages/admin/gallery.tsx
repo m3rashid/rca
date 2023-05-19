@@ -74,7 +74,7 @@ const Gallery: NextPage = () => {
                   { required: true, message: 'Please enter gallery name' },
                 ]}
               >
-                <Input />
+                <Input size='large' />
               </Form.Item>
 
               <Form.Item

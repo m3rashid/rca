@@ -1,6 +1,6 @@
 import { DatePicker, Form, Input, Select } from 'antd';
 import dayjs from 'dayjs';
-import { IRegisterPayload } from 'rca/pages/exam/register';
+import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment } from 'react';
 
 interface IProps {

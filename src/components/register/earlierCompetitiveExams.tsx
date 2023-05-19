@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input } from 'antd';
-import { IRegisterPayload } from 'rca/pages/exam/register';
+import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment } from 'react';
 
 interface IProps {

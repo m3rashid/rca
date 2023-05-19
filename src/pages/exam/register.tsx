@@ -78,7 +78,7 @@ const Register: React.FC<IProps> = () => {
       </Head>
 
       <div className='flex gap-2 flex-col m-2 sm:m-4 sm:flex-row justify-center sm:mt-10'>
-        <div className='p-2 sm:p-4 bg-white rounded-md shadow-md w-full sm:max-w-sm h-full'>
+        <div className='p-2 sm:p-4 bg-white rounded-md shadow-md h-full'>
           <Steps
             direction='vertical'
             className='overflow-x-auto style-scroll-bar py-2'
@@ -130,8 +130,8 @@ const Register: React.FC<IProps> = () => {
           />
         </div>
 
-        <div className='p-2 sm:p-4 bg-white rounded-md shadow-md w-full sm:max-w-sm md:max-w-lg h-full'>
-          <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} form={form}>
+        <div className='p-2 sm:p-4 bg-white rounded-md shadow-md w-full max-w-lg h-full'>
+          <Form labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} form={form}>
             {steps[payload.currentStep]}
 
             <div className='flex justify-between gap-2 mt-10'>

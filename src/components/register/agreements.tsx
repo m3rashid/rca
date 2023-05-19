@@ -1,5 +1,5 @@
 import { Checkbox, Form } from 'antd';
-import { IRegisterPayload } from 'rca/pages/exam/register';
+import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment } from 'react';
 
 interface IProps {
@@ -8,20 +8,36 @@ interface IProps {
 }
 
 const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
+  const onChange = (name: string, value: boolean) => {
+    setPayload((prev) => ({
+      ...prev,
+      agreeToTerms: {
+        ...prev.agreeToTerms,
+        [name]: value,
+      },
+    }));
+  };
+
   return (
     <Fragment>
       <Form.Item
         name='informationIsCorrect'
         label='Information given by me is correct'
       >
-        <Checkbox />
+        <Checkbox
+          onChange={(e) => onChange('informationIsCorrect', e.target.checked)}
+          checked={payload.agreeToTerms.informationIsCorrect}
+        />
       </Form.Item>
 
       <Form.Item
         name='rightToChange'
         label='Any Details in the application can be changed by the university at any time'
       >
-        <Checkbox />
+        <Checkbox
+          onChange={(e) => onChange('rightToChange', e.target.checked)}
+          checked={payload.agreeToTerms.rightToChange}
+        />
       </Form.Item>
     </Fragment>
   );

@@ -1,5 +1,5 @@
 import { Form, Input, InputNumber, Typography } from 'antd';
-import { IRegisterPayload } from 'rca/pages/exam/register';
+import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment } from 'react';
 
 interface IInnerProps {
@@ -74,14 +74,17 @@ const Address: React.FC<IProps> = ({ payload, setPayload }) => {
 
   return (
     <Fragment>
-      <Typography.Text>Permanent Address</Typography.Text>
+      <Typography.Title level={4}>Permanent Address</Typography.Title>
       <AddressContainer
         name='permanentAddress'
         address={payload.permanentAddress}
         onChange={onPermanentAddressChange}
       />
 
-      <Typography.Text>Correspondence Address</Typography.Text>
+      <br />
+      <br />
+
+      <Typography.Title level={4}>Correspondence Address</Typography.Title>
       <AddressContainer
         name='correspondenceAddress'
         address={payload.correspondenceAddress}

@@ -53,7 +53,7 @@ const Events: NextPage = () => {
                 name='name'
                 rules={[{ required: true, message: 'Please enter event name' }]}
               >
-                <Input />
+                <Input size='large' />
               </Form.Item>
 
               <Form.Item
@@ -63,7 +63,7 @@ const Events: NextPage = () => {
                   { required: true, message: 'Please enter event location' },
                 ]}
               >
-                <Input />
+                <Input size='large' />
               </Form.Item>
 
               <Form.Item label='Details' name='description'>
@@ -97,7 +97,7 @@ const Events: NextPage = () => {
               </Form.Item>
 
               <Form.Item label='Contact' name='contact'>
-                <Input />
+                <Input size='large' />
               </Form.Item>
             </>
           }

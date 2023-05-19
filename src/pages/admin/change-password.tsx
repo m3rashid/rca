@@ -43,7 +43,7 @@ const ChangePassword: NextPage = () => {
             { required: true, message: 'Please enter your current password!' },
           ]}
         >
-          <Input.Password />
+          <Input.Password size='large' />
         </Form.Item>
 
         <Form.Item
@@ -53,7 +53,7 @@ const ChangePassword: NextPage = () => {
             { required: true, message: 'Please enter your new password!' },
           ]}
         >
-          <Input.Password />
+          <Input.Password size='large' />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

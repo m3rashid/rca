@@ -108,7 +108,7 @@ const Auth: NextPage = () => {
               name='name'
               rules={[{ required: true, message: 'Please enter your name' }]}
             >
-              <Input />
+              <Input size='large' />
             </Form.Item>
           )}
 
@@ -120,7 +120,7 @@ const Auth: NextPage = () => {
               { type: 'email', message: 'Please enter a valid email' },
             ]}
           >
-            <Input />
+            <Input size='large' />
           </Form.Item>
 
           <Form.Item
@@ -128,7 +128,7 @@ const Auth: NextPage = () => {
             name='password'
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password />
+            <Input.Password size='large' />
           </Form.Item>
 
           <Form.Item>
