@@ -1,9 +1,9 @@
 import { FormInstance } from 'antd';
-import { type } from 'os';
 import { IRegistration } from 'rca/models/registration';
 
 export type IRegisterPayload = Omit<IRegistration, 'user'> & {
   user?: IRegistration['user'];
+  payment: boolean;
 };
 
 export type BasicInfo = Pick<
@@ -85,6 +85,7 @@ export const defaultPayload: IRegisterPayload = {
   ...uploads,
   currentStep: 0,
   testCenter: '' as any,
+  payment: false,
 };
 
 const stepper = [
@@ -93,6 +94,7 @@ const stepper = [
   education,
   earlierCompetitiveExams,
   uploads,
+  { payment: false },
   agreeToTerms,
 ];
 

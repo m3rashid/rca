@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { BaseModel } from 'rca/models';
 
 export interface IEvent extends BaseModel {
-  _id?: string;
   name: string;
   location: string;
   description?: string;

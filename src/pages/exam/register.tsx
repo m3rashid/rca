@@ -1,5 +1,6 @@
 import {
   BookOutlined,
+  DollarCircleOutlined,
   FileImageOutlined,
   HomeOutlined,
   InfoCircleOutlined,
@@ -13,12 +14,13 @@ import { useSession } from 'next-auth/react';
 import React, { Fragment, useEffect, useState } from 'react';
 
 import {
-  IRegisterPayload,
-  defaultPayload,
   validate,
+  defaultPayload,
+  IRegisterPayload,
 } from 'rca/components/register/stepper';
 import Address from 'rca/components/register/address';
 import Uploads from 'rca/components/register/uploads';
+import Payment from 'rca/components/register/payment';
 import Education from 'rca/components/register/education';
 import BasicInfo from 'rca/components/register/basicInfo';
 import Agreements from 'rca/components/register/agreements';
@@ -29,11 +31,17 @@ interface IProps {}
 const Register: React.FC<IProps> = () => {
   const [form] = Form.useForm();
   const router = useRouter();
-  const session = useSession();
+  const session = useSession({
+    required: true,
+    onUnauthenticated: () => {
+      router.replace('/auth?redirect=exam-register');
+    },
+  });
   const [payload, setPayload] = useState<IRegisterPayload>(defaultPayload);
 
   useEffect(() => {
-    if (session.status !== 'authenticated') {
+    if (session.status === 'loading') return;
+    else if (session.status !== 'authenticated') {
       router.replace('/auth?redirect=exam-register');
     }
     // @ts-ignore
@@ -67,6 +75,7 @@ const Register: React.FC<IProps> = () => {
       setPayload={setPayload}
     />,
     <Uploads payload={payload} setPayload={setPayload} />,
+    <Payment payload={payload} setPayload={setPayload} />,
     <Agreements payload={payload} setPayload={setPayload} />,
   ];
 
@@ -76,7 +85,7 @@ const Register: React.FC<IProps> = () => {
         <title>RCA | Register</title>
       </Head>
 
-      <div className='flex gap-2 flex-col m-2 sm:m-4 sm:flex-row justify-center sm:mt-10'>
+      <div className='flex gap-4 flex-col m-2 sm:m-4 sm:flex-row justify-center sm:mt-10'>
         <div className='p-2 sm:p-4 bg-white rounded-md shadow-md h-full'>
           <Steps
             direction='vertical'
@@ -110,6 +119,12 @@ const Register: React.FC<IProps> = () => {
               {
                 title: 'Uploads',
                 icon: <FileImageOutlined />,
+                subTitle: '',
+                style: commonStepStyles,
+              },
+              {
+                title: 'Payment',
+                icon: <DollarCircleOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
               },

@@ -38,6 +38,7 @@ export interface IRegistration extends BaseModel {
   correspondenceAddress: IAddress;
   education: Array<IEducation>;
   testCenter: ITestCenter; // ObjectId
+  transactionId: string;
   earlierCompetitiveExams: Array<IEarlierCompetitiveExams>;
   agreeToTerms: {
     informationIsCorrect: boolean;
@@ -83,6 +84,7 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
       },
     ],
     testCenter: { type: mongoose.Schema.Types.ObjectId, ref: 'TestCenter' },
+    transactionId: { type: String, required: true },
     agreeToTerms: {
       informationIsCorrect: { type: Boolean, required: true },
       rightToChange: { type: Boolean, required: true },

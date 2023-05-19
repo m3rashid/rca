@@ -44,10 +44,6 @@ const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
         <DraggerUpload handleImageChange={handleImageChange} />
       </Form.Item>
 
-      <Form.Item name='signature' label='Signature'>
-        <DraggerUpload handleImageChange={handleImageChange} />
-      </Form.Item>
-
       <Form.Item
         name='lastSemesterCertificate'
         label='Last Semester Certificate'
