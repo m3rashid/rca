@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { IProfileProps } from 'rca/components/admitCard';
 import AdminContainer from 'rca/components/adminContainer';
+import { Button } from 'antd';
 const AdmitCardTemplate = dynamic(() => import('rca/components/admitCard'), {
   ssr: false,
 });
@@ -14,12 +15,14 @@ const Profile: NextPage<IProfileProps> = (props) => {
     content: () => printContainerRef.current,
   });
 
-  if (typeof window !== 'undefined') {
-    window.onbeforeprint = printPdf;
-  }
-
   return (
     <AdminContainer>
+      <div className='flex my-2 mr-2 justify-end'>
+        <Button type='primary' onClick={printPdf}>
+          Print Admit Card
+        </Button>
+      </div>
+
       <AdmitCardTemplate
         printContainerRef={printContainerRef}
         data={props.data}
