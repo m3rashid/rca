@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from 'antd';
 import ConfigForm from 'rca/components/configForm';
+import AdminContainer from "rca/components/adminContainer";
 
 interface IProps {}
 
@@ -36,6 +37,7 @@ const Miscellaneous: React.FC<IProps> = () => {
     console.log(philosophy);
   };
   return (
+      <AdminContainer>
     <div className='flex justify-center w-full'>
       <div className='w-1/2 my-10'>
         <ConfigForm
@@ -131,6 +133,7 @@ const Miscellaneous: React.FC<IProps> = () => {
         </ConfigForm>
       </div>
     </div>
+      </AdminContainer>
   );
 };
 

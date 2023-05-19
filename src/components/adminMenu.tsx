@@ -40,8 +40,8 @@ const AdminMenu: React.FC<IProps> = () => {
     },
     {
       key: 'subHeader7',
-      label: 'Miscellaneous',
-      onClick: () => router.push('/admin/misc'),
+      label: 'Site Settings',
+      onClick: () => router.push('/admin/site-settings'),
     },
   ];
 
