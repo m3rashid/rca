@@ -1,3 +1,4 @@
+import { FormInstance } from 'antd';
 import { type } from 'os';
 import { IRegistration } from 'rca/models/registration';
 
@@ -48,12 +49,12 @@ export type IEducation = Pick<IRegisterPayload, 'education'>['education'];
 
 const education: IEducation = [];
 
-export type IPreviousCompetitiveExams = Pick<
+export type IEarlierCompetitiveExams = Pick<
   IRegisterPayload,
   'earlierCompetitiveExams'
 >['earlierCompetitiveExams'];
 
-const previousCompetitiveExams: IPreviousCompetitiveExams = [];
+const earlierCompetitiveExams: IEarlierCompetitiveExams = [];
 
 export type IAgreements = Pick<
   IRegisterPayload,
@@ -79,9 +80,41 @@ export const defaultPayload: IRegisterPayload = {
   ...basicInfo,
   ...addresses,
   education,
-  earlierCompetitiveExams: previousCompetitiveExams,
+  earlierCompetitiveExams,
   agreeToTerms,
   ...uploads,
   currentStep: 0,
   testCenter: '' as any,
+};
+
+const stepper = [
+  basicInfo,
+  addresses,
+  education,
+  earlierCompetitiveExams,
+  uploads,
+  agreeToTerms,
+];
+
+export const validate = (form: FormInstance<any>, currentStep: number) => {
+  const currentStepPayload = stepper[currentStep];
+  const keys = Object.keys(currentStepPayload);
+  const errors: any = {};
+  console.log({ keys });
+
+  keys.forEach((key) => {
+    const err = form.getFieldError(key);
+    console.log({ err });
+    if (err.length) {
+      errors[key] = {
+        errors: err,
+      };
+    }
+  });
+  if (errors.length) {
+    form.setFields(errors);
+    return false;
+  }
+
+  return true;
 };

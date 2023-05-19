@@ -15,6 +15,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import {
   IRegisterPayload,
   defaultPayload,
+  validate,
 } from 'rca/components/register/stepper';
 import Address from 'rca/components/register/address';
 import Uploads from 'rca/components/register/uploads';
@@ -41,23 +42,21 @@ const Register: React.FC<IProps> = () => {
     }
   }, []);
 
-  const setStep = (step: number) => () => {
-    setPayload((prev) => ({ ...prev, currentStep: step }));
-  };
-
   const goToPreviousStep = () => {
     if (payload.currentStep === 0) return;
+    const isPreviousStepValid = validate(form, payload.currentStep);
+    if (!isPreviousStepValid) return;
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep - 1 }));
   };
 
   const goToNextStep = () => {
     if (payload.currentStep === steps.length - 1) return;
+    const isPreviousStepValid = validate(form, payload.currentStep);
+    if (!isPreviousStepValid) return;
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep + 1 }));
   };
 
-  const commonStepStyles: React.CSSProperties = {
-    cursor: 'pointer',
-  };
+  const commonStepStyles: React.CSSProperties = {};
 
   const steps = [
     <BasicInfo payload={payload} setPayload={setPayload} />,
@@ -88,42 +87,36 @@ const Register: React.FC<IProps> = () => {
                 title: 'Basic Information',
                 icon: <InfoCircleOutlined />,
                 subTitle: '',
-                onClick: setStep(0),
                 style: commonStepStyles,
               },
               {
                 title: 'Addresses',
                 icon: <HomeOutlined />,
                 subTitle: '',
-                onClick: setStep(1),
                 style: commonStepStyles,
               },
               {
                 title: 'Education Details',
                 icon: <BookOutlined />,
                 subTitle: '',
-                onClick: setStep(2),
                 style: commonStepStyles,
               },
               {
                 title: 'Previous Exams',
                 icon: <ReconciliationOutlined />,
                 subTitle: '',
-                onClick: setStep(3),
                 style: commonStepStyles,
               },
               {
                 title: 'Uploads',
                 icon: <FileImageOutlined />,
                 subTitle: '',
-                onClick: setStep(4),
                 style: commonStepStyles,
               },
               {
                 title: 'Agreement',
                 icon: <SolutionOutlined />,
                 subTitle: '',
-                onClick: setStep(5),
                 style: commonStepStyles,
               },
             ]}

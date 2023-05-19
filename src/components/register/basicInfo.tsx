@@ -15,7 +15,37 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
 
   return (
     <Fragment>
-      <Form.Item name='gender' label='Gender'>
+      <Form.Item
+        label='Father Name'
+        name='fatherName'
+        rules={[{ required: true, message: "Father's name is Required" }]}
+      >
+        <Input
+          size='large'
+          placeholder="Enter Father's name"
+          value={payload.fatherName}
+          onChange={(e) => onChange(e.target.name, e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        label='Mother Name'
+        name='motherName'
+        rules={[{ required: true, message: "Mother's name is Required" }]}
+      >
+        <Input
+          size='large'
+          placeholder="Enter Mother's name"
+          value={payload.motherName}
+          onChange={(e) => onChange(e.target.name, e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name='gender'
+        label='Gender'
+        rules={[{ required: true, message: 'Gender is Required' }]}
+      >
         <Select
           value={payload.gender}
           onChange={(val) => onChange('gender', val)}
@@ -29,25 +59,11 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         />
       </Form.Item>
 
-      <Form.Item label='Father Name' name='fatherName'>
-        <Input
-          size='large'
-          placeholder="Enter Father's name"
-          value={payload.fatherName}
-          onChange={(e) => onChange(e.target.name, e.target.value)}
-        />
-      </Form.Item>
-
-      <Form.Item label='Mother Name' name='motherName'>
-        <Input
-          size='large'
-          placeholder="Enter Mother's name"
-          value={payload.motherName}
-          onChange={(e) => onChange(e.target.name, e.target.value)}
-        />
-      </Form.Item>
-
-      <Form.Item label='Date of Birth' name='dateOfBirth'>
+      <Form.Item
+        label='Date of Birth'
+        name='dateOfBirth'
+        rules={[{ required: true, message: 'Date of Birth is Required' }]}
+      >
         <DatePicker
           style={{ width: '100%' }}
           size='large'
@@ -57,7 +73,11 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         />
       </Form.Item>
 
-      <Form.Item label='Mobile Number' name='mobileNumber'>
+      <Form.Item
+        label='Mobile Number'
+        name='mobileNumber'
+        rules={[{ required: true, message: 'Mobile Number is Required' }]}
+      >
         <Input
           type='tel'
           size='large'
