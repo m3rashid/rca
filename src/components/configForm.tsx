@@ -22,25 +22,17 @@ const ConfigForm: React.FC<IProps> = ({
     <Form
       layout='horizontal'
       name={formName}
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 24 }}
       initialValues={{ remember: true }}
       onFinish={onSubmit}
       onFinishFailed={onError}
-      autoComplete='off'
     >
-      <Form.Item
-        label={formLabel}
-        labelCol={{ span: 8 }}
-        name={formName}
-        rules={formRules}
-      >
+      <Form.Item label={formLabel} name={formName} rules={formRules}>
         {children}
       </Form.Item>
 
-      <Form.Item labelCol={{ span: 8 }}>
+      <Form.Item>
         <Button type='primary' htmlType='submit'>
-          Submit
+          Update
         </Button>
       </Form.Item>
     </Form>

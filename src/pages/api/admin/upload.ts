@@ -19,15 +19,14 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
-const apiRoute = nextConnect.createRouter<NextApiRequest, NextApiResponse>();
+const apiRoute = nextConnect<NextApiRequest, NextApiResponse>();
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-// TODO: ERROR
-// apiRoute.use(upload.single('file'));
+apiRoute.use(upload.single('file'));
 
 apiRoute.post(async (req, res) => {
   // @ts-ignore
