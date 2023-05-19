@@ -3,6 +3,7 @@ import { IGallery } from 'rca/models/gallery';
 import { IUser } from 'rca/models/user';
 import { atom } from 'recoil';
 import { INotice } from "rca/models/notice";
+import { ITestCenter } from "rca/models/testCenter";
 
 export const usersAtom = atom<Array<Partial<IUser>>>({
   key: 'users',
@@ -21,6 +22,11 @@ export const galleryAtom = atom<Array<Partial<IGallery>>>({
 
 export const noticeAtom = atom<Array<Partial<INotice>>>({
     key: 'notice',
+    default: [],
+});
+
+export const testCenterAtom = atom<Array<Partial<ITestCenter>>>({
+    key: 'testCenter',
     default: [],
 });
 
