@@ -15,6 +15,47 @@ body {
   overflow-x: hidden;
 }
 
+.cssmarquee {
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background-color: #3b9ad7;
+}
+.cssmarquee h1 {
+  position: absolute;
+  margin: 0;
+  line-height: 50px;
+  text-align: center;
+  /* Starting position */
+  transform: translateX(200%);
+  animation: cssmarquee 20s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .cssmarquee h1 {
+    transform: translateX(100%);
+    animation: cssmarqueeMobile 15s linear infinite;
+  }
+}
+
+@keyframes cssmarquee {
+  0% {
+    transform: translateX(200%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes cssmarqueeMobile {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
