@@ -7,13 +7,14 @@ import axios from "axios";
 interface IProps {
 }
 
+interface IConfig {
+    name: string;
+    value: string;
+    label: string;
+}
+
 const Miscellaneous: React.FC<IProps> = () => {
-    const [siteName, setSiteName] = React.useState('');
-    const [siteShortName, setSiteShortName] = React.useState('');
-    const [mission, setMission] = React.useState('');
-    const [vision, setVision] = React.useState('');
-    const [values, setValues] = React.useState('');
-    const [philosophy, setPhilosophy] = React.useState('');
+    const [config, setConfig] = React.useState<IConfig[]>([]);
 
     useEffect(() => {
         const getSiteSettings = async () => {
@@ -26,31 +27,29 @@ const Miscellaneous: React.FC<IProps> = () => {
             return response.data.data;
         }
         getSiteSettings().then(data => {
-            const siteName = data.filter((item: any) => item.name === 'siteName');
-            const siteShortName = data.filter(
-                (item: any) => item.name === 'shortSiteName'
+            setConfig(
+                data.map((item: any) => {
+                    return {
+                        name: item.name,
+                        value: item.value,
+                        label: splitCamelCase(item.name),
+                    };
+                })
             );
-            const mission = data.filter((item: any) => item.name === 'mission');
-            const vision = data.filter((item: any) => item.name === 'vision');
-            const values = data.filter((item: any) => item.name === 'values');
-            const philosophy = data.filter(
-                (item: any) => item.name === 'philosophy'
-            );
-
-            setSiteName(siteName[0].value);
-            setSiteShortName(siteShortName[0].value);
-            setMission(mission[0].value);
-            setVision(vision[0].value);
-            setValues(values[0].value);
-            setPhilosophy(philosophy[0].value);
         });
 
-    }, [])
-    const onSubmitSiteName = async () => {
+    }, []);
+
+    const splitCamelCase = (str: string) => {
+        const result = str.replace(/([A-Z])/g, " $1");
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    }
+
+    const onSubmitConfig = async ({ name, value }: IConfig) => {
         try {
             await axios.put('/api/admin/config', {
-                    name: 'siteName',
-                    value: siteName,
+                    name: name,
+                    value: value,
                 },
                 {
                     headers: {
@@ -58,213 +57,43 @@ const Miscellaneous: React.FC<IProps> = () => {
                     }
                 }
             );
-            message.success('Site name updated successfully')
+            message.success('Config updated successfully')
         } catch (e) {
-            message.error('Site name update failed')
+            message.error('Config update failed')
         }
-
-    };
-
-    const onSubmitSiteShortName = async () => {
-        try {
-            await axios.put('/api/admin/config', {
-                    name: 'shortSiteName',
-                    value: siteShortName,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-            message.success('Site short name updated successfully')
-        } catch (e) {
-            message.error('Site short name update failed')
-        }
-    };
-
-    const onSubmitMission = async () => {
-        try {
-            await axios.put('/api/admin/config', {
-                    name: 'mission',
-                    value: mission,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-            message.info('Mission updated successfully')
-        } catch (e) {
-            message.error('Mission update failed')
-        }
-    };
-
-    const onSubmitVision = async () => {
-        try {
-            await axios.put('/api/admin/config', {
-                    name: 'vision',
-                    value: vision,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-            message.success('Vision updated successfully')
-        } catch (e) {
-            message.error('Vision update failed')
-        }
-    };
-
-    const onSubmitValues = async () => {
-        try {
-            await axios.put('/api/admin/config', {
-                    name: 'values',
-                    value: values,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-            message.success('Values updated successfully')
-        } catch (e) {
-            message.error('Values update failed')
-        }
-    };
-
-    const onSubmitPhilosophy = () => {
-        try {
-            axios.put('/api/admin/config', {
-                    name: 'philosophy',
-                    value: philosophy,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-            message.success('Philosophy updated successfully')
-        } catch (e) {
-            message.error('Philosophy update failed')
-        }
-    };
+    }
     return (
         <AdminContainer>
             <div className='flex justify-center w-full'>
                 <div className='w-1/2 my-10'>
-                    {siteName.length && <ConfigForm
-                        formName='siteName'
-                        formLabel='Site Name'
-                        formRules={[{ required: true, message: 'Please input site name' }]}
-                        formInitialValue={siteName}
-                        onSubmit={onSubmitSiteName}
-                        onError={() => {
-                        }}
-                    >
-                        <Input
-                            size='large'
-                            onChange={(e) => {
-                                setSiteName(e.target.value);
-                            }}
-                        />
-                    </ConfigForm>}
-
-                    {siteShortName.length && <ConfigForm
-                        formName='siteShortName'
-                        formLabel='Site Short Name'
-                        formRules={[
-                            { required: true, message: 'Please input short site name' },
-                        ]}
-                        formInitialValue={siteShortName}
-                        onSubmit={onSubmitSiteShortName}
-                        onError={() => {
-                        }}
-                    >
-                        <Input
-                            size='large'
-                            onChange={(e) => {
-                                setSiteShortName(e.target.value);
-                            }}
-                        />
-                    </ConfigForm>}
-
-                    {mission.length && <ConfigForm
-                        formName='mission'
-                        formLabel='Mission'
-                        formRules={[{ required: true, message: 'Please input mission' }]}
-                        formInitialValue={mission}
-                        onSubmit={onSubmitMission}
-                        onError={() => {
-                        }}
-                    >
-                        <Input.TextArea
-                            size='large'
-                            onChange={(e) => {
-                                setMission(e.target.value);
-                            }}
-                            rows={4}
-                        />
-                    </ConfigForm>}
-
-                    {vision.length && <ConfigForm
-                        formName='vision'
-                        formLabel='Vision'
-                        formRules={[{ required: true, message: 'Please input vision' }]}
-                        formInitialValue={vision}
-                        onSubmit={onSubmitVision}
-                        onError={() => {
-                        }}
-                    >
-                        <Input.TextArea
-                            size='large'
-                            onChange={(e) => {
-                                setVision(e.target.value);
-                            }}
-                            rows={4}
-                        />
-                    </ConfigForm>}
-
-                    {values.length && <ConfigForm
-                        formName='values'
-                        formLabel='Values'
-                        formRules={[{ required: true, message: 'Please input values' }]}
-                        formInitialValue={values}
-                        onSubmit={onSubmitValues}
-                        onError={() => {
-                        }}
-                    >
-                        <Input.TextArea
-                            size='large'
-                            onChange={(e) => {
-                                setValues(e.target.value);
-                            }}
-                            rows={4}
-                        />
-                    </ConfigForm>}
-
-                    {philosophy.length && <ConfigForm
-                        formName='philosophy'
-                        formLabel='Philosophy'
-                        formRules={[{ required: true, message: 'Please input philosophy' }]}
-                        formInitialValue={philosophy}
-                        onSubmit={onSubmitPhilosophy}
-                        onError={() => {
-                        }}
-                    >
-                        <Input.TextArea
-                            size='large'
-                            onChange={(e) => {
-                                setPhilosophy(e.target.value);
-                            }}
-                            rows={4}
-                        />
-                    </ConfigForm>}
+                    {config.map((item, index) => {
+                        return (
+                            <ConfigForm
+                                key={index}
+                                formName={item.name}
+                                formLabel={item.label}
+                                formRules={[{ required: true, message: `Please input ${item.label}` }]}
+                                formInitialValue={item.value}
+                                onSubmit={() => {
+                                    onSubmitConfig(item).then();
+                                }}
+                                onError={() => {
+                                }}
+                            >
+                                <Input.TextArea
+                                    size='large'
+                                    onChange={(e) => {
+                                        setConfig([...config.slice(0, index), {
+                                            ...item,
+                                            value: e.target.value,
+                                        }, ...config.slice(index + 1)]);
+                                    }}
+                                    rows={4}
+                                />
+                            </ConfigForm>
+                        )
+                    })
+                    }
                 </div>
             </div>
         </AdminContainer>
