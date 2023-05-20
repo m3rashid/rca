@@ -5,14 +5,24 @@ import React, { useRef } from 'react';
 import { Config } from 'rca/models/configs';
 import { getSession } from 'next-auth/react';
 import { useReactToPrint } from 'react-to-print';
-import { IProfileProps } from 'rca/components/admitCard';
 import AdminContainer from 'rca/components/adminContainer';
 import { IRegistration, Registration } from 'rca/models/registration';
 import mongoose from 'mongoose';
 import { ITestCenter, TestCenter } from 'rca/models/testCenter';
-const AdmitCardTemplate = dynamic(() => import('rca/components/admitCard'), {
-  ssr: false,
-});
+const AdmitCardTemplate = dynamic(
+  () => import('rca/components/admitCard/index'),
+  {
+    ssr: false,
+  }
+);
+
+interface IProfileProps {
+  data: IRegistration & {
+    timeOfExam: string;
+    dateOfExam: string;
+  };
+  printContainerRef: React.MutableRefObject<null>;
+}
 
 interface IProps {
   registration: IRegistration;
@@ -42,9 +52,7 @@ const Profile: NextPage<IProps | null> = (props) => {
         </Button>
       </div>
 
-      {props && (
-        <AdmitCardTemplate printContainerRef={printContainerRef} data={data} />
-      )}
+      <AdmitCardTemplate printContainerRef={printContainerRef} data={data} />
     </AdminContainer>
   );
 };

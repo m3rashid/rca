@@ -3,7 +3,7 @@
 import dayjs from 'dayjs';
 import { IRegistration } from 'rca/models/registration';
 
-export interface IProfileProps {
+interface IProfileProps {
   data: IRegistration & {
     timeOfExam: string;
     dateOfExam: string;
@@ -13,9 +13,9 @@ export interface IProfileProps {
 
 const AdmitCardTemplate: React.FC<IProfileProps> = ({
   printContainerRef,
-  data: props,
+  data,
 }) => {
-  if (!props) return null;
+  console.log({ data });
 
   return (
     <div
@@ -48,33 +48,33 @@ const AdmitCardTemplate: React.FC<IProfileProps> = ({
       <div className='flex flex-row justify-between items-center mb-10'>
         <div className='flex flex-col justify-center'>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Name: {props.user?.name}
+            Name: {data.user?.name}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Father's Name: {props.fatherName}
+            Father's Name: {data.fatherName}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Sex: {props.motherName}
+            Sex: {data.motherName}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Category: {props.category}
+            Category: {data.category}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Centre : {props.testCenter?.address}
+            Centre : {data.testCenter?.address}
           </h3>
         </div>
         <div className='flex flex-col justify-center'>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Roll No: {props.rollNumber}
+            Roll No: {data.rollNumber}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Date of Birth: {dayjs(props.dateOfBirth).format('DD/MM/YYYY')}
+            Date of Birth: {dayjs(data.dateOfBirth).format('DD/MM/YYYY')}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Date Of Exam: {props.dateOfExam}
+            Date Of Exam: {data.dateOfExam}
           </h3>
           <h3 className='text-xl font-semibold text-gray-700 ml-4'>
-            Time Of Exam: {props.timeOfExam}
+            Time Of Exam: {data.timeOfExam}
           </h3>
           <div className='flex flex-col justify-center items-center '>
             <div className='flex flex-row justify-center items-center gap-4 p-4 border-2 border-gray-400'>
@@ -83,7 +83,7 @@ const AdmitCardTemplate: React.FC<IProfileProps> = ({
                 the uploaded photograph
               </div>
               <div className='flex flex-col justify-center items-center'>
-                <img src={props.photograph} className=' w-40 h-40' />
+                <img src={data.photograph} className=' w-40 h-40' />
               </div>
             </div>
             <span className='text-sm font-semibold text-gray-700 ml-4 text-center'>
@@ -94,7 +94,7 @@ const AdmitCardTemplate: React.FC<IProfileProps> = ({
       </div>
       <div className='flex flex-row justify-around items-center'>
         <div className='flex flex-col justify-center items-center'>
-          <img src={props.signature} className=' w-40 h-40' />
+          <img src={data.signature} className=' w-40 h-40' />
           <h3
             className='text-xl font-semibold text-gray-700 ml-4
           border-b-2 border-gray-400'
