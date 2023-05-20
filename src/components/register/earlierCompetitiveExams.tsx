@@ -49,7 +49,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
                     value={payload.earlierCompetitiveExams[index]?.name}
                     onChange={(e) =>
                       onEarlierCompetitiveExamsChange(
-                        e.target.name,
+                        'name',
                         e.target.value,
                         index
                       )
@@ -68,7 +68,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
                     value={payload.earlierCompetitiveExams[index]?.year}
                     onChange={(e) =>
                       onEarlierCompetitiveExamsChange(
-                        e.target.name,
+                        'year',
                         e.target.value,
                         index
                       )

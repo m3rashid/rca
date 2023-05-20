@@ -24,7 +24,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           size='large'
           placeholder="Enter Father's name"
           value={payload.fatherName}
-          onChange={(e) => onChange(e.target.name, e.target.value)}
+          onChange={(e) => onChange('fatherName', e.target.value)}
         />
       </Form.Item>
 
@@ -37,7 +37,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           size='large'
           placeholder="Enter Mother's name"
           value={payload.motherName}
-          onChange={(e) => onChange(e.target.name, e.target.value)}
+          onChange={(e) => onChange('motherName', e.target.value)}
         />
       </Form.Item>
 
@@ -79,7 +79,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           size='large'
           placeholder='Enter Mobile Number'
           value={payload.mobileNumber}
-          onChange={(e) => onChange(e.target.name, e.target.value)}
+          onChange={(e) => onChange('mobileNumber', e.target.value)}
         />
       </Form.Item>
 
@@ -89,7 +89,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           size='large'
           placeholder='Enter Phone Number'
           value={payload.phoneNumber}
-          onChange={(e) => onChange(e.target.name, e.target.value)}
+          onChange={(e) => onChange('phoneNumber', e.target.value)}
         />
       </Form.Item>
     </Fragment>

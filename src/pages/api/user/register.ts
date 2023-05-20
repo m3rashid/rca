@@ -7,11 +7,15 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const {} = req.body;
-  await connectDb();
-  const registration = new Registration(req.body);
-  await registration.save();
-  return res.status(200).json({ message: 'Registration created' });
+  try {
+    console.log(req.body);
+    await connectDb();
+    const registration = new Registration(req.body);
+    await registration.save();
+    return res.status(200).json({ message: 'Registration created' });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export default register;

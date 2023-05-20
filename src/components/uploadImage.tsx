@@ -44,7 +44,6 @@ const ImageUploader: React.FC<IProps> = ({
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log({ data });
       setImageUrl(data.url);
       if (handleImageUrl) handleImageUrl(data.url);
       return data.url;

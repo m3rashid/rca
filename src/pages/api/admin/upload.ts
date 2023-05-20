@@ -13,7 +13,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    public_id: (req, file) => Date.now() + '-' + file.originalname,
+    public_id: (req, file) => Date.now() + file.originalname,
   },
 });
 

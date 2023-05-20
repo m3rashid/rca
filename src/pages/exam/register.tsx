@@ -50,6 +50,10 @@ const Register: React.FC<IProps> = () => {
     }
   }, []);
 
+  const setStep = (step: number) => () => {
+    setPayload((prev) => ({ ...prev, currentStep: step }));
+  };
+
   const goToPreviousStep = () => {
     if (payload.currentStep === 0) return;
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep - 1 }));
@@ -60,7 +64,9 @@ const Register: React.FC<IProps> = () => {
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep + 1 }));
   };
 
-  const commonStepStyles: React.CSSProperties = {};
+  const commonStepStyles: React.CSSProperties = {
+    cursor: 'pointer',
+  };
 
   const steps = [
     <BasicInfo payload={payload} setPayload={setPayload} />,
@@ -77,7 +83,7 @@ const Register: React.FC<IProps> = () => {
 
   const handleRegister = async () => {
     try {
-      // validate fields
+      // TODO: validate fields
       const { data } = await axios.post('/api/user/register', {
         ...payload,
         // @ts-ignore
@@ -109,42 +115,49 @@ const Register: React.FC<IProps> = () => {
                 icon: <InfoCircleOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(0),
               },
               {
                 title: 'Addresses',
                 icon: <HomeOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(1),
               },
               {
                 title: 'Education Details',
                 icon: <BookOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(2),
               },
               {
                 title: 'Previous Exams',
                 icon: <ReconciliationOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(3),
               },
               {
                 title: 'Uploads',
                 icon: <FileImageOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(4),
               },
               {
                 title: 'Payment',
                 icon: <DollarCircleOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(5),
               },
               {
                 title: 'Agreement',
                 icon: <SolutionOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
+                onClick: setStep(6),
               },
             ]}
           />
