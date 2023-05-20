@@ -74,6 +74,8 @@ const Register: React.FC<IProps> = () => {
     <Agreements payload={payload} setPayload={setPayload} />,
   ];
 
+  const handleRegister = async (values: any) => {};
+
   return (
     <Fragment>
       <Head>
@@ -134,7 +136,12 @@ const Register: React.FC<IProps> = () => {
         </div>
 
         <div className='p-2 sm:p-4 bg-white rounded-md shadow-md w-full max-w-lg h-full'>
-          <Form labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} form={form}>
+          <Form
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            form={form}
+            onFinish={handleRegister}
+          >
             {steps[payload.currentStep]}
 
             <div className='flex justify-between gap-2 mt-10'>

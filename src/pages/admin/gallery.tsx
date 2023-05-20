@@ -1,28 +1,26 @@
+import React from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next';
-import React, { useState } from 'react';
+import { UploadFile } from 'antd/es/upload';
 import { IGallery } from 'rca/models/gallery';
-import CustomTable from 'rca/components/table';
-import { CloseCircleOutlined } from '@ant-design/icons';
-import { Form, Image, Input, TableProps, Upload } from 'antd';
-import { UploadChangeParam, UploadFile } from 'antd/es/upload';
-import constants from 'rca/constants';
-import AdminContainer from 'rca/components/adminContainer';
 import { galleryAtom } from 'rca/utils/atoms';
+import CustomTable from 'rca/components/table';
+import { Form, Image, Input, TableProps } from 'antd';
+import ImageUploader from 'rca/components/uploadImage';
+import AdminContainer from 'rca/components/adminContainer';
 
 const Gallery: NextPage = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>();
   const columns: TableProps<IGallery>['columns'] = [
     {
       title: 'Image',
       dataIndex: 'image',
-      width: 80,
+      width: 110,
       align: 'center',
       render: (image, record) => (
         <Image
           preview
-          width={50}
-          height={50}
+          width={80}
+          height={80}
           src={image}
           alt={record.name}
           style={{ padding: 0 }}
@@ -33,18 +31,9 @@ const Gallery: NextPage = () => {
     { title: 'Details', dataIndex: 'description' },
   ];
 
-  const handleImageChange = (info: UploadChangeParam<UploadFile<any>>) => {
-    const { file, fileList } = info;
-    if (fileList.length === 0) {
-      setImageUrl(null);
-      return;
-    }
+  const handleImageUrl = (imgSrc: string) => {};
 
-    // get file url to preview
-    const url = URL.createObjectURL(file.originFileObj as Blob);
-    setImageUrl(url);
-    return file;
-  };
+  const handleImageFile = (file: UploadFile<any>) => {};
 
   return (
     <AdminContainer>
@@ -77,40 +66,13 @@ const Gallery: NextPage = () => {
                 <Input size='large' />
               </Form.Item>
 
-              <Form.Item
+              <ImageUploader
                 label='Image'
                 name='image'
-                rules={[{ required: true, message: 'Please choose an image' }]}
-              >
-                {imageUrl ? (
-                  <>
-                    <CloseCircleOutlined
-                      style={{
-                        float: 'right',
-                        marginBottom: 5,
-                        fontSize: 25,
-                        color: constants.dangerColor,
-                      }}
-                      onClick={() => setImageUrl(null)}
-                    />
-                    <Image src={imageUrl} />
-                  </>
-                ) : (
-                  <Upload.Dragger
-                    onChange={handleImageChange}
-                    multiple={false}
-                    style={{ padding: 10 }}
-                  >
-                    <p className='ant-upload-text'>
-                      Click or drag file to this area to upload
-                    </p>
-
-                    <p className='ant-upload-hint'>
-                      Choose a single image from your device
-                    </p>
-                  </Upload.Dragger>
-                )}
-              </Form.Item>
+                required
+                handleImageUrl={handleImageUrl}
+                handleImageFile={handleImageFile}
+              />
 
               <Form.Item label='Details' name='description'>
                 <Input.TextArea rows={4} />

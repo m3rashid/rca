@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import { Form, Upload } from 'antd';
+import ImageUploader from '../uploadImage';
 
 interface IDraggerUpload {
   handleImageChange: (info: any) => void;
@@ -32,36 +33,13 @@ const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
 
   return (
     <Fragment>
-      <Form.Item
-        name='photograph'
-        label='Photograph'
-        rules={[{ required: true }]}
-      >
-        <DraggerUpload handleImageChange={handleImageChange} />
-      </Form.Item>
-
-      <Form.Item
-        name='aadharCard'
-        label='Aadhar Card'
-        rules={[{ required: true }]}
-      >
-        <DraggerUpload handleImageChange={handleImageChange} />
-      </Form.Item>
-
-      <Form.Item
-        name='signature'
-        label='Signature'
-        rules={[{ required: true }]}
-      >
-        <DraggerUpload handleImageChange={handleImageChange} />
-      </Form.Item>
-
-      <Form.Item
-        name='lastSemesterCertificate'
+      <ImageUploader label='Photograph' name='photograph' required />
+      <ImageUploader label='Aadhar Card' name='aadharCard' required />
+      <ImageUploader label='Signature' name='signature' required />
+      <ImageUploader
         label='Last Semester Certificate'
-      >
-        <DraggerUpload handleImageChange={handleImageChange} />
-      </Form.Item>
+        name='lastSemesterCertificate'
+      />
     </Fragment>
   );
 };

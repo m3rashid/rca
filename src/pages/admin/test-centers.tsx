@@ -14,7 +14,6 @@ const TestCentres: React.FC<IProps> = () => {
     { title: 'Address', dataIndex: 'address' },
     { title: 'Mobile Number', dataIndex: 'mobileNumber' },
     { title: 'Email', dataIndex: 'email' },
-    { title: 'Phone Number', dataIndex: 'phoneNumber' },
   ];
 
   return (

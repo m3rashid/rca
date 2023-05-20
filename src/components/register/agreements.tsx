@@ -1,4 +1,4 @@
-import { Checkbox, Form } from 'antd';
+import { Button, Checkbox, Form } from 'antd';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment } from 'react';
 
@@ -38,6 +38,16 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
           onChange={(e) => onChange('rightToChange', e.target.checked)}
           checked={payload.agreeToTerms.rightToChange}
         />
+      </Form.Item>
+
+      <Form.Item className='w-full'>
+        <Button size='large' onClick={() => {}}>
+          Cancel
+        </Button>
+
+        <Button type='primary' htmlType='submit' size='large'>
+          Register
+        </Button>
       </Form.Item>
     </Fragment>
   );

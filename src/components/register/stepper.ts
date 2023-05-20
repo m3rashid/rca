@@ -87,6 +87,8 @@ export const defaultPayload: IRegisterPayload = {
   testCenter: '' as any,
   payment: false,
   transactionId: '',
+  rollNumber: '',
+  category: '',
 };
 
 const stepper = [
