@@ -2,8 +2,6 @@ import { camelCaseToSentenceCase } from 'rca/utils/strings';
 
 export const validateRegister = (payload: any) => {
   const errors: string[] = [];
-  // @ts-ignore
-  if (!session.data?.user?._id) errors.push("User doesn't exist");
   [
     'currentStep',
     'gender',

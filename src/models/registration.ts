@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { BaseModel } from 'rca/models';
 import { IUser } from 'rca/models/user';
-import { ITestCenter } from 'rca/models/testCenter';
+import { ITestCenter, TestCenter } from 'rca/models/testCenter';
 
 export interface IAddress {
   city: string;
@@ -85,7 +85,11 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
         passYear: { type: Number, required: true },
       },
     ],
-    testCenter: { type: mongoose.Schema.Types.ObjectId, ref: 'TestCenter' },
+    testCenter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'TestCenter',
+      required: true,
+    },
     transactionId: { type: String, required: true },
     agreeToTerms: {
       informationIsCorrect: { type: Boolean, required: true },

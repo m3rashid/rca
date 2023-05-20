@@ -1,18 +1,15 @@
 import mongoose from 'mongoose';
-import { BaseModel } from 'rca/models';
 
-export interface IConfig extends BaseModel {
+export interface IConfig {
+  _id?: string;
   name: string;
   value: string;
 }
 
-const configSchema = new mongoose.Schema<IConfig>(
-  {
-    name: { type: String, required: true, unique: true },
-    value: { type: String, required: true },
-  },
-  { timestamps: true }
-);
+const configSchema = new mongoose.Schema<IConfig>({
+  name: { type: String, required: true, unique: true },
+  value: { type: String, required: true },
+});
 
 export const Config =
   mongoose.models.Config || mongoose.model<IConfig>('Config', configSchema);

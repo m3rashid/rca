@@ -28,8 +28,13 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import { IRegistration, Registration } from 'rca/models/registration';
 import { validateRegister } from 'rca/components/register/validate';
+import mongoose from 'mongoose';
+import { ITestCenter, TestCenter } from 'rca/models/testCenter';
 
-type IProps = IRegistration | null;
+type IProps = {
+  registration: IRegistration | null;
+  testCenter: ITestCenter | null;
+};
 
 const Register: NextPage<IProps> = (props) => {
   const [form] = Form.useForm();
@@ -52,13 +57,11 @@ const Register: NextPage<IProps> = (props) => {
     } else if (
       props &&
       Object.keys(props).length > 0 &&
-      props.registerComplete
+      props.registration?.registerComplete
     ) {
       router.replace('/user/profile');
     }
-  }, []);
-
-  console.log({ props });
+  }, [router, session, props]);
 
   const setStep = (step: number) => () => {
     setPayload((prev) => ({ ...prev, currentStep: step }));
@@ -74,10 +77,6 @@ const Register: NextPage<IProps> = (props) => {
     setPayload((prev) => ({ ...prev, currentStep: prev.currentStep + 1 }));
   };
 
-  const commonStepStyles: React.CSSProperties = {
-    cursor: 'pointer',
-  };
-
   const steps = [
     <BasicInfo payload={payload} setPayload={setPayload} />,
     <Address payload={payload} setPayload={setPayload} />,
@@ -86,14 +85,16 @@ const Register: NextPage<IProps> = (props) => {
       payload={payload}
       setPayload={setPayload}
     />,
-    <Agreements payload={payload} setPayload={setPayload} />,
     <Uploads payload={payload} setPayload={setPayload} />,
     <Payment payload={payload} setPayload={setPayload} />,
+    <Agreements payload={payload} setPayload={setPayload} />,
   ];
 
   const handleRegister = async () => {
     try {
       const errors = validateRegister(payload);
+      // @ts-ignore
+      if (!session.data?.user?._id) errors.push("User doesn't exist");
 
       if (errors.length > 0) {
         message.error(
@@ -110,17 +111,21 @@ const Register: NextPage<IProps> = (props) => {
         return;
       }
 
-      const { data } = await axios.post('/api/user/register', {
+      await axios.post('/api/user/register', {
         ...payload,
         // @ts-ignore
         user: session.data?.user?._id,
       });
-      console.log(data);
+      setPayload(defaultPayload);
       message.success('Successfully registered');
     } catch (err: any) {
       console.log(err);
       message.error('Something went wrong');
     }
+  };
+
+  const commonStepStyles: React.CSSProperties = {
+    cursor: 'pointer',
   };
 
   return (
@@ -165,22 +170,22 @@ const Register: NextPage<IProps> = (props) => {
                 onClick: setStep(3),
               },
               {
-                title: 'Agreement',
-                icon: <SolutionOutlined />,
+                title: 'Uploads',
+                icon: <FileImageOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(4),
               },
               {
-                title: 'Uploads',
-                icon: <FileImageOutlined />,
+                title: 'Payment',
+                icon: <DollarCircleOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(5),
               },
               {
-                title: 'Payment',
-                icon: <DollarCircleOutlined />,
+                title: 'Agreement',
+                icon: <SolutionOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(6),
@@ -225,18 +230,24 @@ export default Register;
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
-  try {
-    // @ts-ignore
-    if (!session || !session.user?._id) return { props: {} };
-    // @ts-ignore
-    const res = await Registration.findOne({ user: session.user._id })
-      .populate('user')
-      .populate('testCenter')
-      .lean();
+  // @ts-ignore
+  if (!session || !session.user?._id) return { props: {} };
 
-    if (!res) return { props: {} };
-    return { props: res };
-  } catch (err) {
-    return { props: {} };
-  }
+  const registration = await Registration.findOne({
+    // @ts-ignore
+    user: new mongoose.Types.ObjectId(session.user?._id),
+  }).populate('user');
+
+  const testCenter = await TestCenter.findById(registration?.testCenter).lean();
+
+  if (!registration || !testCenter) return { props: {} };
+
+  console.log({ hello: 'hello', registration, testCenter });
+
+  return {
+    props: {
+      registration: JSON.parse(JSON.stringify(registration)),
+      testCenter: JSON.parse(JSON.stringify(testCenter)),
+    },
+  };
 };

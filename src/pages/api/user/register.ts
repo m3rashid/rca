@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { validateRegister } from 'rca/components/register/validate';
 import connectDb from 'rca/models';
@@ -14,8 +15,17 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ errors: errors });
     }
 
+    const count = await Registration.countDocuments();
+    const rollNumber = `RCA-${String(new Date().getFullYear())}-${(
+      count + 1
+    ).toFixed(4)}`;
+
     await connectDb();
-    const registration = new Registration(req.body);
+    const registration = new Registration({
+      ...req.body,
+      rollNumber: rollNumber,
+      registerComplete: true,
+    });
     await registration.save();
     return res.status(200).json({ message: 'Registration created' });
   } catch (err) {
