@@ -1,37 +1,57 @@
-import React from 'react';
-import { Form, Image, Upload } from 'antd';
+import React, { useCallback } from 'react';
+import { Form, Image, Upload, message } from 'antd';
 import constants from 'rca/constants';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { UploadChangeParam, UploadFile } from 'antd/es/upload';
+import { RcFile, UploadChangeParam, UploadFile } from 'antd/es/upload';
+import axios from 'axios';
 
 interface IProps {
-  handleImageUrl?: (imgSrc: string) => any;
-  handleImageFile?: (file: UploadFile<any>) => any;
+  handleImageUrl: (imgSrc: string) => any;
   name: string;
   label: string;
   required?: boolean;
+  upload: boolean;
 }
 
 const ImageUploader: React.FC<IProps> = ({
   handleImageUrl,
-  handleImageFile,
   label,
   name,
   required,
+  upload,
 }) => {
   const [imageUrl, setImageUrl] = React.useState<string | null>();
 
-  const handleImageChange = (info: UploadChangeParam<UploadFile<any>>) => {
-    const { file, fileList } = info;
-    if (fileList.length === 0) {
+  const handleImageChange = async (options: any) => {
+    if (!options || !options.file) {
       setImageUrl(null);
       return;
+    } else if (!upload) {
+      const fileUrl = URL.createObjectURL(options.file);
+      setImageUrl(fileUrl);
+      if (handleImageUrl) handleImageUrl(fileUrl);
+      return fileUrl;
     }
-    const url = URL.createObjectURL(file.originFileObj as Blob);
-    setImageUrl(url);
-    if (handleImageUrl) handleImageUrl(url);
-    if (handleImageFile) handleImageFile(file);
-    return file;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', options.file);
+      const { data } = await axios({
+        method: 'POST',
+        data: formData,
+        url: '/api/admin/upload',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log({ data });
+      setImageUrl(data.url);
+      if (handleImageUrl) handleImageUrl(data.url);
+      return data.url;
+    } catch (err: any) {
+      console.log(err);
+      message.error('Error uploading image');
+    }
   };
 
   return (
@@ -57,8 +77,9 @@ const ImageUploader: React.FC<IProps> = ({
             <Image src={imageUrl} />
           </>
         ) : (
+          // </>
           <Upload.Dragger
-            onChange={handleImageChange}
+            customRequest={handleImageChange}
             multiple={false}
             style={{ padding: 10 }}
           >

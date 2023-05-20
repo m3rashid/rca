@@ -33,8 +33,6 @@ const Gallery: NextPage = () => {
 
   const handleImageUrl = (imgSrc: string) => {};
 
-  const handleImageFile = (file: UploadFile<any>) => {};
-
   return (
     <AdminContainer>
       <Head>
@@ -67,11 +65,11 @@ const Gallery: NextPage = () => {
               </Form.Item>
 
               <ImageUploader
+                upload={false}
                 label='Image'
                 name='image'
                 required
                 handleImageUrl={handleImageUrl}
-                handleImageFile={handleImageFile}
               />
 
               <Form.Item label='Details' name='description'>

@@ -1,27 +1,7 @@
 import React, { Fragment } from 'react';
+import ImageUploader from 'rca/components/uploadImage';
 import { IRegisterPayload } from 'rca/components/register/stepper';
-import { Form, Upload } from 'antd';
-import ImageUploader from '../uploadImage';
-
-interface IDraggerUpload {
-  handleImageChange: (info: any) => void;
-}
-
-const DraggerUpload: React.FC<IDraggerUpload> = ({ handleImageChange }) => {
-  return (
-    <Upload.Dragger
-      onChange={handleImageChange}
-      multiple={false}
-      style={{ padding: 10 }}
-    >
-      <p className='ant-upload-text'>
-        Click or drag file to this area to upload
-      </p>
-
-      <p className='ant-upload-hint'>Choose a single image from your device</p>
-    </Upload.Dragger>
-  );
-};
+import { UploadFile } from 'antd';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -29,16 +9,41 @@ interface IProps {
 }
 
 const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
-  const handleImageChange = (info: any) => {};
+  const handleImageFile = async (name: string, imgUrl: string) => {
+    if (!imgUrl) return;
+    setPayload((prev) => ({ ...prev, [name]: imgUrl }));
+  };
 
   return (
     <Fragment>
-      <ImageUploader label='Photograph' name='photograph' required />
-      <ImageUploader label='Aadhar Card' name='aadharCard' required />
-      <ImageUploader label='Signature' name='signature' required />
       <ImageUploader
+        upload={true}
+        label='Photograph'
+        name='photograph'
+        required
+        handleImageUrl={(imgUrl) => handleImageFile('photograph', imgUrl)}
+      />
+      <ImageUploader
+        upload={true}
+        label='Aadhar Card'
+        name='aadharCard'
+        required
+        handleImageUrl={(imgUrl) => handleImageFile('aadharCard', imgUrl)}
+      />
+      <ImageUploader
+        upload={true}
+        label='Signature'
+        name='signature'
+        required
+        handleImageUrl={(imgUrl) => handleImageFile('signature', imgUrl)}
+      />
+      <ImageUploader
+        upload={true}
         label='Last Semester Certificate'
         name='lastSemesterCertificate'
+        handleImageUrl={(imgUrl) =>
+          handleImageFile('lastSemesterCertificate', imgUrl)
+        }
       />
     </Fragment>
   );

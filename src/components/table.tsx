@@ -112,8 +112,6 @@ export default function CustomTable<RecordType = unknown>({
     if (!file) return;
     const formData = new FormData();
     formData.append('file', file);
-    const url = getUrl(window.location.href, '/api/admin/upload');
-    // const { data } = await axios.post(url, formData);
     const { data } = await axios({
       method: 'POST',
       data: formData,

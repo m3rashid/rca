@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Button, Form, Steps } from 'antd';
+import { Button, Form, message, Steps } from 'antd';
 import { useSession } from 'next-auth/react';
 import React, { Fragment, useEffect, useState } from 'react';
 
@@ -24,6 +24,7 @@ import Education from 'rca/components/register/education';
 import BasicInfo from 'rca/components/register/basicInfo';
 import Agreements from 'rca/components/register/agreements';
 import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
+import axios from 'axios';
 
 interface IProps {}
 
@@ -33,7 +34,7 @@ const Register: React.FC<IProps> = () => {
   const session = useSession({
     required: true,
     onUnauthenticated: () => {
-      router.replace('/auth?redirect=exam-register');
+      router.replace('/user/auth?redirect=exam-register');
     },
   });
   const [payload, setPayload] = useState<IRegisterPayload>(defaultPayload);
@@ -41,11 +42,11 @@ const Register: React.FC<IProps> = () => {
   useEffect(() => {
     if (session.status === 'loading') return;
     else if (session.status !== 'authenticated') {
-      router.replace('/auth?redirect=exam-register');
+      router.replace('/user/auth?redirect=exam-register');
     }
     // @ts-ignore
     else if (session.data?.user?.type === 'ADMIN') {
-      router.replace('/auth');
+      router.replace('/user/auth');
     }
   }, []);
 
@@ -74,7 +75,21 @@ const Register: React.FC<IProps> = () => {
     <Agreements payload={payload} setPayload={setPayload} />,
   ];
 
-  const handleRegister = async (values: any) => {};
+  const handleRegister = async () => {
+    try {
+      // validate fields
+      const { data } = await axios.post('/api/user/register', {
+        ...payload,
+        // @ts-ignore
+        user: session.data?.user?._id,
+      });
+      console.log(data);
+      message.success('Successfully registered');
+    } catch (err: any) {
+      console.log(err);
+      message.error('Something went wrong');
+    }
+  };
 
   return (
     <Fragment>

@@ -1,6 +1,8 @@
-import { Button, Checkbox, Form } from 'antd';
+import { Button, Checkbox, Form, Input, Select } from 'antd';
+import axios from 'axios';
 import { IRegisterPayload } from 'rca/components/register/stepper';
-import React, { Fragment } from 'react';
+import { ITestCenter } from 'rca/models/testCenter';
+import React, { Fragment, useEffect, useState } from 'react';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -8,6 +10,7 @@ interface IProps {
 }
 
 const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
+  const [testCentres, setTestCenters] = useState<ITestCenter[]>([]);
   const onChange = (name: string, value: boolean) => {
     setPayload((prev) => ({
       ...prev,
@@ -17,6 +20,14 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
       },
     }));
   };
+
+  useEffect(() => {
+    const getTestCenters = async () => {
+      const { data } = await axios.get('/api/admin/test-centers');
+      setTestCenters(data.data);
+    };
+    getTestCenters().then().catch(console.log);
+  }, []);
 
   return (
     <Fragment>
@@ -37,6 +48,19 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
         <Checkbox
           onChange={(e) => onChange('rightToChange', e.target.checked)}
           checked={payload.agreeToTerms.rightToChange}
+        />
+      </Form.Item>
+
+      <Form.Item name='testCenter' label='Choose your Test Center'>
+        <Select
+          options={testCentres.map((t: ITestCenter) => ({
+            label: t.address,
+            value: t._id,
+          }))}
+          value={payload.testCenter as any}
+          onChange={(value) =>
+            setPayload((prev) => ({ ...prev, testCenter: value as any }))
+          }
         />
       </Form.Item>
 
