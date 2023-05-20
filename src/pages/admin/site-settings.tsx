@@ -25,9 +25,7 @@ const Miscellaneous: React.FC<IProps> = () => {
 
             return response.data.data;
         }
-
         getSiteSettings().then(data => {
-
             const siteName = data.filter((item: any) => item.name === 'siteName');
             const siteShortName = data.filter(
                 (item: any) => item.name === 'shortSiteName'
@@ -160,7 +158,7 @@ const Miscellaneous: React.FC<IProps> = () => {
         <AdminContainer>
             <div className='flex justify-center w-full'>
                 <div className='w-1/2 my-10'>
-                    <ConfigForm
+                    {siteName.length && <ConfigForm
                         formName='siteName'
                         formLabel='Site Name'
                         formRules={[{ required: true, message: 'Please input site name' }]}
@@ -175,9 +173,9 @@ const Miscellaneous: React.FC<IProps> = () => {
                                 setSiteName(e.target.value);
                             }}
                         />
-                    </ConfigForm>
+                    </ConfigForm>}
 
-                    <ConfigForm
+                    {siteShortName.length && <ConfigForm
                         formName='siteShortName'
                         formLabel='Site Short Name'
                         formRules={[
@@ -194,9 +192,9 @@ const Miscellaneous: React.FC<IProps> = () => {
                                 setSiteShortName(e.target.value);
                             }}
                         />
-                    </ConfigForm>
+                    </ConfigForm>}
 
-                    <ConfigForm
+                    {mission.length && <ConfigForm
                         formName='mission'
                         formLabel='Mission'
                         formRules={[{ required: true, message: 'Please input mission' }]}
@@ -210,10 +208,11 @@ const Miscellaneous: React.FC<IProps> = () => {
                             onChange={(e) => {
                                 setMission(e.target.value);
                             }}
+                            rows={4}
                         />
-                    </ConfigForm>
+                    </ConfigForm>}
 
-                    <ConfigForm
+                    {vision.length && <ConfigForm
                         formName='vision'
                         formLabel='Vision'
                         formRules={[{ required: true, message: 'Please input vision' }]}
@@ -227,10 +226,11 @@ const Miscellaneous: React.FC<IProps> = () => {
                             onChange={(e) => {
                                 setVision(e.target.value);
                             }}
+                            rows={4}
                         />
-                    </ConfigForm>
+                    </ConfigForm>}
 
-                    <ConfigForm
+                    {values.length && <ConfigForm
                         formName='values'
                         formLabel='Values'
                         formRules={[{ required: true, message: 'Please input values' }]}
@@ -244,10 +244,11 @@ const Miscellaneous: React.FC<IProps> = () => {
                             onChange={(e) => {
                                 setValues(e.target.value);
                             }}
+                            rows={4}
                         />
-                    </ConfigForm>
+                    </ConfigForm>}
 
-                    <ConfigForm
+                    {philosophy.length && <ConfigForm
                         formName='philosophy'
                         formLabel='Philosophy'
                         formRules={[{ required: true, message: 'Please input philosophy' }]}
@@ -261,8 +262,9 @@ const Miscellaneous: React.FC<IProps> = () => {
                             onChange={(e) => {
                                 setPhilosophy(e.target.value);
                             }}
+                            rows={4}
                         />
-                    </ConfigForm>
+                    </ConfigForm>}
                 </div>
             </div>
         </AdminContainer>

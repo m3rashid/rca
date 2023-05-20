@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Col, Form, Input, Row } from 'antd';
 import React from 'react';
 
 interface IProps {
@@ -21,32 +21,50 @@ const ConfigForm: React.FC<IProps> =
          onSubmit,
          onError,
      }) => {
+
         return (
             <Form
                 layout='horizontal'
-                name={formName}
-                labelCol={{ span: 8 }}
+                // name={formName}
+                labelCol={{ span: 6 }}
+                labelAlign="left"
                 wrapperCol={{ span: 24 }}
-                initialValues={{ remember: true }}
+                initialValues={{[formName]: formInitialValue}}
                 onFinish={onSubmit}
                 onFinishFailed={onError}
-                autoComplete='off'
+                labelWrap={true}
+                // autoComplete='off'
             >
-                <Form.Item
-                    label={formLabel}
-                    labelCol={{ span: 8 }}
-                    name={formName}
-                    rules={formRules}
-                    initialValue={formInitialValue || ''}
-                >
-                    {children}
-                </Form.Item>
+                {/*<Row gutter={24}>*/}
+                {/*    <Col span={20}>*/}
+                        <Form.Item
+                            label={formLabel}
+                            // labelCol={{ span: 8 }}
+                            name={formName}
+                            rules={formRules}
+                            // initialValue={formInitialValue || 'uhit'}
+                        >
+                            {children}
+                        </Form.Item>
+                    {/*</Col>*/}
+                    {/*<Col span={4}  >*/}
+                        <Form.Item labelCol={{ span: 8 }} style={{
+                            // backgroundColor: 'red',
+                            display: 'flex',
 
-                <Form.Item labelCol={{ span: 8 }}>
-                    <Button type='primary' htmlType='submit'>
-                        Submit
-                    </Button>
-                </Form.Item>
+                            justifyContent: 'flex-end',
+                            paddingRight: '10px',
+
+                        }} >
+                            <Button type='primary' htmlType='submit'>
+                                Submit
+                            </Button>
+                        </Form.Item>
+                    {/*</Col>*/}
+                {/*</Row>*/}
+
+
+
             </Form>
         );
     };
