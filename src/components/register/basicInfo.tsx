@@ -55,6 +55,18 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         />
       </Form.Item>
 
+      <Form.Item name='category' label='Category' rules={[{ required: true }]}>
+        <Select
+          value={payload.category}
+          onChange={(val) => onChange('category', val)}
+          placeholder='Select Category'
+          size='large'
+          options={['GENERAL', 'SC', 'ST', 'OBC', 'PWD', 'GENERAL-EWS'].map(
+            (t) => ({ label: t, value: t })
+          )}
+        />
+      </Form.Item>
+
       <Form.Item
         label='Date of Birth'
         name='dateOfBirth'

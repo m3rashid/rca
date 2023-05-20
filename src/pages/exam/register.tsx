@@ -10,7 +10,7 @@ import {
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Button, Form, message, Steps } from 'antd';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import React, { Fragment, useEffect, useState } from 'react';
 
 import {
@@ -25,10 +25,13 @@ import BasicInfo from 'rca/components/register/basicInfo';
 import Agreements from 'rca/components/register/agreements';
 import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
 import axios from 'axios';
+import { NextPage } from 'next';
+import { IRegistration, Registration } from 'rca/models/registration';
+import { validateRegister } from 'rca/components/register/validate';
 
-interface IProps {}
+type IProps = IRegistration | null;
 
-const Register: React.FC<IProps> = () => {
+const Register: NextPage<IProps> = (props) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const session = useSession({
@@ -43,12 +46,19 @@ const Register: React.FC<IProps> = () => {
     if (session.status === 'loading') return;
     else if (session.status !== 'authenticated') {
       router.replace('/user/auth?redirect=exam-register');
-    }
-    // @ts-ignore
-    else if (session.data?.user?.type === 'ADMIN') {
+      // @ts-ignore
+    } else if (session.data?.user?.type === 'ADMIN') {
       router.replace('/user/auth');
+    } else if (
+      props &&
+      Object.keys(props).length > 0 &&
+      props.registerComplete
+    ) {
+      router.replace('/user/profile');
     }
   }, []);
+
+  console.log({ props });
 
   const setStep = (step: number) => () => {
     setPayload((prev) => ({ ...prev, currentStep: step }));
@@ -76,14 +86,30 @@ const Register: React.FC<IProps> = () => {
       payload={payload}
       setPayload={setPayload}
     />,
+    <Agreements payload={payload} setPayload={setPayload} />,
     <Uploads payload={payload} setPayload={setPayload} />,
     <Payment payload={payload} setPayload={setPayload} />,
-    <Agreements payload={payload} setPayload={setPayload} />,
   ];
 
   const handleRegister = async () => {
     try {
-      // TODO: validate fields
+      const errors = validateRegister(payload);
+
+      if (errors.length > 0) {
+        message.error(
+          <div className='w-full max-w-[350px] flex gap-2 flex-col items-center'>
+            {errors.map((t) => (
+              <Fragment key={t}>
+                <div className='w-full bg-red-200 rounded-md px-2 py-1'>
+                  {t}
+                </div>
+              </Fragment>
+            ))}
+          </div>
+        );
+        return;
+      }
+
       const { data } = await axios.post('/api/user/register', {
         ...payload,
         // @ts-ignore
@@ -139,22 +165,22 @@ const Register: React.FC<IProps> = () => {
                 onClick: setStep(3),
               },
               {
-                title: 'Uploads',
-                icon: <FileImageOutlined />,
+                title: 'Agreement',
+                icon: <SolutionOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(4),
               },
               {
-                title: 'Payment',
-                icon: <DollarCircleOutlined />,
+                title: 'Uploads',
+                icon: <FileImageOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(5),
               },
               {
-                title: 'Agreement',
-                icon: <SolutionOutlined />,
+                title: 'Payment',
+                icon: <DollarCircleOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(6),
@@ -196,3 +222,21 @@ const Register: React.FC<IProps> = () => {
 };
 
 export default Register;
+
+export const getServerSideProps = async (ctx: any) => {
+  const session = await getSession(ctx);
+  try {
+    // @ts-ignore
+    if (!session || !session.user?._id) return { props: {} };
+    // @ts-ignore
+    const res = await Registration.findOne({ user: session.user._id })
+      .populate('user')
+      .populate('testCenter')
+      .lean();
+
+    if (!res) return { props: {} };
+    return { props: res };
+  } catch (err) {
+    return { props: {} };
+  }
+};

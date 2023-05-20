@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
-import { Form, Image, Upload, message } from 'antd';
+import React from 'react';
+import axios from 'axios';
 import constants from 'rca/constants';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { RcFile, UploadChangeParam, UploadFile } from 'antd/es/upload';
-import axios from 'axios';
+import { Form, Image, Upload, message, Typography } from 'antd';
 
 interface IProps {
   handleImageUrl: (imgSrc: string) => any;
@@ -89,6 +88,11 @@ const ImageUploader: React.FC<IProps> = ({
             <p className='ant-upload-hint'>
               Choose a single image from your device
             </p>
+
+            <Typography.Text type='danger'>
+              Please wait for the image to upload before submitting the form.
+              Once, preview is visible, you can submit the form.
+            </Typography.Text>
           </Upload.Dragger>
         )}
       </Form.Item>

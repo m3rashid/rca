@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import ImageUploader from 'rca/components/uploadImage';
 import { IRegisterPayload } from 'rca/components/register/stepper';
-import { UploadFile } from 'antd';
 
 interface IProps {
   payload: IRegisterPayload;

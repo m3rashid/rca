@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { validateRegister } from 'rca/components/register/validate';
 import connectDb from 'rca/models';
 import { Registration } from 'rca/models/registration';
 
@@ -8,7 +9,11 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    console.log(req.body);
+    const errors = validateRegister(req.body);
+    if (errors.length > 0) {
+      return res.status(400).json({ errors: errors });
+    }
+
     await connectDb();
     const registration = new Registration(req.body);
     await registration.save();
