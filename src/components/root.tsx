@@ -176,11 +176,11 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
                   style={{ padding: 0, margin: 0 }}
                 />
               </div>
-              {!ui.isMobile && (
-                <Typography.Title level={4} style={{ padding: 0, margin: 0 }}>
-                  Residential Coaching Academy
-                </Typography.Title>
-              )}
+              <Typography.Title level={4} style={{ padding: 0, margin: 0 }}>
+                {ui.isMobile
+                  ? 'Shibli RCA'
+                  : 'Shibli Residential Coaching Academy'}
+              </Typography.Title>
             </div>
 
             <Dropdown
@@ -193,8 +193,6 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
             </Dropdown>
           </div>
         </Layout.Header>
-
-        {/* @ts-ignore */}
 
         <Layout.Content style={{ minHeight: 'calc(100vh - 150px)' }}>
           {children}

@@ -1,7 +1,7 @@
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Config } from 'rca/models/configs';
 import { getSession } from 'next-auth/react';
 import { useReactToPrint } from 'react-to-print';
@@ -39,21 +39,32 @@ const Profile: NextPage<IProps | null> = (props) => {
     timeOfExam: props?.timeOfExam as string,
   };
 
+  console.log({ data });
+
   const printContainerRef = useRef(null);
   const printPdf = useReactToPrint({
     content: () => printContainerRef.current,
   });
 
   return (
-    <AdminContainer>
-      <div className='flex my-2 mr-2 justify-end'>
+    <Fragment>
+      {/* <div className='flex my-2 mr-2 justify-end'>
         <Button type='primary' onClick={printPdf}>
           Print Admit Card
         </Button>
+      </div> */}
+
+      <div className='flex items-center flex-col justify-center min-h-[500px]'>
+        <Typography.Title level={3}>
+          You have already registered for the exam
+        </Typography.Title>
+        <Typography.Text>
+          Your Response was recorded. You will get admit card here in a few days
+        </Typography.Text>
       </div>
 
-      <AdmitCardTemplate printContainerRef={printContainerRef} data={data} />
-    </AdminContainer>
+      {/* <AdmitCardTemplate printContainerRef={printContainerRef} data={data} /> */}
+    </Fragment>
   );
 };
 

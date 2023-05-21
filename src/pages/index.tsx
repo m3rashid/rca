@@ -1,14 +1,16 @@
 import axios from 'axios';
 import Head from 'next/head';
-import { Carousel } from 'antd';
+import { Button, Carousel, Typography } from 'antd';
 import { IEvent } from 'rca/models/event';
 import { IGallery } from 'rca/models/gallery';
 import { useEffect, useState } from 'react';
 import MainCarousel from 'rca/components/mainCarousel';
 import Principles from 'rca/components/principles';
 import UserHeader from 'rca/components/userHeader';
+import { useRouter } from 'next/router';
 
 const Home = () => {
+  const router = useRouter();
   const [{ events, gallery }, setState] = useState<{
     events: IEvent[];
     gallery: IGallery[];
@@ -36,7 +38,7 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>RCA - Residential Coaching Academy</title>
+        <title>RCA - Shibli Residential Coaching Academy</title>
       </Head>
 
       <UserHeader>
@@ -60,6 +62,20 @@ const Home = () => {
             return <MainCarousel key={1} alt='carousel items' url={item} />;
           })}
         </Carousel>
+
+        <div className='relative -top-[100px] flex items-center justify-center flex-col'>
+          <Button
+            size='large'
+            className='w-[250px] h-[60px]'
+            type='primary'
+            onClick={() => router.push('/exam/register')}
+          >
+            Register for Exam
+          </Button>
+          <Typography.Text className='block font-bold text-lg text-red-700 bg-white bg-opacity-40 rounded-md py-1 px-4 mt-2 backdrop:opacity-10'>
+            You have to create account First
+          </Typography.Text>
+        </div>
 
         <Principles />
 
