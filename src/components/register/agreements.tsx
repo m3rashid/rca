@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
 import axios from 'axios';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import { ITestCenter } from 'rca/models/testCenter';
@@ -53,6 +53,7 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
 
       <Form.Item name='testCenter' label='Choose your Test Center'>
         <Select
+          size='large'
           options={testCentres.map((t: ITestCenter) => ({
             label: t.address,
             value: t._id,
@@ -62,10 +63,14 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
             setPayload((prev) => ({ ...prev, testCenter: value as any }))
           }
         />
+        <Typography.Text type='danger'>
+          Test Centres are provisional and subject to change until you receive
+          the final admit card
+        </Typography.Text>
       </Form.Item>
 
       <Form.Item className='w-full'>
-        <Button size='large' onClick={() => {}}>
+        <Button size='large' className='mr-2' onClick={() => {}}>
           Cancel
         </Button>
 

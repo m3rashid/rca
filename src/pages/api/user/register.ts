@@ -30,6 +30,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ message: 'Registration created' });
   } catch (err) {
     console.log(err);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 

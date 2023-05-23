@@ -33,7 +33,7 @@ const gallery = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const deletedGallery = await Gallery.findByIdAndDelete(_id);
     return res.status(200).json({ error: null, data: deletedGallery });
   } else {
-    res.status(405).json({ error: 'Method not allowed', data: null });
+    return res.status(405).json({ error: 'Method not allowed', data: null });
   }
 };
 

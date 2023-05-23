@@ -10,7 +10,7 @@ import {
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Button, Form, message, Steps } from 'antd';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import React, { Fragment, useEffect, useState } from 'react';
 
 import {
@@ -26,10 +26,9 @@ import Agreements from 'rca/components/register/agreements';
 import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
 import axios from 'axios';
 import { NextPage } from 'next';
-import { IRegistration, Registration } from 'rca/models/registration';
+import { IRegistration } from 'rca/models/registration';
 import { validateRegister } from 'rca/components/register/validate';
-import mongoose from 'mongoose';
-import { ITestCenter, TestCenter } from 'rca/models/testCenter';
+import { ITestCenter } from 'rca/models/testCenter';
 
 type IProps = {
   registration: IRegistration | null;
@@ -54,12 +53,18 @@ const Register: NextPage<IProps> = (props) => {
       // @ts-ignore
     } else if (session.data?.user?.type === 'ADMIN') {
       router.replace('/user/auth');
-    } else if (
-      props &&
-      Object.keys(props).length > 0 &&
-      props.registration?.registerComplete
-    ) {
-      router.replace('/user/profile');
+    } else {
+      const getInitialData = async () => {
+        const { data } = await axios.get('/api/user/initial');
+        if (data.registration && data.testCenter) {
+          if (data.registration.registerComplete) {
+            router.replace('/user/profile');
+          } else {
+            setPayload((prev) => ({ ...prev, ...data.registration }));
+          }
+        }
+      };
+      getInitialData().then().catch(console.log);
     }
   }, [router, session, props]);
 
@@ -227,27 +232,3 @@ const Register: NextPage<IProps> = (props) => {
 };
 
 export default Register;
-
-export const getServerSideProps = async (ctx: any) => {
-  const session = await getSession(ctx);
-  // @ts-ignore
-  if (!session || !session.user?._id) return { props: {} };
-
-  const registration = await Registration.findOne({
-    // @ts-ignore
-    user: new mongoose.Types.ObjectId(session.user?._id),
-  }).populate('user');
-
-  const testCenter = await TestCenter.findById(registration?.testCenter).lean();
-
-  if (!registration || !testCenter) return { props: {} };
-
-  console.log({ hello: 'hello', registration, testCenter });
-
-  return {
-    props: {
-      registration: JSON.parse(JSON.stringify(registration)),
-      testCenter: JSON.parse(JSON.stringify(testCenter)),
-    },
-  };
-};
