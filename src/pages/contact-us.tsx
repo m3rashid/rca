@@ -15,12 +15,13 @@ const ContactUs: React.FC<IProps> = () => {
       <UserHeader>
         <div className='lg:py-12 md:px-8 xl:px-32 md:relative md:z-10 px-4 text-xl'>
           <Typography.Title level={2}>Emails</Typography.Title>
-          <p></p>
+          <p>shiblirca@gmail.com</p>
 
           <br />
 
           <Typography.Title level={2}>Contacts</Typography.Title>
-          <p></p>
+          <p>8655835557</p>
+          <p>7042003729</p>
         </div>
       </UserHeader>
     </>
