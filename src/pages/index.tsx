@@ -1,40 +1,40 @@
-import axios from 'axios';
+// import axios from 'axios';
 import Head from 'next/head';
 import { Button, Carousel, Typography } from 'antd';
-import { IEvent } from 'rca/models/event';
-import { Gallery, IGallery } from 'rca/models/gallery';
-import { useEffect, useState } from 'react';
+// import { IEvent } from 'rca/models/event';
+// import { Gallery, IGallery } from 'rca/models/gallery';
+// import { useEffect, useState } from 'react';
 import MainCarousel from 'rca/components/mainCarousel';
 import Principles from 'rca/components/principles';
 import UserHeader from 'rca/components/userHeader';
 import { useRouter } from 'next/router';
-import HomeCarousel from 'rca/components/homeCarousel';
+// import HomeCarousel from 'rca/components/homeCarousel';
 
 const Home = () => {
   const router = useRouter();
-  const [{ events, gallery }, setState] = useState<{
-    events: IEvent[];
-    gallery: IGallery[];
-  }>({ events: [], gallery: [] });
+  // const [{ events, gallery }, setState] = useState<{
+  //   events: IEvent[];
+  //   gallery: IGallery[];
+  // }>({ events: [], gallery: [] });
 
-  const getData = async () => {
-    const promises: Array<Promise<any>> = [];
-    promises.push(axios.get('/api/admin/events'));
-    promises.push(axios.get('/api/admin/gallery'));
+  // const getData = async () => {
+  //   const promises: Array<Promise<any>> = [];
+  //   promises.push(axios.get('/api/admin/events'));
+  //   promises.push(axios.get('/api/admin/gallery'));
 
-    const [allEvents, allGallery] = await Promise.all(promises);
+  //   const [allEvents, allGallery] = await Promise.all(promises);
 
-    return {
-      events: allEvents.data.error ? [] : allEvents.data.data,
-      gallery: allGallery.data.error ? [] : allGallery.data.data,
-    };
-  };
+  //   return {
+  //     events: allEvents.data.error ? [] : allEvents.data.data,
+  //     gallery: allGallery.data.error ? [] : allGallery.data.data,
+  //   };
+  // };
 
-  useEffect(() => {
-    getData()
-      .then((data) => setState(data))
-      .catch(console.log);
-  }, []);
+  // useEffect(() => {
+  //   getData()
+  //     .then((data) => setState(data))
+  //     .catch(console.log);
+  // }, []);
 
   return (
     <>
@@ -72,7 +72,7 @@ const Home = () => {
 
         <Principles />
 
-        {gallery &&
+        {/* {gallery &&
           gallery.map((item) => {
             return (
               <HomeCarousel
@@ -82,7 +82,7 @@ const Home = () => {
                 content={item.description}
               />
             );
-          })}
+          })} */}
 
         {/* <div className='m-3 md:m-5 mt-4 md:mt-6 flex items-center justify-center'>
         <Typography.Title level={2}>Upcoming Events</Typography.Title>
@@ -99,11 +99,11 @@ const Home = () => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
-  const gallery = await Gallery.find({}).lean();
-  return {
-    props: {
-      gallery: gallery || [],
-    },
-  };
-};
+// export const getServerSideProps = async () => {
+//   const gallery = await Gallery.find({}).lean();
+//   return {
+//     props: {
+//       gallery: gallery || [],
+//     },
+//   };
+// };
