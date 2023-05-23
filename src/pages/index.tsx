@@ -2,12 +2,13 @@ import axios from 'axios';
 import Head from 'next/head';
 import { Button, Carousel, Typography } from 'antd';
 import { IEvent } from 'rca/models/event';
-import { IGallery } from 'rca/models/gallery';
+import { Gallery, IGallery } from 'rca/models/gallery';
 import { useEffect, useState } from 'react';
 import MainCarousel from 'rca/components/mainCarousel';
 import Principles from 'rca/components/principles';
 import UserHeader from 'rca/components/userHeader';
 import { useRouter } from 'next/router';
+import HomeCarousel from 'rca/components/homeCarousel';
 
 const Home = () => {
   const router = useRouter();
@@ -43,21 +44,13 @@ const Home = () => {
 
       <UserHeader>
         <Carousel autoplay arrows className='w-screen' dotPosition='top'>
-          {/* {gallery &&
-          gallery.map((item) => {
-            return (
-              <HomeCarousel
-                key={item._id}
-                title={item.name}
-                url={item.image}
-                content={item.description}
-              />
-            );
-          })} */}
           {[
-            'https://static.theprint.in/wp-content/uploads/2019/06/UPSC-headquarters-1.jpeg?compress=true&quality=80&w=376&dpr=2.6',
-            'https://static.theprint.in/wp-content/uploads/2021/02/UPSC.jpg',
-            'https://english.cdn.zeenews.com/sites/default/files/styles/zm_700x400/public/2022/08/02/1072504-upsc.jpg?im=Resize=(1280,720)',
+            '/home1.jpeg',
+            '/home2.jpeg',
+            '/home3.jpeg',
+            '/home4.jpeg',
+            '/home5.jpeg',
+            '/home6.jpeg',
           ].map((item) => {
             return <MainCarousel key={1} alt='carousel items' url={item} />;
           })}
@@ -79,6 +72,18 @@ const Home = () => {
 
         <Principles />
 
+        {gallery &&
+          gallery.map((item) => {
+            return (
+              <HomeCarousel
+                key={item._id}
+                title={item.name}
+                url={item.image}
+                content={item.description}
+              />
+            );
+          })}
+
         {/* <div className='m-3 md:m-5 mt-4 md:mt-6 flex items-center justify-center'>
         <Typography.Title level={2}>Upcoming Events</Typography.Title>
       </div>
@@ -93,3 +98,12 @@ const Home = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async () => {
+  const gallery = await Gallery.find({}).lean();
+  return {
+    props: {
+      gallery: gallery || [],
+    },
+  };
+};

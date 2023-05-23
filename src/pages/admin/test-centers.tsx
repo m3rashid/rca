@@ -53,21 +53,11 @@ const TestCentres: React.FC<IProps> = () => {
                 <Input.TextArea />
               </Form.Item>
 
-              <Form.Item
-                label='Mobile Number'
-                name='mobileNumber'
-                rules={[
-                  { required: true, message: 'Please enter mobile number' },
-                ]}
-              >
+              <Form.Item label='Mobile Number' name='mobileNumber'>
                 <Input />
               </Form.Item>
 
-              <Form.Item
-                label='Email'
-                name='email'
-                rules={[{ required: true, message: 'Please enter email' }]}
-              >
+              <Form.Item label='Email' name='email'>
                 <Input />
               </Form.Item>
             </>

@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import Head from 'next/head';
 import UserHeader from 'rca/components/userHeader';
 import React from 'react';
@@ -12,7 +13,15 @@ const ContactUs: React.FC<IProps> = () => {
       </Head>
 
       <UserHeader>
-        <div>Contact</div>
+        <div className='lg:py-12 md:px-8 xl:px-32 md:relative md:z-10 px-4 text-xl'>
+          <Typography.Title level={2}>Emails</Typography.Title>
+          <p></p>
+
+          <br />
+
+          <Typography.Title level={2}>Contacts</Typography.Title>
+          <p></p>
+        </div>
       </UserHeader>
     </>
   );
