@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import { uiAtom } from 'rca/utils/atoms';
 import React, { Fragment } from 'react';
@@ -80,26 +80,23 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
                   />
                 </Form.Item>
 
-                <Form.Item
-                  label='Cleared'
-                  name='cleared'
-                  rules={[{ required: true }]}
-                >
-                  <Checkbox
-                    checked={payload.earlierCompetitiveExams[index]?.cleared}
-                    onChange={(e) =>
-                      onEarlierCompetitiveExamsChange(
-                        'cleared',
-                        e.target.checked,
-                        index
-                      )
-                    }
-                  />
-                </Form.Item>
+                <Checkbox
+                  checked={payload.earlierCompetitiveExams[index]?.cleared}
+                  onChange={(e) =>
+                    onEarlierCompetitiveExamsChange(
+                      'cleared',
+                      e.target.checked,
+                      index
+                    )
+                  }
+                />
+                <Typography.Text className='ml-2'>
+                  Cleared this Exam
+                </Typography.Text>
 
                 <Button
                   type='dashed'
-                  className='w-full mb-10'
+                  className='w-full my-10'
                   onClick={() => remove(index)}
                 >
                   Remove

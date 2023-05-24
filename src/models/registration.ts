@@ -39,7 +39,7 @@ export interface IRegistration extends BaseModel {
     matriculation: IEducation;
     intermediate: IEducation;
     graduation: IEducation;
-    other?: IEducation;
+    other: IEducation;
   };
   testCenter: ITestCenter; // ObjectId
   transactionId: string;
@@ -91,7 +91,12 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
       matriculation: educationSchema,
       intermediate: educationSchema,
       graduation: educationSchema,
-      other: educationSchema,
+      other: {
+        education: { type: String, default: '' },
+        passYear: { type: Number, default: '' },
+        percentage: { type: Number, default: '' },
+        boardOrUni: { type: String, default: '' },
+      },
     },
     testCenter: {
       type: mongoose.Schema.Types.ObjectId,

@@ -1,4 +1,5 @@
 import { camelCaseToSentenceCase } from 'rca/utils/strings';
+import { IEducation } from 'rca/models/registration';
 
 export const validateRegister = (payload: any) => {
   const errors: string[] = [];
@@ -32,17 +33,19 @@ export const validateRegister = (payload: any) => {
     });
   });
 
-  if (payload.education.length > 0) {
-    payload.education.forEach((t: any) => {
-      ['education', 'passYear', 'percentage', 'boardOrUni'].forEach((m) => {
-        // @ts-ignore
-        if (!t[m] || t[m] === '')
-          errors.push(
-            `${camelCaseToSentenceCase(m)} in ${t.degree} is required`
-          );
-      });
-    });
-  }
+  Object.values(payload.education).forEach((value: any) => {
+    if (
+      !value.education ||
+      !value.passYear ||
+      !value.percentage ||
+      !value.boardOrUni
+    ) {
+      errors.push(
+        `All fields in ${camelCaseToSentenceCase('education')} is required`
+      );
+      return;
+    }
+  });
 
   if (payload.earlierCompetitiveExams.length > 0) {
     payload.earlierCompetitiveExams.forEach((t: any) => {

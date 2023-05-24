@@ -32,13 +32,15 @@ export type Addresses = Pick<
 const addresses: Addresses = {
   correspondenceAddress: {
     city: '',
-    country: '',
+    district: '',
+    landMark: '',
     postalCode: '',
     state: '',
   },
   permanentAddress: {
     city: '',
-    country: '',
+    district: '',
+    landMark: '',
     postalCode: '',
     state: '',
   },
@@ -46,7 +48,19 @@ const addresses: Addresses = {
 
 export type IEducation = Pick<IRegisterPayload, 'education'>['education'];
 
-const education: IEducation = [];
+const defaultEducation: IEducation['matriculation'] = {
+  boardOrUni: '',
+  education: '',
+  percentage: 0,
+  passYear: 2000,
+};
+
+const education: IEducation = {
+  matriculation: defaultEducation,
+  intermediate: defaultEducation,
+  graduation: defaultEducation,
+  other: defaultEducation,
+};
 
 export type IEarlierCompetitiveExams = Pick<
   IRegisterPayload,

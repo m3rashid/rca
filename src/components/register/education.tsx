@@ -90,9 +90,56 @@ interface IProps {
 }
 
 const Education: React.FC<IProps> = ({ payload, setPayload }) => {
-  const onMatriculationChange = (name: string, value: string) => {};
-  const onIntermediateChange = (name: string, value: string) => {};
-  const onGraduationChange = (name: string, value: string) => {};
+  const onMatriculationChange = (name: string, value: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      education: {
+        ...prev.education,
+        matriculation: { ...prev.education.matriculation, [name]: value },
+      },
+    }));
+  };
+
+  const onIntermediateChange = (name: string, value: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      education: {
+        ...prev.education,
+        intermediate: { ...prev.education.intermediate, [name]: value },
+      },
+    }));
+  };
+
+  const onGraduationChange = (name: string, value: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      education: {
+        ...prev.education,
+        graduation: { ...prev.education.graduation, [name]: value },
+      },
+    }));
+  };
+
+  const onOthersChange = (name: string, value: string) => {
+    setPayload((prev) => ({
+      ...prev,
+      education: {
+        ...prev.education,
+        ...(prev.education.other
+          ? { other: { ...prev.education.other, [name]: value } }
+          : {
+              other: {
+                boardOrUni: '',
+                education: '',
+                passYear: 2000,
+                percentage: 0,
+                [name]: value,
+              },
+            }),
+        // other: { ...prev.education.other, [name]: value },
+      },
+    }));
+  };
 
   return (
     <Fragment>
@@ -134,11 +181,14 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
       <br />
 
       <Typography.Title level={2}>Other details</Typography.Title>
+      <Typography.Text type='secondary'>
+        Other Details are optional
+      </Typography.Text>
       <EducationContainer
         disabled={false}
-        education={payload.education.intermediate}
-        name='Graduation'
-        onChange={onGraduationChange}
+        education={payload.education.other}
+        name='Other'
+        onChange={onOthersChange}
       />
     </Fragment>
   );
