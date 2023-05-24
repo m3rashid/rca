@@ -15,7 +15,6 @@ const getInitialData = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req });
     if (!session) throw new Error('Unauthorized');
 
-    console.log({ session });
     const registration = await Registration.findOne({
       // @ts-ignore
       user: new mongoose.Types.ObjectId(session.user?._id),

@@ -39,8 +39,6 @@ const Profile: NextPage<IProps | null> = (props) => {
     timeOfExam: props?.timeOfExam as string,
   };
 
-  console.log({ data });
-
   const printContainerRef = useRef(null);
   const printPdf = useReactToPrint({
     content: () => printContainerRef.current,

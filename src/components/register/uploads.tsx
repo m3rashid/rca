@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import ImageUploader from 'rca/components/uploadImage';
 import { IRegisterPayload } from 'rca/components/register/stepper';
+import { Form, Input } from 'antd';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -15,19 +16,23 @@ const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
 
   return (
     <Fragment>
+      <Form.Item label='Aadhar Card Number' name='aadharCard'>
+        <Input
+          size='large'
+          placeholder='Enter Aadhar Card Number'
+          value={payload.aadharCard}
+          onChange={(e) =>
+            setPayload((p) => ({ ...p, aadharCard: e.target.value }))
+          }
+        />
+      </Form.Item>
+
       <ImageUploader
         upload={true}
         label='Photograph'
         name='photograph'
         required
         handleImageUrl={(imgUrl) => handleImageFile('photograph', imgUrl)}
-      />
-      <ImageUploader
-        upload={true}
-        label='Aadhar Card'
-        name='aadharCard'
-        required
-        handleImageUrl={(imgUrl) => handleImageFile('aadharCard', imgUrl)}
       />
       <ImageUploader
         upload={true}

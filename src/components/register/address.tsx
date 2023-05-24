@@ -1,17 +1,19 @@
-import { Form, Input, InputNumber, Typography } from 'antd';
+import { Checkbox, Form, Input, InputNumber, Typography } from 'antd';
 import { IRegisterPayload } from 'rca/components/register/stepper';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 interface IInnerProps {
-  address: IRegisterPayload['permanentAddress'];
+  address: IRegisterPayload['correspondenceAddress'];
   onChange: (name: string, value: any) => void;
   name: 'permanentAddress' | 'correspondenceAddress';
+  disabled: boolean;
 }
 
 const AddressContainer: React.FC<IInnerProps> = ({
   address,
   onChange,
   name,
+  disabled,
 }) => {
   return (
     <Fragment>
@@ -21,6 +23,7 @@ const AddressContainer: React.FC<IInnerProps> = ({
         rules={[{ required: true }]}
       >
         <Input
+          disabled={disabled}
           size='large'
           placeholder='Enter State'
           value={address.state}
@@ -34,6 +37,7 @@ const AddressContainer: React.FC<IInnerProps> = ({
         rules={[{ required: true }]}
       >
         <Input
+          disabled={disabled}
           size='large'
           placeholder='Enter City'
           value={address.city}
@@ -47,6 +51,7 @@ const AddressContainer: React.FC<IInnerProps> = ({
         rules={[{ required: true }]}
       >
         <InputNumber
+          disabled={disabled}
           size='large'
           placeholder='Postal Code'
           value={address.postalCode}
@@ -64,43 +69,62 @@ interface IProps {
 }
 
 const Address: React.FC<IProps> = ({ payload, setPayload }) => {
+  const [isSameAddress, setIsSameAddress] = useState(false);
+
   const onPermanentAddressChange = (name: string, value: any) => {
+    if (isSameAddress) return;
     setPayload((prev) => ({
       ...prev,
-      permanentAddress: {
-        ...prev.permanentAddress,
-        [name]: value,
-      },
+      permanentAddress: { ...prev.permanentAddress, [name]: value },
     }));
   };
 
   const onCorrespondenceAddressChange = (name: string, value: any) => {
     setPayload((prev) => ({
       ...prev,
-      correspondenceAddress: {
-        ...prev.correspondenceAddress,
-        [name]: value,
-      },
+      correspondenceAddress: { ...prev.correspondenceAddress, [name]: value },
+      ...(isSameAddress
+        ? { permanentAddress: { ...prev.correspondenceAddress, [name]: value } }
+        : {}),
     }));
   };
 
+  const onSameAddressCheck = (val: boolean) => {
+    setIsSameAddress(val);
+    if (val) {
+      setPayload((prev) => ({
+        ...prev,
+        permanentAddress: prev.correspondenceAddress,
+      }));
+    }
+  };
+
+  console.log(payload);
+
   return (
     <Fragment>
-      <Typography.Title level={4}>Permanent Address</Typography.Title>
+      <Typography.Title level={4}>Correspondence Address</Typography.Title>
       <AddressContainer
-        name='permanentAddress'
-        address={payload.permanentAddress}
-        onChange={onPermanentAddressChange}
+        disabled={false}
+        name='correspondenceAddress'
+        address={payload.correspondenceAddress}
+        onChange={onCorrespondenceAddressChange}
       />
 
       <br />
       <br />
 
-      <Typography.Title level={4}>Correspondence Address</Typography.Title>
+      <Typography.Title level={4}>Permanent Address</Typography.Title>
+      <Checkbox onChange={(e) => onSameAddressCheck(e.target.checked)} />
+      <Typography.Text className='ml-2'>
+        Same as Correspondence Address
+      </Typography.Text>
+
       <AddressContainer
-        name='correspondenceAddress'
-        address={payload.correspondenceAddress}
-        onChange={onCorrespondenceAddressChange}
+        disabled={isSameAddress}
+        name='permanentAddress'
+        address={payload.permanentAddress}
+        onChange={onPermanentAddressChange}
       />
     </Fragment>
   );
