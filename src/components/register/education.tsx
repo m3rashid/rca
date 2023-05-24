@@ -1,7 +1,9 @@
 import { Button, DatePicker, Form, Input } from 'antd';
 import dayjs from 'dayjs';
 import { IRegisterPayload } from 'rca/components/register/stepper';
+import { uiAtom } from 'rca/utils/atoms';
 import React, { Fragment } from 'react';
+import { useRecoilValue } from 'recoil';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -9,6 +11,8 @@ interface IProps {
 }
 
 const Education: React.FC<IProps> = ({ payload, setPayload }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const onEducationChange = (name: string, value: any, index: number) => {
     setPayload((prev) => ({
       ...prev,
@@ -38,7 +42,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Degree'
                     value={payload.education[index]?.degree}
                     onChange={(e) => {
@@ -53,7 +57,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Degree'
                     value={payload.education[index]?.percentage}
                     onChange={(e) => {
@@ -68,7 +72,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Division'
                     value={payload.education[index]?.division}
                     onChange={(e) => {
@@ -83,7 +87,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Education Board'
                     value={payload.education[index]?.board}
                     onChange={(e) => {
@@ -98,7 +102,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Institution Name'
                     value={payload.education[index]?.institutionName}
                     onChange={(e) => {
@@ -125,7 +129,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                     showSecond={false}
                     showTime={false}
                     showToday={false}
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     value={dayjs(payload.education[index]?.institutionName)}
                     onChange={(val) => {
                       onEducationChange('institutionName', val, index);
@@ -134,7 +138,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
                 </Form.Item>
 
                 <Button
-                  size='large'
+                  size={isMobile ? 'middle' : 'large'}
                   type='dashed'
                   onClick={() => remove(index)}
                   className='w-full mb-10'
@@ -145,7 +149,7 @@ const Education: React.FC<IProps> = ({ payload, setPayload }) => {
             ))}
 
             <Button
-              size='large'
+              size={isMobile ? 'middle' : 'large'}
               type='dashed'
               onClick={() => add()}
               className='w-full'

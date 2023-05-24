@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
+import { Form, InputNumber } from 'antd';
 import ImageUploader from 'rca/components/uploadImage';
 import { IRegisterPayload } from 'rca/components/register/stepper';
-import { Form, Input } from 'antd';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -9,6 +11,8 @@ interface IProps {
 }
 
 const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const handleImageFile = async (name: string, imgUrl: string) => {
     if (!imgUrl) return;
     setPayload((prev) => ({ ...prev, [name]: imgUrl }));
@@ -17,12 +21,13 @@ const Uploads: React.FC<IProps> = ({ payload, setPayload }) => {
   return (
     <Fragment>
       <Form.Item label='Aadhar Card Number' name='aadharCard'>
-        <Input
-          size='large'
+        <InputNumber
+          size={isMobile ? 'middle' : 'large'}
+          className='w-full'
           placeholder='Enter Aadhar Card Number'
           value={payload.aadharCard}
-          onChange={(e) =>
-            setPayload((p) => ({ ...p, aadharCard: e.target.value }))
+          onChange={(val) =>
+            setPayload((p) => ({ ...p, aadharCard: p.aadharCard || val || '' }))
           }
         />
       </Form.Item>

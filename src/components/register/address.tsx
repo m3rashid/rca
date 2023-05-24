@@ -1,6 +1,47 @@
-import { Checkbox, Form, Input, InputNumber, Typography } from 'antd';
+import { Checkbox, Form, Input, InputNumber, Select, Typography } from 'antd';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import React, { Fragment, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
+
+const indianStates = [
+  'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chhattisgarh',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jammu and Kashmir',
+  'Jharkhand',
+  'Karnataka',
+  'Kerala',
+  'Madhya Pradesh',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
+  'Odisha',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttarakhand',
+  'Uttar Pradesh',
+  'West Bengal',
+  'Andaman and Nicobar Islands',
+  'Chandigarh',
+  'Dadra and Nagar Haveli',
+  'Daman and Diu',
+  'Delhi',
+  'Lakshadweep',
+  'Puducherry',
+];
 
 interface IInnerProps {
   address: IRegisterPayload['correspondenceAddress'];
@@ -15,33 +56,17 @@ const AddressContainer: React.FC<IInnerProps> = ({
   name,
   disabled,
 }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   return (
     <Fragment>
-      <Form.Item
-        name={`${name}.state`}
-        label='State'
-        rules={[{ required: true }]}
-      >
+      <Form.Item name={`${name}.landmark`} label='Landmark'>
         <Input
           disabled={disabled}
-          size='large'
-          placeholder='Enter State'
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Locality Landmark'
           value={address.state}
-          onChange={(e) => onChange('state', e.target.value)}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name={`${name}.city`}
-        label='City'
-        rules={[{ required: true }]}
-      >
-        <Input
-          disabled={disabled}
-          size='large'
-          placeholder='Enter City'
-          value={address.city}
-          onChange={(e) => onChange('city', e.target.value)}
+          onChange={(e) => onChange('landmark', e.target.value)}
         />
       </Form.Item>
 
@@ -52,11 +77,54 @@ const AddressContainer: React.FC<IInnerProps> = ({
       >
         <InputNumber
           disabled={disabled}
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder='Postal Code'
           value={address.postalCode}
           className='w-full'
           onChange={(val) => onChange('postalCode', val)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name={`${name}.cityOrTown`}
+        label='City Or Town'
+        rules={[{ required: true }]}
+      >
+        <Input
+          disabled={disabled}
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter City Or Town'
+          value={address.city}
+          onChange={(e) => onChange('cityOrTown', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name={`${name}.district`}
+        label='district'
+        rules={[{ required: true }]}
+      >
+        <Input
+          disabled={disabled}
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter District'
+          value={address.state}
+          onChange={(e) => onChange('district', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name={`${name}.state`}
+        label='State'
+        rules={[{ required: true }]}
+      >
+        <Select
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter State'
+          value={address.state}
+          disabled={disabled}
+          onChange={(e) => onChange('state', e)}
+          options={indianStates.map((t) => ({ label: t, value: t }))}
         />
       </Form.Item>
     </Fragment>
@@ -120,12 +188,14 @@ const Address: React.FC<IProps> = ({ payload, setPayload }) => {
         Same as Correspondence Address
       </Typography.Text>
 
-      <AddressContainer
-        disabled={isSameAddress}
-        name='permanentAddress'
-        address={payload.permanentAddress}
-        onChange={onPermanentAddressChange}
-      />
+      {!isSameAddress && (
+        <AddressContainer
+          disabled={isSameAddress}
+          name='permanentAddress'
+          address={payload.permanentAddress}
+          onChange={onPermanentAddressChange}
+        />
+      )}
     </Fragment>
   );
 };

@@ -6,6 +6,8 @@ import { Form, Input, Button, Typography, message, Modal, Alert } from 'antd';
 import Head from 'next/head';
 import Loading from 'rca/components/loading';
 import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 const Auth: NextPage = () => {
   const router = useRouter();
@@ -13,6 +15,7 @@ const Auth: NextPage = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
   const [authType, setAuthType] = useState<'login' | 'register'>('login');
+  const { isMobile } = useRecoilValue(uiAtom);
 
   React.useEffect(() => {
     if (session) {
@@ -108,7 +111,7 @@ const Auth: NextPage = () => {
               name='name'
               rules={[{ required: true, message: 'Please enter your name' }]}
             >
-              <Input size='large' />
+              <Input size={isMobile ? 'middle' : 'large'} />
             </Form.Item>
           )}
 
@@ -120,7 +123,7 @@ const Auth: NextPage = () => {
               { type: 'email', message: 'Please enter a valid email' },
             ]}
           >
-            <Input size='large' />
+            <Input size={isMobile ? 'middle' : 'large'} />
           </Form.Item>
 
           <Form.Item
@@ -128,19 +131,27 @@ const Auth: NextPage = () => {
             name='password'
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password size='large' />
+            <Input.Password size={isMobile ? 'middle' : 'large'} />
           </Form.Item>
 
           <Form.Item>
             <div className='flex items-center justify-center gap-2'>
-              <Button type='primary' size='large' htmlType='submit'>
+              <Button
+                type='primary'
+                size={isMobile ? 'middle' : 'large'}
+                htmlType='submit'
+              >
                 {authType === 'register' ? 'Create Account' : 'Login'}
               </Button>
 
               <Button onClick={reset}>Reset</Button>
 
               {authType === 'login' && (
-                <Button size='large' type='link' onClick={forgotPassword}>
+                <Button
+                  size={isMobile ? 'middle' : 'large'}
+                  type='link'
+                  onClick={forgotPassword}
+                >
                   Forgot password
                 </Button>
               )}
@@ -151,7 +162,7 @@ const Auth: NextPage = () => {
         <div className='flex items-center justify-center gap-2'>
           {authType === 'register' ? (
             <Button
-              size='large'
+              size={isMobile ? 'middle' : 'large'}
               type='link'
               onClick={() => setAuthType('login')}
             >
@@ -159,7 +170,7 @@ const Auth: NextPage = () => {
             </Button>
           ) : (
             <Button
-              size='large'
+              size={isMobile ? 'middle' : 'large'}
               type='link'
               onClick={() => setAuthType('register')}
             >

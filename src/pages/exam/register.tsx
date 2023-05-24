@@ -29,6 +29,8 @@ import { NextPage } from 'next';
 import { IRegistration } from 'rca/models/registration';
 import { validateRegister } from 'rca/components/register/validate';
 import { ITestCenter } from 'rca/models/testCenter';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 type IProps = {
   registration: IRegistration | null;
@@ -45,6 +47,7 @@ const Register: NextPage<IProps> = (props) => {
     },
   });
   const [payload, setPayload] = useState<IRegisterPayload>(defaultPayload);
+  const { isMobile } = useRecoilValue(uiAtom);
 
   useEffect(() => {
     if (session.status === 'loading') return;
@@ -210,14 +213,14 @@ const Register: NextPage<IProps> = (props) => {
 
             <div className='flex justify-between gap-2 mt-10'>
               <Button
-                size='large'
+                size={isMobile ? 'middle' : 'large'}
                 disabled={payload.currentStep === 0}
                 onClick={goToPreviousStep}
               >
                 Previous
               </Button>
               <Button
-                size='large'
+                size={isMobile ? 'middle' : 'large'}
                 disabled={payload.currentStep === steps.length - 1}
                 onClick={goToNextStep}
               >

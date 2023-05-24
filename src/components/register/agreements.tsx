@@ -2,7 +2,9 @@ import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
 import axios from 'axios';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import { ITestCenter } from 'rca/models/testCenter';
+import { uiAtom } from 'rca/utils/atoms';
 import React, { Fragment, useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -11,6 +13,8 @@ interface IProps {
 
 const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
   const [testCentres, setTestCenters] = useState<ITestCenter[]>([]);
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const onChange = (name: string, value: boolean) => {
     setPayload((prev) => ({
       ...prev,
@@ -31,50 +35,61 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
 
   return (
     <Fragment>
-      <Form.Item
-        name='informationIsCorrect'
-        label='Information given by me is correct'
-      >
-        <Checkbox
-          onChange={(e) => onChange('informationIsCorrect', e.target.checked)}
-          checked={payload.agreeToTerms.informationIsCorrect}
-        />
-      </Form.Item>
+      <Checkbox
+        onChange={(e) => onChange('informationIsCorrect', e.target.checked)}
+        checked={payload.agreeToTerms.informationIsCorrect}
+      />
+      <Typography.Text className='ml-2'>
+        Information given by me is correct
+      </Typography.Text>
 
-      <Form.Item
-        name='rightToChange'
-        label='Any Details in the application can be changed by the university at any time'
-      >
-        <Checkbox
-          onChange={(e) => onChange('rightToChange', e.target.checked)}
-          checked={payload.agreeToTerms.rightToChange}
-        />
-      </Form.Item>
+      <br />
+      <br />
+
+      <Checkbox
+        onChange={(e) => onChange('rightToChange', e.target.checked)}
+        checked={payload.agreeToTerms.rightToChange}
+      />
+      <Typography.Text className='ml-2'>
+        Details in the exam can be changed by the Shibli RCA at any time
+      </Typography.Text>
+
+      <br />
+      <br />
 
       <Form.Item name='testCenter' label='Choose your Test Center'>
         <Select
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Select Your Test Center'
           options={testCentres.map((t: ITestCenter) => ({
             label: t.address,
             value: t._id,
           }))}
-          value={payload.testCenter as any}
+          {...(payload.testCenter ? { value: payload.testCenter } : {})}
           onChange={(value) =>
             setPayload((prev) => ({ ...prev, testCenter: value as any }))
           }
         />
         <Typography.Text type='danger'>
-          Test Centres are provisional and subject to change until you receive
-          the final admit card
+          Test Centres are provisional and are subject to change until you
+          receive the final admit card
         </Typography.Text>
       </Form.Item>
 
       <Form.Item className='w-full'>
-        <Button size='large' className='mr-2' onClick={() => {}}>
+        <Button
+          size={isMobile ? 'middle' : 'large'}
+          className='mr-2'
+          onClick={() => {}}
+        >
           Cancel
         </Button>
 
-        <Button type='primary' htmlType='submit' size='large'>
+        <Button
+          type='primary'
+          htmlType='submit'
+          size={isMobile ? 'middle' : 'large'}
+        >
           Register
         </Button>
       </Form.Item>

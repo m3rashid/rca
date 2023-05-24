@@ -3,13 +3,16 @@ import Head from 'next/head';
 import { NextPage } from 'next';
 import { UploadFile } from 'antd/es/upload';
 import { IGallery } from 'rca/models/gallery';
-import { galleryAtom } from 'rca/utils/atoms';
+import { galleryAtom, uiAtom } from 'rca/utils/atoms';
 import CustomTable from 'rca/components/table';
 import { Form, Image, Input, TableProps } from 'antd';
 import ImageUploader from 'rca/components/uploadImage';
 import AdminContainer from 'rca/components/adminContainer';
+import { useRecoilValue } from 'recoil';
 
 const Gallery: NextPage = () => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const columns: TableProps<IGallery>['columns'] = [
     {
       title: 'Image',
@@ -61,7 +64,7 @@ const Gallery: NextPage = () => {
                   { required: true, message: 'Please enter gallery name' },
                 ]}
               >
-                <Input size='large' />
+                <Input size={isMobile ? 'middle' : 'large'} />
               </Form.Item>
 
               <ImageUploader

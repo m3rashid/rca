@@ -14,7 +14,6 @@ export const validateRegister = (payload: any) => {
     'category',
     'photograph',
     'signature',
-    'aadharCard',
   ].forEach((t) => {
     // @ts-ignore
     if (!payload[t] || payload[t] === '')
@@ -22,7 +21,7 @@ export const validateRegister = (payload: any) => {
   });
 
   ['permanentAddress', 'correspondenceAddress'].forEach((t) => {
-    ['city', 'state', 'postalCode'].forEach((i) => {
+    ['postalCode', 'cityOrTown', 'district', 'state'].forEach((i) => {
       // @ts-ignore
       if (!payload[t][i] || payload[t][i] === '')
         errors.push(
@@ -35,7 +34,7 @@ export const validateRegister = (payload: any) => {
 
   if (payload.education.length > 0) {
     payload.education.forEach((t: any) => {
-      ['degree', 'percentage', 'board', 'passYear'].forEach((m) => {
+      ['education', 'passYear', 'percentage', 'boardOrUni'].forEach((m) => {
         // @ts-ignore
         if (!t[m] || t[m] === '')
           errors.push(

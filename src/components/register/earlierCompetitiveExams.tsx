@@ -1,6 +1,8 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import { IRegisterPayload } from 'rca/components/register/stepper';
+import { uiAtom } from 'rca/utils/atoms';
 import React, { Fragment } from 'react';
+import { useRecoilValue } from 'recoil';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -11,6 +13,8 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
   payload,
   setPayload,
 }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const onEarlierCompetitiveExamsChange = (
     name: string,
     value: any,
@@ -44,7 +48,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Exam Name'
                     value={payload.earlierCompetitiveExams[index]?.name}
                     onChange={(e) =>
@@ -63,7 +67,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
                   rules={[{ required: true }]}
                 >
                   <Input
-                    size='large'
+                    size={isMobile ? 'middle' : 'large'}
                     placeholder='Enter Exam Year'
                     value={payload.earlierCompetitiveExams[index]?.year}
                     onChange={(e) =>
@@ -104,7 +108,7 @@ const EarlierCompetitiveExamsContainer: React.FC<IProps> = ({
             ))}
 
             <Button
-              size='large'
+              size={isMobile ? 'middle' : 'large'}
               type='dashed'
               style={{ width: '100%' }}
               onClick={() => add()}

@@ -1,9 +1,12 @@
 import { Button, Form, Input, Typography } from 'antd';
 import { NextPage } from 'next';
 import Head from 'next/head';
+import { uiAtom } from 'rca/utils/atoms';
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 
 const ChangePassword: NextPage = () => {
+  const { isMobile } = useRecoilValue(uiAtom);
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
@@ -43,7 +46,7 @@ const ChangePassword: NextPage = () => {
             { required: true, message: 'Please enter your current password!' },
           ]}
         >
-          <Input.Password size='large' />
+          <Input.Password size={isMobile ? 'middle' : 'large'} />
         </Form.Item>
 
         <Form.Item
@@ -53,7 +56,7 @@ const ChangePassword: NextPage = () => {
             { required: true, message: 'Please enter your new password!' },
           ]}
         >
-          <Input.Password size='large' />
+          <Input.Password size={isMobile ? 'middle' : 'large'} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

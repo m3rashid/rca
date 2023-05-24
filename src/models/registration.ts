@@ -1,22 +1,21 @@
 import mongoose from 'mongoose';
 import { BaseModel } from 'rca/models';
 import { IUser } from 'rca/models/user';
-import { ITestCenter, TestCenter } from 'rca/models/testCenter';
+import { ITestCenter } from 'rca/models/testCenter';
 
 export interface IAddress {
   city: string;
   state: string;
+  district: string;
+  landMark: string;
   postalCode: string;
-  country: string;
 }
 
 export interface IEducation {
-  degree: string;
-  percentage: number;
-  division?: number;
-  board: string;
-  institutionName?: string;
+  education: string;
   passYear: number;
+  percentage: number;
+  boardOrUni: string;
 }
 
 export interface IEarlierCompetitiveExams {
@@ -50,17 +49,18 @@ export interface IRegistration extends BaseModel {
   // Static Assets
   photograph: string;
   signature: string;
-  aadharCard: string;
+  aadharCard?: string;
   lastSemesterCertificate?: string;
 }
 
 export const genders = ['M', 'F', 'O'] as const;
 
 const addressSchema = {
-  city: { type: String, required: true },
-  state: { type: String, required: true },
+  landmark: { type: String },
   postalCode: { type: String, required: true },
-  country: { type: String, default: 'India' },
+  cityOrTown: { type: String, required: true },
+  district: { type: String, required: true },
+  state: { type: String, required: true },
 };
 
 const registrationSchema = new mongoose.Schema<IRegistration>(
@@ -77,12 +77,10 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
     correspondenceAddress: addressSchema,
     education: [
       {
-        degree: { type: String, required: true },
-        percentage: { type: Number, required: true },
-        division: { type: Number },
-        board: { type: String, required: true },
-        institutionName: { type: String },
+        education: { type: String, required: true },
         passYear: { type: Number, required: true },
+        percentage: { type: Number, required: true },
+        boardOrUni: { type: String },
       },
     ],
     testCenter: {
@@ -100,7 +98,7 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
     registerComplete: { type: Boolean, default: false },
     photograph: { type: String, required: true },
     signature: { type: String, required: true },
-    aadharCard: { type: String, required: true },
+    aadharCard: { type: String },
     lastSemesterCertificate: { type: String },
     earlierCompetitiveExams: [
       {

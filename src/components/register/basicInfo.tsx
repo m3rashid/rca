@@ -1,7 +1,9 @@
 import { DatePicker, Form, Input, Select } from 'antd';
 import dayjs from 'dayjs';
 import { IRegisterPayload } from 'rca/components/register/stepper';
+import { uiAtom } from 'rca/utils/atoms';
 import React, { Fragment } from 'react';
+import { useRecoilValue } from 'recoil';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -9,6 +11,8 @@ interface IProps {
 }
 
 const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const onChange = (name: string, value: any) => {
     setPayload((prev) => ({ ...prev, [name]: value }));
   };
@@ -21,7 +25,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         rules={[{ required: true }]}
       >
         <Input
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder="Enter Father's name"
           value={payload.fatherName}
           onChange={(e) => onChange('fatherName', e.target.value)}
@@ -34,7 +38,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         rules={[{ required: true }]}
       >
         <Input
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder="Enter Mother's name"
           value={payload.motherName}
           onChange={(e) => onChange('motherName', e.target.value)}
@@ -46,7 +50,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           value={payload.gender}
           onChange={(val) => onChange('gender', val)}
           placeholder='Select Gender'
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           options={[
             { label: 'Male', value: 'M' },
             { label: 'Female', value: 'F' },
@@ -60,7 +64,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           value={payload.category}
           onChange={(val) => onChange('category', val)}
           placeholder='Select Category'
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           options={['GENERAL', 'SC', 'ST', 'OBC', 'PWD', 'GENERAL-EWS'].map(
             (t) => ({ label: t, value: t })
           )}
@@ -74,7 +78,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       >
         <DatePicker
           style={{ width: '100%' }}
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder='Enter Date of Birth'
           value={dayjs(payload.dateOfBirth)}
           onChange={(val) => onChange('dateOfBirth', val)}
@@ -88,7 +92,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       >
         <Input
           type='tel'
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder='Enter Mobile Number'
           value={payload.mobileNumber}
           onChange={(e) => onChange('mobileNumber', e.target.value)}
@@ -98,7 +102,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
       <Form.Item label='Phone Number' name='phoneNumber'>
         <Input
           type='tel'
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder='Enter Phone Number'
           value={payload.phoneNumber}
           onChange={(e) => onChange('phoneNumber', e.target.value)}

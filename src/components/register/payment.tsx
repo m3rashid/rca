@@ -1,6 +1,8 @@
 import { Form, Image, Input, QRCode, Typography } from 'antd';
 import React, { Fragment } from 'react';
 import { IRegisterPayload } from './stepper';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -8,6 +10,8 @@ interface IProps {
 }
 
 const Payment: React.FC<IProps> = ({ payload, setPayload }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   return (
     <Fragment>
       <Image
@@ -29,7 +33,7 @@ const Payment: React.FC<IProps> = ({ payload, setPayload }) => {
         rules={[{ required: true }]}
       >
         <Input
-          size='large'
+          size={isMobile ? 'middle' : 'large'}
           placeholder='Enter Transaction Id of your payment'
           value={payload.transactionId}
           onChange={(e) =>

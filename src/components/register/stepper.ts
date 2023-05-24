@@ -1,4 +1,3 @@
-import { FormInstance } from 'antd';
 import { IRegistration } from 'rca/models/registration';
 
 export type IRegisterPayload = Omit<IRegistration, 'user'> & {
@@ -90,13 +89,3 @@ export const defaultPayload: IRegisterPayload = {
   rollNumber: '',
   category: '',
 };
-
-const stepper = [
-  basicInfo,
-  addresses,
-  education,
-  earlierCompetitiveExams,
-  uploads,
-  { payment: false },
-  agreeToTerms,
-];

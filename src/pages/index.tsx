@@ -8,10 +8,14 @@ import MainCarousel from 'rca/components/mainCarousel';
 import Principles from 'rca/components/principles';
 import UserHeader from 'rca/components/userHeader';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 // import HomeCarousel from 'rca/components/homeCarousel';
 
 const Home = () => {
   const router = useRouter();
+  const { isMobile } = useRecoilValue(uiAtom);
+
   // const [{ events, gallery }, setState] = useState<{
   //   events: IEvent[];
   //   gallery: IGallery[];
@@ -58,7 +62,7 @@ const Home = () => {
 
         <div className='relative -top-[100px] flex items-center justify-center flex-col'>
           <Button
-            size='large'
+            size={isMobile ? 'middle' : 'large'}
             className='w-[250px] h-[60px]'
             type='primary'
             onClick={() => router.push('/exam/register')}

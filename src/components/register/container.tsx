@@ -9,6 +9,8 @@ import Agreements from 'rca/components/register/agreements';
 import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
 
 import { IRegisterPayload } from 'rca/components/register/stepper';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -16,6 +18,8 @@ interface IProps {
 }
 
 const RegisterContainer: React.FC<IProps> = ({ payload, setPayload }) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
   const handleRegister = async (values: any) => {
     console.log({ payload });
   };
@@ -58,14 +62,14 @@ const RegisterContainer: React.FC<IProps> = ({ payload, setPayload }) => {
         </Form>
         <div className='flex justify-between gap-2 mt-10'>
           <Button
-            size='large'
+            size={isMobile ? 'middle' : 'large'}
             disabled={payload.currentStep === 0}
             onClick={goToPreviousStep}
           >
             Previous
           </Button>
           <Button
-            size='large'
+            size={isMobile ? 'middle' : 'large'}
             disabled={payload.currentStep === steps.length - 1}
             onClick={goToNextStep}
           >

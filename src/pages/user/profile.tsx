@@ -1,14 +1,15 @@
 import { Button, Typography } from 'antd';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { Config } from 'rca/models/configs';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { useReactToPrint } from 'react-to-print';
 import AdminContainer from 'rca/components/adminContainer';
 import { IRegistration, Registration } from 'rca/models/registration';
 import mongoose from 'mongoose';
 import { ITestCenter, TestCenter } from 'rca/models/testCenter';
+import { useRouter } from 'next/router';
 const AdmitCardTemplate = dynamic(
   () => import('rca/components/admitCard/index'),
   {
@@ -34,10 +35,21 @@ interface IProps {
 const Profile: NextPage<IProps | null> = (props) => {
   const data: IProfileProps['data'] = {
     ...(props?.registration as IRegistration),
-    testCenter: props?.testCenter.address as any,
+    testCenter: props?.testCenter?.address as any,
     dateOfExam: props?.dateOfExam as string,
     timeOfExam: props?.timeOfExam as string,
   };
+
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log({ session, props });
+    if (!props || !props.registration || !props.registration.registerComplete) {
+      router.push('/exam/register');
+      return;
+    }
+  }, []);
 
   const printContainerRef = useRef(null);
   const printPdf = useReactToPrint({
@@ -78,6 +90,7 @@ export const getServerSideProps = async (ctx: any) => {
     // @ts-ignore
     user: new mongoose.Types.ObjectId(session.user?._id),
   }).populate('user');
+  if (!registration) return { props: {} };
 
   const testCenter = await TestCenter.findById(registration?.testCenter).lean();
 
