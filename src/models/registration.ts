@@ -35,7 +35,12 @@ export interface IRegistration extends BaseModel {
   phoneNumber?: string;
   permanentAddress: IAddress;
   correspondenceAddress: IAddress;
-  education: Array<IEducation>;
+  education: {
+    matriculation: IEducation;
+    intermediate: IEducation;
+    graduation: IEducation;
+    other?: IEducation;
+  };
   testCenter: ITestCenter; // ObjectId
   transactionId: string;
   earlierCompetitiveExams: Array<IEarlierCompetitiveExams>;
@@ -63,6 +68,13 @@ const addressSchema = {
   state: { type: String, required: true },
 };
 
+const educationSchema = {
+  education: { type: String, required: true },
+  passYear: { type: Number, required: true },
+  percentage: { type: Number, required: true },
+  boardOrUni: { type: String },
+};
+
 const registrationSchema = new mongoose.Schema<IRegistration>(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -75,14 +87,12 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
     phoneNumber: { type: String },
     permanentAddress: addressSchema,
     correspondenceAddress: addressSchema,
-    education: [
-      {
-        education: { type: String, required: true },
-        passYear: { type: Number, required: true },
-        percentage: { type: Number, required: true },
-        boardOrUni: { type: String },
-      },
-    ],
+    education: {
+      matriculation: educationSchema,
+      intermediate: educationSchema,
+      graduation: educationSchema,
+      other: educationSchema,
+    },
     testCenter: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'TestCenter',

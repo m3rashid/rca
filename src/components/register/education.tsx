@@ -1,9 +1,88 @@
-import { Button, DatePicker, Form, Input } from 'antd';
+import { Button, DatePicker, Form, Input, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import { uiAtom } from 'rca/utils/atoms';
 import React, { Fragment } from 'react';
 import { useRecoilValue } from 'recoil';
+
+interface IEducationContainerProps {
+  education: IRegisterPayload['education']['matriculation'];
+  onChange: (name: string, value: any) => void;
+  name: 'Matriculation' | 'Intermediate' | 'Graduation' | 'Other';
+  disabled: boolean;
+}
+
+const EducationContainer: React.FC<IEducationContainerProps> = ({
+  disabled,
+  education,
+  name,
+  onChange,
+}) => {
+  const { isMobile } = useRecoilValue(uiAtom);
+
+  return (
+    <Fragment>
+      <Form.Item
+        name={`${name}.education`}
+        label='Education'
+        rules={[{ required: true }]}
+      >
+        <Input
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Education'
+          value={education.education}
+          onChange={(e) => onChange('education', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name={`${name}.passYear`}
+        label='Pass Year'
+        rules={[{ required: true }]}
+      >
+        <DatePicker
+          placeholder='Enter Passing Year'
+          style={{ width: '100%' }}
+          showHour={false}
+          showMinute={false}
+          showNow={false}
+          showSecond={false}
+          showTime={false}
+          showToday={false}
+          size={isMobile ? 'middle' : 'large'}
+          value={dayjs(education.passYear)}
+          onChange={(val) => onChange('passYear', val)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name={`${name}.percentage`}
+        label='Percentage'
+        rules={[{ required: true }]}
+      >
+        <Input
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Percentage'
+          value={education.percentage}
+          onChange={(e) => onChange('percentage', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name={`${name}.boardOrUni`}
+        label='Board Or University'
+        rules={[{ required: true }]}
+      >
+        <Input
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Education Board Or University'
+          value={education.boardOrUni}
+          onChange={(e) => onChange('boardOrUni', e.target.value)}
+        />
+      </Form.Item>
+    </Fragment>
+  );
+};
 
 interface IProps {
   payload: IRegisterPayload;
@@ -11,154 +90,56 @@ interface IProps {
 }
 
 const Education: React.FC<IProps> = ({ payload, setPayload }) => {
-  const { isMobile } = useRecoilValue(uiAtom);
-
-  const onEducationChange = (name: string, value: any, index: number) => {
-    setPayload((prev) => ({
-      ...prev,
-      education: prev.education.map((edu, i) => {
-        if (i === index) {
-          return {
-            ...edu,
-            [name]: value,
-          };
-        }
-
-        return edu;
-      }),
-    }));
-  };
+  const onMatriculationChange = (name: string, value: string) => {};
+  const onIntermediateChange = (name: string, value: string) => {};
+  const onGraduationChange = (name: string, value: string) => {};
 
   return (
     <Fragment>
-      <Form.List name='education'>
-        {(fields, { add, remove }) => (
-          <Fragment>
-            {fields.map((field, index) => (
-              <Fragment key={field.key}>
-                <Form.Item
-                  name='degree'
-                  label='Degree'
-                  rules={[{ required: true }]}
-                >
-                  <Input
-                    size={isMobile ? 'middle' : 'large'}
-                    placeholder='Enter Degree'
-                    value={payload.education[index]?.degree}
-                    onChange={(e) => {
-                      onEducationChange('degree', e.target.value, index);
-                    }}
-                  />
-                </Form.Item>
+      <Typography.Title level={2}>
+        Matriculation (Class 10) details
+      </Typography.Title>
+      <EducationContainer
+        disabled={false}
+        education={payload.education.matriculation}
+        name='Matriculation'
+        onChange={onMatriculationChange}
+      />
 
-                <Form.Item
-                  name='percentage'
-                  label='Percentage'
-                  rules={[{ required: true }]}
-                >
-                  <Input
-                    size={isMobile ? 'middle' : 'large'}
-                    placeholder='Enter Degree'
-                    value={payload.education[index]?.percentage}
-                    onChange={(e) => {
-                      onEducationChange('percentage', e.target.value, index);
-                    }}
-                  />
-                </Form.Item>
+      <br />
+      <br />
 
-                <Form.Item
-                  name='division'
-                  label='Division'
-                  rules={[{ required: true }]}
-                >
-                  <Input
-                    size={isMobile ? 'middle' : 'large'}
-                    placeholder='Enter Division'
-                    value={payload.education[index]?.division}
-                    onChange={(e) => {
-                      onEducationChange('division', e.target.value, index);
-                    }}
-                  />
-                </Form.Item>
+      <Typography.Title level={2}>
+        Intermediate (Class 12) details
+      </Typography.Title>
+      <EducationContainer
+        disabled={false}
+        education={payload.education.intermediate}
+        name='Intermediate'
+        onChange={onIntermediateChange}
+      />
 
-                <Form.Item
-                  name='board'
-                  label='Board'
-                  rules={[{ required: true }]}
-                >
-                  <Input
-                    size={isMobile ? 'middle' : 'large'}
-                    placeholder='Enter Education Board'
-                    value={payload.education[index]?.board}
-                    onChange={(e) => {
-                      onEducationChange('board', e.target.value, index);
-                    }}
-                  />
-                </Form.Item>
+      <br />
+      <br />
 
-                <Form.Item
-                  name='institutionName'
-                  label='Institution Name'
-                  rules={[{ required: true }]}
-                >
-                  <Input
-                    size={isMobile ? 'middle' : 'large'}
-                    placeholder='Enter Institution Name'
-                    value={payload.education[index]?.institutionName}
-                    onChange={(e) => {
-                      onEducationChange(
-                        'institutionName',
-                        e.target.value,
-                        index
-                      );
-                    }}
-                  />
-                </Form.Item>
+      <Typography.Title level={2}>Graduation details</Typography.Title>
+      <EducationContainer
+        disabled={false}
+        education={payload.education.intermediate}
+        name='Graduation'
+        onChange={onGraduationChange}
+      />
 
-                <Form.Item
-                  name='passYear'
-                  label='Pass Year'
-                  rules={[{ required: true }]}
-                >
-                  <DatePicker
-                    placeholder='Enter Passing Year'
-                    style={{ width: '100%' }}
-                    showHour={false}
-                    showMinute={false}
-                    showNow={false}
-                    showSecond={false}
-                    showTime={false}
-                    showToday={false}
-                    size={isMobile ? 'middle' : 'large'}
-                    value={dayjs(payload.education[index]?.institutionName)}
-                    onChange={(val) => {
-                      onEducationChange('institutionName', val, index);
-                    }}
-                  />
-                </Form.Item>
+      <br />
+      <br />
 
-                <Button
-                  size={isMobile ? 'middle' : 'large'}
-                  type='dashed'
-                  onClick={() => remove(index)}
-                  className='w-full mb-10'
-                >
-                  Remove Education
-                </Button>
-              </Fragment>
-            ))}
-
-            <Button
-              size={isMobile ? 'middle' : 'large'}
-              type='dashed'
-              onClick={() => add()}
-              className='w-full'
-            >
-              Add Education
-            </Button>
-          </Fragment>
-        )}
-      </Form.List>
+      <Typography.Title level={2}>Other details</Typography.Title>
+      <EducationContainer
+        disabled={false}
+        education={payload.education.intermediate}
+        name='Graduation'
+        onChange={onGraduationChange}
+      />
     </Fragment>
   );
 };
