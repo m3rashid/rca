@@ -1,5 +1,7 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, message } from 'antd';
+import axios from 'axios';
 import { NextPage } from 'next';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { uiAtom } from 'rca/utils/atoms';
 import React from 'react';
@@ -8,13 +10,24 @@ import { useRecoilValue } from 'recoil';
 const ChangePassword: NextPage = () => {
   const { isMobile } = useRecoilValue(uiAtom);
   const [form] = Form.useForm();
+  const session = useSession();
 
   const onFinish = async (values: any) => {
-    console.log({ values });
+    try {
+      // @ts-ignore
+      const dataBody = { ...values, userId: session.data?.user?._id };
+      const { data } = await axios.post('/api/user/change-password', dataBody);
+      message.success(data.message || 'Data updated successfully');
+    } catch (err: any) {
+      message.error(
+        err?.response?.data?.message || 'Unable to change your password'
+      );
+    }
   };
 
   const onFinishFailed = async (errInfo: any) => {
     console.log({ errInfo });
+    message.error('An error occurred in changing your password');
   };
 
   return (
@@ -41,7 +54,7 @@ const ChangePassword: NextPage = () => {
       >
         <Form.Item
           label='Current Password'
-          name='current'
+          name='currentPwd'
           rules={[
             { required: true, message: 'Please enter your current password!' },
           ]}
@@ -51,7 +64,7 @@ const ChangePassword: NextPage = () => {
 
         <Form.Item
           label='New Password'
-          name='new'
+          name='newPwd'
           rules={[
             { required: true, message: 'Please enter your new password!' },
           ]}

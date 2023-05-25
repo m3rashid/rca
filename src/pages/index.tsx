@@ -1,9 +1,5 @@
-// import axios from 'axios';
 import Head from 'next/head';
 import { Button, Carousel, Typography } from 'antd';
-// import { IEvent } from 'rca/models/event';
-// import { Gallery, IGallery } from 'rca/models/gallery';
-// import { useEffect, useState } from 'react';
 import MainCarousel from 'rca/components/mainCarousel';
 import Principles from 'rca/components/principles';
 import UserHeader from 'rca/components/userHeader';
@@ -15,30 +11,6 @@ import { uiAtom } from 'rca/utils/atoms';
 const Home = () => {
   const router = useRouter();
   const { isMobile } = useRecoilValue(uiAtom);
-
-  // const [{ events, gallery }, setState] = useState<{
-  //   events: IEvent[];
-  //   gallery: IGallery[];
-  // }>({ events: [], gallery: [] });
-
-  // const getData = async () => {
-  //   const promises: Array<Promise<any>> = [];
-  //   promises.push(axios.get('/api/admin/events'));
-  //   promises.push(axios.get('/api/admin/gallery'));
-
-  //   const [allEvents, allGallery] = await Promise.all(promises);
-
-  //   return {
-  //     events: allEvents.data.error ? [] : allEvents.data.data,
-  //     gallery: allGallery.data.error ? [] : allGallery.data.data,
-  //   };
-  // };
-
-  // useEffect(() => {
-  //   getData()
-  //     .then((data) => setState(data))
-  //     .catch(console.log);
-  // }, []);
 
   return (
     <>
@@ -102,12 +74,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// export const getServerSideProps = async () => {
-//   const gallery = await Gallery.find({}).lean();
-//   return {
-//     props: {
-//       gallery: gallery || [],
-//     },
-//   };
-// };

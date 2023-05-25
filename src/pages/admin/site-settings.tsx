@@ -14,6 +14,11 @@ interface IConfig {
   label: string;
 }
 
+const splitCamelCase = (str: string) => {
+  const result = str.replace(/([A-Z])/g, ' $1');
+  return result.charAt(0).toUpperCase() + result.slice(1);
+};
+
 const Miscellaneous: React.FC<IProps> = () => {
   const { isMobile } = useRecoilValue(uiAtom);
   const [config, setConfig] = React.useState<IConfig[]>([]);
@@ -21,13 +26,11 @@ const Miscellaneous: React.FC<IProps> = () => {
   useEffect(() => {
     const getSiteSettings = async () => {
       const response = await axios.get('/api/admin/config', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
-
       return response.data.data;
     };
+
     getSiteSettings().then((data) => {
       setConfig(
         data.map((item: any) => {
@@ -41,27 +44,15 @@ const Miscellaneous: React.FC<IProps> = () => {
     });
   }, []);
 
-  const splitCamelCase = (str: string) => {
-    const result = str.replace(/([A-Z])/g, ' $1');
-    return result.charAt(0).toUpperCase() + result.slice(1);
-  };
-
   const onSubmitConfig = async ({ name, value }: IConfig) => {
     try {
       await axios.put(
         '/api/admin/config',
-        {
-          name: name,
-          value: value,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        { name: name, value: value },
+        { headers: { 'Content-Type': 'application/json' } }
       );
       message.success('Config updated successfully');
-    } catch (e) {
+    } catch (err) {
       message.error('Config update failed');
     }
   };
@@ -79,9 +70,7 @@ const Miscellaneous: React.FC<IProps> = () => {
                   { required: true, message: `Please input ${item.label}` },
                 ]}
                 formInitialValue={item.value}
-                onSubmit={() => {
-                  onSubmitConfig(item).then();
-                }}
+                onSubmit={() => onSubmitConfig(item)}
                 onError={() => {}}
               >
                 <Input.TextArea

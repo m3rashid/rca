@@ -116,9 +116,7 @@ export default function CustomTable<RecordType = unknown>({
       method: 'POST',
       data: formData,
       url: '/api/admin/upload',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
     return data;
   };
@@ -165,7 +163,7 @@ export default function CustomTable<RecordType = unknown>({
     {
       title: 'Sl. No.',
       render: (_, __, index) => `${index + 1}.`,
-      width: 70,
+      width: 100,
       align: 'center',
     },
     ...tableColumns,

@@ -1,38 +1,54 @@
-import { Col, Row } from "antd";
-import React from "react";
+import { Col, Row } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-const principles = [
-  {
-    title: "Our Mission",
-    color: "#737495",
-    content:
-      "To identify and guide students who can contribute towards nation building through civil services and help them inculcate Indian values and ethos.",
-  },
-  {
-    title: "Our Vision",
-    color: "#68a8ad",
-    content:
-      "To make sure that innovative and imaginative persons including those from disadvantaged segments of Indian society should join the civil services.",
-  },
-  {
-    title: "Our Values",
-    color: "#6c8672",
-    content:
-      "In order to fulfill the purpose of our organization we promote and practice the following values: Respect, Integrity, Diligence and Motivation.",
-  },
-  {
-    title: "Our Philosophy",
-    color: "#f17d80",
-    content:
-      "Education is the best gift that parents can give.We believe in educating a child during his/her various stages of development while being aware of its motivations and changing interests.",
-  },
-];
+const colors = {
+  mission: '#737495',
+  vision: '#68a8ad',
+  values: '#6c8672',
+  philosophy: '#f17d80',
+};
+
+const namesArr = Object.keys(colors);
+
+interface IPrinciple {
+  name: string;
+  value: string;
+  color: string;
+}
 
 const Principles = () => {
+  const [principles, setPrinciples] = useState<Array<IPrinciple>>([]);
+
+  useEffect(() => {
+    const getConfig = async () => {
+      const { data } = await axios.get('/api/admin/config');
+      const newConfigs = data?.data.reduce(
+        (acc: Array<IPrinciple>, curr: any) => {
+          if (namesArr.includes(curr.name)) {
+            return [
+              ...acc,
+              {
+                name: curr.name,
+                value: curr.value,
+                // @ts-ignore
+                color: colors[curr.name],
+              },
+            ];
+          }
+          return acc;
+        },
+        []
+      );
+      setPrinciples(newConfigs);
+    };
+    getConfig().then().catch(console.log);
+  }, []);
+
   return (
     <Row
-      justify="center"
-      className="lg:py-12 md:px-8 xl:px-32 md:relative md:-top-[100px] md:z-10 px-4"
+      justify='center'
+      className='lg:py-12 md:px-8 xl:px-32 md:relative md:-top-[100px] md:z-10 px-4'
     >
       {principles.map((item, index) => {
         return (
@@ -41,13 +57,13 @@ const Principles = () => {
             lg={6}
             style={{
               backgroundColor: item.color,
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
             }}
-            className="p-12 py-16 text-center text-white items-center justify-center"
+            className='p-12 py-16 text-center text-white items-center justify-center'
           >
-            <h1 className="font-bold">{item.title}</h1>
-            <p className="text-base">{item.content}</p>
+            <h1 className='font-bold'>{item.name}</h1>
+            <p className='text-base'>{item.value}</p>
           </Col>
         );
       })}

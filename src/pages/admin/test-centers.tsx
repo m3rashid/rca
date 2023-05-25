@@ -10,7 +10,6 @@ interface IProps {}
 
 const TestCentres: React.FC<IProps> = () => {
   const columns: TableProps<ITestCenter>['columns'] = [
-    { title: 'Code Name', dataIndex: 'codeName' },
     { title: 'Address', dataIndex: 'address' },
     { title: 'Mobile Number', dataIndex: 'mobileNumber' },
     { title: 'Email', dataIndex: 'email' },

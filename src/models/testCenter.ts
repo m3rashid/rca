@@ -8,15 +8,11 @@ export interface ITestCenter extends BaseModel {
   email?: string;
 }
 
-const testCenterSchema = new mongoose.Schema<ITestCenter>(
-  {
-    codeName: { type: String, required: true },
-    address: { type: String, required: true },
-    mobileNumber: { type: String },
-    email: { type: String },
-  },
-  { timestamps: true }
-);
+const testCenterSchema = new mongoose.Schema<ITestCenter>({
+  address: { type: String, required: true },
+  mobileNumber: { type: String },
+  email: { type: String },
+});
 
 export const TestCenter =
   mongoose.models.TestCenter ||
