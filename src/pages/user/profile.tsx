@@ -34,7 +34,6 @@ const Profile = () => {
   useEffect(() => {
     const getData = async () => {
       const { data } = await axios.post('/api/user/get-profile');
-      console.log({ data });
       if (!data || !data.registration || !data.registration.registerComplete) {
         router.push('/exam/register');
         return;
