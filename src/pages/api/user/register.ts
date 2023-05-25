@@ -16,9 +16,9 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const count = await Registration.countDocuments();
-    const rollNumber = `RCA-${String(new Date().getFullYear())}-${(
+    const rollNumber = `RCA-${String(new Date().getFullYear())}-${String(
       count + 1
-    ).toFixed(4)}`;
+    ).padStart(4, '0')}`;
 
     await connectDb();
     const registration = new Registration({
