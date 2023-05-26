@@ -115,7 +115,10 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
 
       <Form.Item label='Language Of Exam' name='languageOfExam'>
         <Select
-          options={['English', 'Hindi'].map((t) => ({ label: t, value: t }))}
+          options={['English', 'Hindi', 'Urdu'].map((t) => ({
+            label: t,
+            value: t,
+          }))}
           value={payload.languageOfExam}
           onChange={(val) => onChange('languageOfExam', val)}
           placeholder='Select Language Of Exam'
