@@ -27,3 +27,5 @@ export const camelCaseToSentenceCase = (text: string) => {
     }, [])
     .join(' ');
 };
+
+export const getOtp = () => Math.floor(100000 + Math.random() * 900000);

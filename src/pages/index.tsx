@@ -23,7 +23,6 @@ const Home = () => {
           {[
             '/home1.jpeg',
             '/home2.jpeg',
-            '/home3.jpeg',
             '/home4.jpeg',
             '/home5.jpeg',
             '/home6.jpeg',

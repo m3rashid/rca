@@ -3,7 +3,7 @@ import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { uiAtom } from 'rca/utils/atoms';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 interface IProps {}
@@ -22,7 +22,11 @@ const ForgotPassword: React.FC<IProps> = () => {
         return;
       }
       try {
-        await axios.post('/api/user/forgot-password');
+        // send mail
+        await axios.post('/api/user/forgot-password', {
+          email: values.email,
+          step: 1,
+        });
       } catch (err) {
         console.log(err);
         message.error(
@@ -33,12 +37,17 @@ const ForgotPassword: React.FC<IProps> = () => {
       return;
     }
     console.log(values);
-    if (!values.email || !values.otp) {
-      message.error('Email is required');
-      message.error('OTP is required');
+    if (!values.email || !values.otp || !values.password) {
+      message.error('All fields are required');
       return;
     }
     try {
+      await axios.post('/api/user/forgot-password', {
+        email: values.email,
+        otp: values.otp,
+        password: values.password,
+        step: 2,
+      });
     } catch (err) {
       console.log(err);
       message.error(
@@ -87,21 +96,36 @@ const ForgotPassword: React.FC<IProps> = () => {
           </Form.Item>
 
           {isStep2 ? (
-            <Form.Item
-              label='OTP'
-              name='otp'
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter OTP received on your email',
-                },
-              ]}
-            >
-              <Input
-                placeholder='Enter the OTP received'
-                size={isMobile ? 'middle' : 'large'}
-              />
-            </Form.Item>
+            <Fragment>
+              <Form.Item
+                label='OTP'
+                name='otp'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter OTP received on your email',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder='Enter the OTP received'
+                  size={isMobile ? 'middle' : 'large'}
+                />
+              </Form.Item>
+
+              <Form.Item
+                label='Password'
+                name='password'
+                rules={[
+                  { required: true, message: 'Please input your password!' },
+                ]}
+              >
+                <Input.Password
+                  placeholder='Enter Password'
+                  size={isMobile ? 'middle' : 'large'}
+                />
+              </Form.Item>
+            </Fragment>
           ) : null}
 
           <Form.Item>
