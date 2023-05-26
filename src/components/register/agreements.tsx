@@ -1,10 +1,10 @@
-import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
 import axios from 'axios';
-import { IRegisterPayload } from 'rca/components/register/stepper';
-import { ITestCenter } from 'rca/models/testCenter';
-import { uiAtom } from 'rca/utils/atoms';
-import React, { Fragment, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
+import { ITestCenter } from 'rca/models/testCenter';
+import React, { Fragment, useEffect, useState } from 'react';
+import { IRegisterPayload } from 'rca/components/register/stepper';
+import { Checkbox, Form, Select, Typography } from 'antd';
 
 interface IProps {
   payload: IRegisterPayload;
@@ -74,24 +74,6 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
           Test Centres are provisional and are subject to change until you
           receive the final admit card
         </Typography.Text>
-      </Form.Item>
-
-      <Form.Item className='w-full'>
-        <Button
-          size={isMobile ? 'middle' : 'large'}
-          className='mr-2'
-          onClick={() => {}}
-        >
-          Cancel
-        </Button>
-
-        <Button
-          type='primary'
-          htmlType='submit'
-          size={isMobile ? 'middle' : 'large'}
-        >
-          Register
-        </Button>
       </Form.Item>
     </Fragment>
   );

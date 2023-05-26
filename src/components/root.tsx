@@ -52,14 +52,9 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
     session.status === 'authenticated' && session.data.user?.type === 'ADMIN'
       ? [
           {
-            key: 'current-affairs',
-            label: 'Admin - Current Affairs',
-            onClick: () => router.push('/admin/current-affairs'),
-          },
-          {
-            key: 'events',
-            label: 'Admin - Events',
-            onClick: () => router.push('/admin/events'),
+            key: 'registration',
+            label: 'Admin - Registrations',
+            onClick: () => router.push('/admin/registration'),
           },
           {
             key: 'gallery',
@@ -67,9 +62,9 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
             onClick: () => router.push('/admin/gallery'),
           },
           {
-            key: 'site-settings',
-            label: 'Admin - Site Settings',
-            onClick: () => router.push('/admin/site-settings'),
+            key: 'events',
+            label: 'Admin - Events',
+            onClick: () => router.push('/admin/events'),
           },
           {
             key: 'notices',
@@ -80,6 +75,16 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
             key: 'test-centres',
             label: 'Admin - Test Centers',
             onClick: () => router.push('/admin/test-centers'),
+          },
+          {
+            key: 'current-affairs',
+            label: 'Admin - Current Affairs',
+            onClick: () => router.push('/admin/current-affairs'),
+          },
+          {
+            key: 'site-settings',
+            label: 'Admin - Site Settings',
+            onClick: () => router.push('/admin/site-settings'),
           },
         ]
       : [];

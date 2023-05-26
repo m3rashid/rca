@@ -1,4 +1,3 @@
-import { IGallery } from 'rca/models/gallery';
 import { INotice, Notice } from 'rca/models/notice';
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDb from 'rca/models';

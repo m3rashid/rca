@@ -21,7 +21,6 @@ const ContactUs: React.FC<IProps> = () => {
 
           <Typography.Title level={2}>Contacts</Typography.Title>
           <p>8655835557</p>
-          <p>7042003729</p>
         </div>
       </UserHeader>
     </>

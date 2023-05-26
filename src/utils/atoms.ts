@@ -1,9 +1,10 @@
-import { IEvent } from 'rca/models/event';
-import { IGallery } from 'rca/models/gallery';
-import { IUser } from 'rca/models/user';
 import { atom } from 'recoil';
-import { INotice } from "rca/models/notice";
-import { ITestCenter } from "rca/models/testCenter";
+import { IUser } from 'rca/models/user';
+import { IEvent } from 'rca/models/event';
+import { INotice } from 'rca/models/notice';
+import { IGallery } from 'rca/models/gallery';
+import { ITestCenter } from 'rca/models/testCenter';
+import { IRegistration } from 'rca/models/registration';
 
 export const usersAtom = atom<Array<Partial<IUser>>>({
   key: 'users',
@@ -21,13 +22,13 @@ export const galleryAtom = atom<Array<Partial<IGallery>>>({
 });
 
 export const noticeAtom = atom<Array<Partial<INotice>>>({
-    key: 'notice',
-    default: [],
+  key: 'notice',
+  default: [],
 });
 
 export const testCenterAtom = atom<Array<Partial<ITestCenter>>>({
-    key: 'testCenter',
-    default: [],
+  key: 'testCenter',
+  default: [],
 });
 
 export interface IUi {
@@ -39,4 +40,9 @@ export const uiAtom = atom<IUi>({
   default: {
     isMobile: true,
   },
+});
+
+export const registrationAtom = atom<Array<Partial<IRegistration>>>({
+  key: 'registration',
+  default: [],
 });

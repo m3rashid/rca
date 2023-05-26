@@ -19,6 +19,11 @@ const AdminContainer: React.FC<IProps> = ({ children }) => {
 
   const subHeaderItems: MenuProps['items'] = [
     {
+      key: 'registration',
+      label: 'Registrations',
+      onClick: () => router.push('/admin/registration'),
+    },
+    {
       key: 'gallery',
       label: 'Gallery',
       onClick: () => router.push('/admin/gallery'),

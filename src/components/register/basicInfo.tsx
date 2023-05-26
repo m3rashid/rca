@@ -65,9 +65,13 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           onChange={(val) => onChange('category', val)}
           placeholder='Select Category'
           size={isMobile ? 'middle' : 'large'}
-          options={['GENERAL', 'SC', 'ST', 'OBC', 'PWD', 'GENERAL-EWS'].map(
-            (t) => ({ label: t, value: t })
-          )}
+          options={[
+            'MUSLIM_GENERAL',
+            'MUSLIM_ST',
+            'MUSLIM_OBC',
+            'MUSLIM_EWS',
+            'PWD',
+          ].map((t) => ({ label: t, value: t }))}
         />
       </Form.Item>
 
@@ -106,6 +110,16 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           placeholder='Enter Phone Number'
           value={payload.phoneNumber}
           onChange={(e) => onChange('phoneNumber', e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label='Language Of Exam' name='languageOfExam'>
+        <Select
+          options={['English', 'Hindi'].map((t) => ({ label: t, value: t }))}
+          value={payload.languageOfExam}
+          onChange={(val) => onChange('languageOfExam', val)}
+          placeholder='Select Language Of Exam'
+          size={isMobile ? 'middle' : 'large'}
         />
       </Form.Item>
     </Fragment>

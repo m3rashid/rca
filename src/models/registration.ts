@@ -41,6 +41,7 @@ export interface IRegistration extends BaseModel {
     graduation: IEducation;
     other: IEducation;
   };
+  languageOfExam: string;
   testCenter: ITestCenter; // ObjectId
   transactionId: string;
   earlierCompetitiveExams: Array<IEarlierCompetitiveExams>;
@@ -108,6 +109,7 @@ const registrationSchema = new mongoose.Schema<IRegistration>(
       informationIsCorrect: { type: Boolean, required: true },
       rightToChange: { type: Boolean, required: true },
     },
+    languageOfExam: { type: String, required: true },
     category: { type: String, required: true },
     rollNumber: { type: String },
     registerComplete: { type: Boolean, default: false },

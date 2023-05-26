@@ -1,5 +1,6 @@
 import {
   BookOutlined,
+  CheckCircleOutlined,
   DollarCircleOutlined,
   FileImageOutlined,
   HomeOutlined,
@@ -7,30 +8,31 @@ import {
   ReconciliationOutlined,
   SolutionOutlined,
 } from '@ant-design/icons';
+import axios from 'axios';
 import Head from 'next/head';
+import { NextPage } from 'next';
+import { useRecoilValue } from 'recoil';
 import { useRouter } from 'next/router';
-import { Button, Form, message, Steps } from 'antd';
+import { uiAtom } from 'rca/utils/atoms';
 import { useSession } from 'next-auth/react';
+import { Button, Form, message, Steps } from 'antd';
 import React, { Fragment, useEffect, useState } from 'react';
 
 import {
   defaultPayload,
   IRegisterPayload,
 } from 'rca/components/register/stepper';
+import { ITestCenter } from 'rca/models/testCenter';
 import Address from 'rca/components/register/address';
 import Uploads from 'rca/components/register/uploads';
 import Payment from 'rca/components/register/payment';
+import { IRegistration } from 'rca/models/registration';
 import Education from 'rca/components/register/education';
 import BasicInfo from 'rca/components/register/basicInfo';
 import Agreements from 'rca/components/register/agreements';
-import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
-import axios from 'axios';
-import { NextPage } from 'next';
-import { IRegistration } from 'rca/models/registration';
+import Confirmation from 'rca/components/register/confirmation';
 import { validateRegister } from 'rca/components/register/validate';
-import { ITestCenter } from 'rca/models/testCenter';
-import { useRecoilValue } from 'recoil';
-import { uiAtom } from 'rca/utils/atoms';
+import EarlierCompetitiveExamsContainer from 'rca/components/register/earlierCompetitiveExams';
 
 type IProps = {
   registration: IRegistration | null;
@@ -96,6 +98,7 @@ const Register: NextPage<IProps> = (props) => {
     <Uploads payload={payload} setPayload={setPayload} />,
     <Payment payload={payload} setPayload={setPayload} />,
     <Agreements payload={payload} setPayload={setPayload} />,
+    <Confirmation payload={payload} />,
   ];
 
   const handleRegister = async () => {
@@ -192,11 +195,18 @@ const Register: NextPage<IProps> = (props) => {
                 onClick: setStep(5),
               },
               {
-                title: 'Agreement',
+                title: 'Terms and Conditions',
                 icon: <SolutionOutlined />,
                 subTitle: '',
                 style: commonStepStyles,
                 onClick: setStep(6),
+              },
+              {
+                title: 'Confirmation',
+                icon: <CheckCircleOutlined />,
+                subTitle: '',
+                style: commonStepStyles,
+                onClick: setStep(7),
               },
             ]}
           />
@@ -211,22 +221,24 @@ const Register: NextPage<IProps> = (props) => {
           >
             {steps[payload.currentStep]}
 
-            <div className='flex justify-between gap-2 mt-10'>
-              <Button
-                size={isMobile ? 'middle' : 'large'}
-                disabled={payload.currentStep === 0}
-                onClick={goToPreviousStep}
-              >
-                Previous
-              </Button>
-              <Button
-                size={isMobile ? 'middle' : 'large'}
-                disabled={payload.currentStep === steps.length - 1}
-                onClick={goToNextStep}
-              >
-                Next
-              </Button>
-            </div>
+            {payload.currentStep !== steps.length - 1 ? (
+              <div className='flex justify-between gap-2 mt-10'>
+                <Button
+                  size={isMobile ? 'middle' : 'large'}
+                  disabled={payload.currentStep === 0}
+                  onClick={goToPreviousStep}
+                >
+                  Previous
+                </Button>
+                <Button
+                  size={isMobile ? 'middle' : 'large'}
+                  disabled={payload.currentStep === steps.length - 1}
+                  onClick={goToNextStep}
+                >
+                  Next
+                </Button>
+              </div>
+            ) : null}
           </Form>
         </div>
       </div>

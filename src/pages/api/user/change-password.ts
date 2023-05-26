@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import connectDb from 'rca/models';
-import { IUser, User } from 'rca/models/user';
+import { User } from 'rca/models/user';
 import { compareHash } from 'rca/utils/auth';
 import { getHash } from 'rca/utils/auth';
 
