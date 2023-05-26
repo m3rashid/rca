@@ -36,12 +36,7 @@ export const validateRegister = (payload: any) => {
   });
 
   Object.values(payload.education).forEach((value: any) => {
-    if (
-      !value.education ||
-      !value.passYear ||
-      !value.percentage ||
-      !value.boardOrUni
-    ) {
+    if (!value.passYear || !value.percentage || !value.boardOrUni) {
       errors.push(
         `All fields in ${camelCaseToSentenceCase('education')} is required`
       );
