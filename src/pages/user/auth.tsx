@@ -73,7 +73,9 @@ const Auth: NextPage = () => {
     console.log({ errorInfo });
   };
 
-  const forgotPassword = () => {};
+  const forgotPassword = () => {
+    router.push('/user/forgot-password');
+  };
 
   if (loading) return <Loading loading={loading} />;
 
@@ -111,7 +113,10 @@ const Auth: NextPage = () => {
               name='name'
               rules={[{ required: true, message: 'Please enter your name' }]}
             >
-              <Input size={isMobile ? 'middle' : 'large'} />
+              <Input
+                placeholder='Enter your Name'
+                size={isMobile ? 'middle' : 'large'}
+              />
             </Form.Item>
           )}
 
@@ -123,7 +128,10 @@ const Auth: NextPage = () => {
               { type: 'email', message: 'Please enter a valid email' },
             ]}
           >
-            <Input size={isMobile ? 'middle' : 'large'} />
+            <Input
+              placeholder='Enter your Email'
+              size={isMobile ? 'middle' : 'large'}
+            />
           </Form.Item>
 
           <Form.Item
@@ -131,7 +139,10 @@ const Auth: NextPage = () => {
             name='password'
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password size={isMobile ? 'middle' : 'large'} />
+            <Input.Password
+              placeholder='Enter Password'
+              size={isMobile ? 'middle' : 'large'}
+            />
           </Form.Item>
 
           <Form.Item>
