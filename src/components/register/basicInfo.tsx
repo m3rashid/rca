@@ -2,6 +2,7 @@ import { DatePicker, Form, Input, Select } from 'antd';
 import dayjs from 'dayjs';
 import { IRegisterPayload } from 'rca/components/register/stepper';
 import { uiAtom } from 'rca/utils/atoms';
+import { toSentenceCase } from 'rca/utils/strings';
 import React, { Fragment } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -71,7 +72,7 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
             'MUSLIM_OBC',
             'MUSLIM_EWS',
             'PWD',
-          ].map((t) => ({ label: t, value: t }))}
+          ].map((t) => ({ label: toSentenceCase(t), value: t }))}
         />
       </Form.Item>
 

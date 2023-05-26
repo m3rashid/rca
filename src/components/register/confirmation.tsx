@@ -50,24 +50,28 @@ const Confirmation: React.FC<IProps> = ({ payload }) => {
       <Typography.Title level={3}>Addresses</Typography.Title>
       <Typography.Title level={5}>Correspondence Address</Typography.Title>
       <Descriptions column={{ xs: 1, sm: 1, md: 1 }}>
-        {['city', 'district', 'landMark', 'postalCode', 'state'].map((t) => (
-          <Descriptions.Item label={camelCaseToSentenceCase(t)}>
-            {/* @ts-ignore */}
-            {payload.correspondenceAddress[t]}
-          </Descriptions.Item>
-        ))}
+        {['cityOrTown', 'district', 'landmark', 'postalCode', 'state'].map(
+          (t) => (
+            <Descriptions.Item label={camelCaseToSentenceCase(t)}>
+              {/* @ts-ignore */}
+              {payload.correspondenceAddress[t]}
+            </Descriptions.Item>
+          )
+        )}
       </Descriptions>
 
       <br />
 
       <Typography.Title level={5}>Permanent Address</Typography.Title>
       <Descriptions column={{ xs: 1, sm: 1, md: 1 }}>
-        {['city', 'district', 'landMark', 'postalCode', 'state'].map((t) => (
-          <Descriptions.Item label={camelCaseToSentenceCase(t)}>
-            {/* @ts-ignore */}
-            {payload.permanentAddress[t]}
-          </Descriptions.Item>
-        ))}
+        {['cityOrTown', 'district', 'landmark', 'postalCode', 'state'].map(
+          (t) => (
+            <Descriptions.Item label={camelCaseToSentenceCase(t)}>
+              {/* @ts-ignore */}
+              {payload.permanentAddress[t]}
+            </Descriptions.Item>
+          )
+        )}
       </Descriptions>
 
       <br />
@@ -76,7 +80,7 @@ const Confirmation: React.FC<IProps> = ({ payload }) => {
       <Typography.Title level={3}>Education</Typography.Title>
       <Typography.Title level={5}>Matriculation</Typography.Title>
       <Descriptions column={{ xs: 1, sm: 1, md: 1 }}>
-        {['boardOrUni', 'education', 'percentage', 'passYear'].map((t) => (
+        {['boardOrUni', 'percentage', 'passYear'].map((t) => (
           <Descriptions.Item label={camelCaseToSentenceCase(t)}>
             {/* @ts-ignore */}
             {payload.education.matriculation[t]}
@@ -88,7 +92,7 @@ const Confirmation: React.FC<IProps> = ({ payload }) => {
 
       <Typography.Title level={5}>Intermediate</Typography.Title>
       <Descriptions column={{ xs: 1, sm: 1, md: 1 }}>
-        {['boardOrUni', 'education', 'percentage', 'passYear'].map((t) => (
+        {['boardOrUni', 'percentage', 'passYear'].map((t) => (
           <Descriptions.Item label={camelCaseToSentenceCase(t)}>
             {/* @ts-ignore */}
             {payload.education.intermediate[t]}
@@ -100,7 +104,7 @@ const Confirmation: React.FC<IProps> = ({ payload }) => {
 
       <Typography.Title level={5}>Graduation</Typography.Title>
       <Descriptions column={{ xs: 1, sm: 1, md: 1 }}>
-        {['boardOrUni', 'education', 'percentage', 'passYear'].map((t) => (
+        {['boardOrUni', 'percentage', 'passYear'].map((t) => (
           <Descriptions.Item label={camelCaseToSentenceCase(t)}>
             {/* @ts-ignore */}
             {payload.education.graduation[t]}
@@ -114,7 +118,7 @@ const Confirmation: React.FC<IProps> = ({ payload }) => {
         <Fragment>
           <Typography.Title level={5}>Other</Typography.Title>
           <Descriptions column={{ xs: 1, sm: 1, md: 1 }}>
-            {['boardOrUni', 'education', 'percentage', 'passYear'].map((t) => (
+            {['boardOrUni', 'percentage', 'passYear'].map((t) => (
               <Descriptions.Item label={camelCaseToSentenceCase(t)}>
                 {/* @ts-ignore */}
                 {payload.education.other[t]}

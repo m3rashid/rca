@@ -148,6 +148,14 @@ const ForgotPassword: React.FC<IProps> = () => {
               </Button>
             </div>
           </Form.Item>
+
+          {!isStep2 ? (
+            <div className='flex items-center justify-center'>
+              <Button type='link' onClick={() => setIsStep2(true)}>
+                I already have an OTP
+              </Button>
+            </div>
+          ) : null}
         </Form>
 
         <div className='flex items-center justify-center gap-2'>
