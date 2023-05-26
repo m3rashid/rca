@@ -11,7 +11,24 @@ import AdminContainer from 'rca/components/adminContainer';
 interface IProps {}
 
 const Registration: React.FC<IProps> = () => {
-  const columns: TableProps<IRegistration>['columns'] = [];
+  const columns: TableProps<IRegistration>['columns'] = [
+    {
+      title: 'Name',
+      dataIndex: 'user',
+      key: 'name',
+      render: (user) => user.name,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'user',
+      key: 'email',
+      render: (user) => user.email,
+    },
+    { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    { title: 'Roll Number', dataIndex: 'rollNumber', key: 'rollNumber' },
+    { title: 'Category', dataIndex: 'category', key: 'category' },
+    { title: 'Mobile Number', dataIndex: 'mobileNumber', key: 'mobileNumber' },
+  ];
   const [registrations, setRegistrations] = useRecoilState(registrationAtom);
 
   useEffect(() => {
@@ -31,7 +48,7 @@ const Registration: React.FC<IProps> = () => {
 
       <div className='m-4 bg-white rounded-md shadow-md'>
         <CustomTable<IRegistration>
-          tableTitle='Registration'
+          tableTitle='Registrations'
           endpoint={{
             get: '/api/admin/registration',
             post: '/api/admin/registration',
@@ -39,7 +56,7 @@ const Registration: React.FC<IProps> = () => {
             delete: '/api/admin/registration',
           }}
           tableColumns={columns}
-          addButtonLabel='Add Event'
+          // addButtonLabel='Add Event'
           recoilAtom={registrationAtom}
           AddFormInner={<></>}
         />

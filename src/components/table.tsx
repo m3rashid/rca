@@ -28,7 +28,7 @@ export type FormResponseError = {
 
 export type ICustomTableProps<RecordType> = TableProps<RecordType> & {
   tableColumns: TableProps<RecordType>['columns'];
-  addButtonLabel: string;
+  addButtonLabel?: string;
   endpoint: {
     get: string;
     post: string;
@@ -226,7 +226,7 @@ export default function CustomTable<RecordType = unknown>({
   };
 
   useEffect(() => {
-    if (tableData.length > 0) return;
+    if (tableData?.length > 0) return;
     refreshEntries();
   }, []);
 
@@ -307,9 +307,7 @@ export default function CustomTable<RecordType = unknown>({
             Are you sure you want to delete this entry ?
           </Typography.Text>
         ) : (
-          <>
-            <ObjectAsDetails data={actionModal.data} />
-          </>
+          <ObjectAsDetails data={actionModal.data} />
         )}
       </Modal>
 
@@ -317,13 +315,15 @@ export default function CustomTable<RecordType = unknown>({
         <Typography.Title level={4}>{tableTitle}</Typography.Title>
         <div className='flex items-center gap-3'>
           <Button icon={<ReloadOutlined />} onClick={refreshEntries} />
-          <Button
-            type='primary'
-            icon={<PlusOutlined />}
-            onClick={() => setModal((p) => ({ ...p, open: true }))}
-          >
-            {addButtonLabel || 'Add'}
-          </Button>
+          {addButtonLabel ? (
+            <Button
+              type='primary'
+              icon={<PlusOutlined />}
+              onClick={() => setModal((p) => ({ ...p, open: true }))}
+            >
+              {addButtonLabel || 'Add'}
+            </Button>
+          ) : null}
         </div>
       </div>
 

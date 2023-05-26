@@ -113,7 +113,11 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
         />
       </Form.Item>
 
-      <Form.Item label='Language Of Exam' name='languageOfExam'>
+      <Form.Item
+        label='Language Of Exam'
+        name='languageOfExam'
+        rules={[{ required: true, message: 'Please select language of exam' }]}
+      >
         <Select
           options={['English', 'Hindi', 'Urdu'].map((t) => ({
             label: t,

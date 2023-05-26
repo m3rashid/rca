@@ -167,8 +167,6 @@ const Address: React.FC<IProps> = ({ payload, setPayload }) => {
     }
   };
 
-  console.log(payload);
-
   return (
     <Fragment>
       <Typography.Title level={4}>Correspondence Address</Typography.Title>

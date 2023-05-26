@@ -9,7 +9,7 @@ const registrations = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await connectDb();
     const allRegistrations = await Registration.find().lean().populate('user');
-    console.log(allRegistrations);
+    // console.log(allRegistrations);
     return res.status(200).json(allRegistrations);
   } catch (err: any) {
     console.log(err);

@@ -36,7 +36,6 @@ const ForgotPassword: React.FC<IProps> = () => {
       setIsStep2(true);
       return;
     }
-    console.log(values);
     if (!values.email || !values.otp || !values.password) {
       message.error('All fields are required');
       return;
@@ -110,6 +109,7 @@ const ForgotPassword: React.FC<IProps> = () => {
                   },
                 ]}
               >
+                <Typography.Text>Also check the spam folder</Typography.Text>
                 <Input
                   placeholder='Enter the OTP received'
                   size={isMobile ? 'middle' : 'large'}

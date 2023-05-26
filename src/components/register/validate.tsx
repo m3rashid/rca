@@ -15,6 +15,8 @@ export const validateRegister = (payload: any) => {
     'category',
     'photograph',
     'signature',
+    'languageOfExam',
+    'testCenter',
   ].forEach((t) => {
     // @ts-ignore
     if (!payload[t] || payload[t] === '')

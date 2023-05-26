@@ -57,7 +57,11 @@ const Agreements: React.FC<IProps> = ({ payload, setPayload }) => {
       <br />
       <br />
 
-      <Form.Item name='testCenter' label='Choose your Test Center'>
+      <Form.Item
+        name='testCenter'
+        label='Choose your Test Center'
+        rules={[{ required: true, message: 'Test Center is required' }]}
+      >
         <Select
           size={isMobile ? 'middle' : 'large'}
           placeholder='Select Your Test Center'
