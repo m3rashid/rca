@@ -111,12 +111,12 @@ const ForgotPassword: React.FC<IProps> = () => {
                   },
                 ]}
               >
-                <Typography.Text>Also check the spam folder</Typography.Text>
                 <Input
                   placeholder='Enter the OTP received'
                   size={isMobile ? 'middle' : 'large'}
                 />
               </Form.Item>
+              <Typography.Text>Also check the spam folder</Typography.Text>
 
               <Form.Item
                 label='Password'
