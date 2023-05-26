@@ -12,7 +12,6 @@ export interface IAddress {
 }
 
 export interface IEducation {
-  education: string;
   passYear: number;
   percentage: number;
   boardOrUni: string;
@@ -70,7 +69,6 @@ const addressSchema = {
 };
 
 const educationSchema = {
-  education: { type: String, required: true },
   passYear: { type: Number, required: true },
   percentage: { type: Number, required: true },
   boardOrUni: { type: String },

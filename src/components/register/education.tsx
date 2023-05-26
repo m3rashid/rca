@@ -23,19 +23,6 @@ const EducationContainer: React.FC<IEducationContainerProps> = ({
   return (
     <Fragment>
       <Form.Item
-        name={`${name}.education`}
-        label='Education'
-        rules={[{ required: true }]}
-      >
-        <Input
-          size={isMobile ? 'middle' : 'large'}
-          placeholder='Enter Education'
-          value={education.education}
-          onChange={(e) => onChange('education', e.target.value)}
-        />
-      </Form.Item>
-
-      <Form.Item
         name={`${name}.passYear`}
         label='Pass Year'
         rules={[{ required: true }]}
@@ -43,15 +30,10 @@ const EducationContainer: React.FC<IEducationContainerProps> = ({
         <DatePicker
           placeholder='Enter Passing Year'
           style={{ width: '100%' }}
-          showHour={false}
-          showMinute={false}
-          showNow={false}
-          showSecond={false}
-          showTime={false}
-          showToday={false}
+          picker='year'
           size={isMobile ? 'middle' : 'large'}
           value={dayjs(education.passYear)}
-          onChange={(val) => onChange('passYear', val)}
+          onChange={(val) => onChange('passYear', dayjs(val).format('YYYY'))}
         />
       </Form.Item>
 

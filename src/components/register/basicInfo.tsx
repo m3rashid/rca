@@ -85,7 +85,9 @@ const BasicInfo: React.FC<IProps> = ({ payload, setPayload }) => {
           size={isMobile ? 'middle' : 'large'}
           placeholder='Enter Date of Birth'
           value={dayjs(payload.dateOfBirth)}
-          onChange={(val) => onChange('dateOfBirth', val)}
+          onChange={(val) =>
+            onChange('dateOfBirth', dayjs(val).format('DD-MM-YYYY'))
+          }
         />
       </Form.Item>
 
