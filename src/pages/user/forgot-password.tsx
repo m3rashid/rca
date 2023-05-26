@@ -22,11 +22,11 @@ const ForgotPassword: React.FC<IProps> = () => {
         return;
       }
       try {
-        // send mail
         await axios.post('/api/user/forgot-password', {
           email: values.email,
           step: 1,
         });
+        message.success('OTP sent to your email');
       } catch (err) {
         console.log(err);
         message.error(
@@ -48,6 +48,9 @@ const ForgotPassword: React.FC<IProps> = () => {
         password: values.password,
         step: 2,
       });
+      message.success('Password updated successfully');
+      form.resetFields();
+      router.push('/user/auth');
     } catch (err) {
       console.log(err);
       message.error(
@@ -135,7 +138,7 @@ const ForgotPassword: React.FC<IProps> = () => {
                 size={isMobile ? 'middle' : 'large'}
                 htmlType='submit'
               >
-                Send Email
+                {isStep2 ? 'Update Password' : 'Send OTP'}
               </Button>
 
               <Button size={isMobile ? 'middle' : 'large'} onClick={reset}>

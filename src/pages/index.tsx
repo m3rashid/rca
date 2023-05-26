@@ -21,6 +21,7 @@ const Home = () => {
       <UserHeader>
         <Carousel autoplay arrows className='w-screen' dotPosition='top'>
           {[
+            '/home3.jpeg',
             '/home1.jpeg',
             '/home2.jpeg',
             '/home4.jpeg',

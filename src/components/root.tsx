@@ -181,7 +181,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
                   style={{ padding: 0, margin: 0 }}
                 />
               </div>
-              <Typography.Title level={4} style={{ padding: 0, margin: 0 }}>
+              <Typography.Title level={2} style={{ padding: 0, margin: 0 }}>
                 {ui.isMobile
                   ? 'Shibli RCA'
                   : 'Shibli Residential Coaching Academy'}
