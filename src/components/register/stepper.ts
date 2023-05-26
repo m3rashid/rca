@@ -50,7 +50,6 @@ export type IEducation = Pick<IRegisterPayload, 'education'>['education'];
 
 const defaultEducation: IEducation['matriculation'] = {
   boardOrUni: '',
-  education: '',
   percentage: 0,
   passYear: 2000,
 };

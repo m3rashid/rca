@@ -37,6 +37,8 @@ const ChangePassword: NextPage = () => {
     >
       <Head>
         <title>Change Password | RCA</title>
+        <meta property='twitter:title' content='Change Password | RCA' />
+        <meta property='og:title' content='Change Password | RCA' />
       </Head>
 
       <Typography.Title level={2}>Change Password</Typography.Title>

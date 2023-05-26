@@ -65,6 +65,8 @@ const ForgotPassword: React.FC<IProps> = () => {
     >
       <Head>
         <title>Forgot Password | RCA</title>
+        <meta property='twitter:title' content='Forgot Password | RCA' />
+        <meta property='og:title' content='Forgot Password | RCA' />
       </Head>
 
       <div className='bg-white w-full max-w-xl p-2 sm:p-4 mx-2 sm:mx-4 rounded-md shadow-md'>

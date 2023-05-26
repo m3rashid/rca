@@ -142,7 +142,9 @@ const Register: NextPage<IProps> = (props) => {
   return (
     <Fragment>
       <Head>
-        <title>RCA | Register</title>
+        <title>Shibli RCA | Register</title>
+        <meta property='twitter:title' content='Shibli RCA | Register' />
+        <meta property='og:title' content='Shibli RCA | Register' />
       </Head>
 
       <div className='flex gap-4 flex-col m-2 sm:m-4 sm:flex-row justify-center sm:mt-10'>

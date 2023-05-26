@@ -88,6 +88,18 @@ const Auth: NextPage = () => {
         <title>
           {authType === 'register' ? 'Create Account' : 'Login'} | RCA
         </title>
+        <meta
+          property='twitter:title'
+          content={`${
+            authType === 'register' ? 'Create Account' : 'Login'
+          } | RCA`}
+        />
+        <meta
+          property='og:title'
+          content={`${
+            authType === 'register' ? 'Create Account' : 'Login'
+          } | RCA`}
+        />
       </Head>
 
       <div className='bg-white w-full max-w-xl p-2 sm:p-4 mx-2 sm:mx-4 rounded-md shadow-md'>
