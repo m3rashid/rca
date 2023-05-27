@@ -157,7 +157,7 @@ const Auth: NextPage = () => {
             />
           </Form.Item>
           <div className='flex items-center justify-center -mt-4 mb-4 md:ml-20'>
-            <Typography.Text type='danger'>
+            <Typography.Text type='secondary'>
               Please remember your password, you MAY NOT be able to update later
             </Typography.Text>
           </div>

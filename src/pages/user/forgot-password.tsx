@@ -116,7 +116,11 @@ const ForgotPassword: React.FC<IProps> = () => {
                   size={isMobile ? 'middle' : 'large'}
                 />
               </Form.Item>
-              <Typography.Text>Also check the spam folder</Typography.Text>
+              <div className='flex items-center justify-center -mt-4 mb-4'>
+                <Typography.Text type='secondary'>
+                  Also check the spam folder
+                </Typography.Text>
+              </div>
 
               <Form.Item
                 label='Password'
