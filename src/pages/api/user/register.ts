@@ -16,7 +16,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const count = await Registration.countDocuments();
-    const rollNumber = `RCA-${String(new Date().getFullYear())}-${String(
+    const rollNumber = `${String(new Date().getFullYear()).slice(2, 4)}${String(
       count + 1
     ).padStart(4, '0')}`;
 
