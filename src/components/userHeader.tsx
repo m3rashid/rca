@@ -42,18 +42,18 @@ const UserHeader: React.FC<IProps> = ({ children }) => {
         <h1 className='text-white'>
           Applications are open for the residential coaching program 2023-24
           <span
-            className='text-blue-800 cursor-pointer mx-2 font-mono'
+            className='text-red-500 cursor-pointer mx-2 font-mono'
             onClick={() => router.push('/exam/register')}
           >
             Register Here
           </span>
-          ::
+          -
           <a
             href='https://drive.google.com/file/d/1hHcbN0_D7GNY2O8gCELy8VbCFqn_LULX/view'
             target='_blank'
-            className='text-blue-800 cursor-pointer mx-2 font-mono'
+            className='text-red-500 cursor-pointer mx-2 font-mono'
           >
-            Download Instructions Pdf
+            Download Notification
           </a>
         </h1>
       </div>
