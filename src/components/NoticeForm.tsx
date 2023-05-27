@@ -1,9 +1,8 @@
 'use client';
 
+import React from 'react';
 import { Form, Input } from 'antd';
 import ReactQuill from 'react-quill';
-import React from 'react';
-
 import 'react-quill/dist/quill.snow.css';
 
 interface IProps {
@@ -22,19 +21,11 @@ const NoticeForm: React.FC<IProps> = ({ quillValue, setValue }) => {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        label='Issued By'
-        name='issuedBy'
-        rules={[{ required: true, message: 'Please enter Name' }]}
-      >
-        <Input />
+      <Form.Item label='Issued By' name='issuedBy'>
+        <Input placeholder='Enter Issued By' />
       </Form.Item>
 
-      <Form.Item
-        label='Description'
-        name='description'
-        rules={[{ required: true, message: 'Please enter description' }]}
-      >
+      <Form.Item label='Description' name='description'>
         <ReactQuill
           theme='snow'
           value={quillValue}

@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import AdminContainer from 'rca/components/adminContainer';
 import Head from 'next/head';
-import CustomTable from 'rca/components/table';
-import { noticeAtom } from 'rca/utils/atoms';
 import { TableProps } from 'antd';
-import { INotice } from 'rca/models/notice';
 import dynamic from 'next/dynamic';
-
+import React, { useState } from 'react';
+import { INotice } from 'rca/models/notice';
+import { noticeAtom } from 'rca/utils/atoms';
+import CustomTable from 'rca/components/table';
+import AdminContainer from 'rca/components/adminContainer';
 const NoticeForm = dynamic(() => import('rca/components/NoticeForm'), {
   ssr: false,
 });
@@ -18,7 +17,6 @@ const Notices: React.FC<IProps> = () => {
 
   const columns: TableProps<INotice>['columns'] = [
     { title: 'Title', dataIndex: 'title' },
-    { title: 'Name', dataIndex: 'name' },
     { title: 'Issued By', dataIndex: 'issuedBy' },
   ];
 
