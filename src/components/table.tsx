@@ -1,11 +1,4 @@
 import {
-  DeleteOutlined,
-  EditOutlined,
-  InfoOutlined,
-  PlusOutlined,
-  ReloadOutlined,
-} from '@ant-design/icons';
-import {
   Button,
   Form,
   Modal,
@@ -15,11 +8,18 @@ import {
   Tooltip,
   Typography,
 } from 'antd';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  InfoOutlined,
+  PlusOutlined,
+  ReloadOutlined,
+} from '@ant-design/icons';
 import axios from 'axios';
 import constants from 'rca/constants';
+import ObjectAsDetails from './objectToSchema';
 import { RecoilState, useRecoilState } from 'recoil';
 import React, { ReactNode, useEffect, useState } from 'react';
-import ObjectAsDetails from './objectToSchema';
 
 export type FormResponseError = {
   field: string;
