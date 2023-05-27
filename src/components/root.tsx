@@ -169,7 +169,7 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
         >
           <div className='flex gap-3 items-center justify-between'>
             <div
-              className='flex items-center justify-between gap-4'
+              className='flex items-center justify-between gap-4 cursor-pointer'
               onClick={() => router.push('/')}
             >
               <div>

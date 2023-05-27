@@ -156,6 +156,11 @@ const Auth: NextPage = () => {
               size={isMobile ? 'middle' : 'large'}
             />
           </Form.Item>
+          <div className='flex items-center justify-center -mt-4 mb-4 md:ml-20'>
+            <Typography.Text type='danger'>
+              Please remember your password, you MAY NOT be able to update later
+            </Typography.Text>
+          </div>
 
           <Form.Item>
             <div className='flex items-center justify-center gap-2'>
