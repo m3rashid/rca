@@ -54,10 +54,9 @@ const Home = () => {
           ))}
         </Carousel>
 
-        <div className='relative -top-[100px] flex items-center justify-center flex-col'>
+        <div className='relative -top-[120px] flex items-center justify-center flex-col'>
           <Button
-            size={isMobile ? 'middle' : 'large'}
-            className='w-[250px] h-[60px]'
+            className='w-[250px] h-[60px] font-bold text-lg'
             type='primary'
             onClick={() => router.push('/exam/register')}
           >

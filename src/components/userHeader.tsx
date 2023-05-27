@@ -1,15 +1,18 @@
 import Link from 'next/link';
 import constants from 'rca/constants';
-import { Col, Layout, Row } from 'antd';
+import { Col, Layout, Row, Typography } from 'antd';
 import { useSession } from 'next-auth/react';
 import React, { Fragment, PropsWithChildren } from 'react';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 interface IProps extends PropsWithChildren {}
 
 const UserHeader: React.FC<IProps> = ({ children }) => {
   const session = useSession();
   const router = useRouter();
+  const { isMobile } = useRecoilValue(uiAtom);
 
   const headerItems = [
     { to: '/', label: 'Home' },
@@ -23,39 +26,51 @@ const UserHeader: React.FC<IProps> = ({ children }) => {
     <Fragment>
       {/* @ts-ignore */}
       {(!session || (session && session.user?.type !== 'ADMIN')) && (
-        <Layout.Header style={{ backgroundColor: constants.appThemeColor }}>
-          <Row gutter={24} justify='center' className='text-white'>
+        <Layout.Header
+          style={{ backgroundColor: constants.appThemeColor, height: 40 }}
+        >
+          <div
+            className={`flex items-center justify-center h-full ${
+              isMobile ? 'gap-2' : 'gap-4'
+            }`}
+          >
             {headerItems.map((item, index) => {
               return (
-                <Col>
-                  <Link href={item.to}>
-                    <h1 className='text-white m-0'>{item.label}</h1>
-                  </Link>
-                </Col>
+                <Link
+                  href={item.to}
+                  key={index}
+                  style={{
+                    fontSize: isMobile ? 15 : 20,
+                    fontWeight: 'bold',
+                    color: 'white',
+                  }}
+                >
+                  {item.label}
+                </Link>
               );
             })}
-          </Row>
+          </div>
         </Layout.Header>
       )}
 
-      <div className='cssMarquee'>
-        <h1 className='text-white'>
-          Applications are open for the residential coaching program 2023-24
-          <span
-            className='text-red-500 cursor-pointer mx-2 font-mono'
+      <div className='marquee pt-3 font-md'>
+        <span className='text-white' style={{ fontSize: isMobile ? 14 : 16 }}>
+          Applications are invited for Civil Services Coaching Programme 2023-24
+          <b
+            className='text-red-500 hover:text-red-800 cursor-pointer mx-4'
             onClick={() => router.push('/exam/register')}
           >
             Register Here
-          </span>
+          </b>
           -
           <a
             href='https://drive.google.com/file/d/1hHcbN0_D7GNY2O8gCELy8VbCFqn_LULX/view'
             target='_blank'
-            className='text-red-500 cursor-pointer mx-2 font-mono'
+            className='text-red-500 hover:text-red-800 cursor-pointer mx-4'
           >
-            Download Notification
+            <b>Download Notification</b>
           </a>
-        </h1>
+        </span>
       </div>
       {children}
     </Fragment>
