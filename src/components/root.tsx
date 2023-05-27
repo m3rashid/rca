@@ -5,25 +5,17 @@ import {
   Dropdown,
   Image,
   Layout,
-  Menu,
   MenuProps,
-  Tabs,
   theme,
   Typography,
 } from 'antd';
 import enUs from 'antd/locale/en_US';
 import constants from 'rca/constants';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import {
-  AndroidOutlined,
-  AppleOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { signOut, useSession } from 'next-auth/react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { uiAtom } from 'rca/utils/atoms';
-import HeaderNavigation from './generalMenu';
+import { UserOutlined } from '@ant-design/icons';
+import { signOut, useSession } from 'next-auth/react';
 
 interface IContainerProps extends PropsWithChildren {}
 const AppContainer: React.FC<IContainerProps> = ({ children }) => {
@@ -148,21 +140,6 @@ const AppContainer: React.FC<IContainerProps> = ({ children }) => {
       }}
     >
       <Layout>
-        {!session && (
-          <div className='cssmarquee'>
-            <h1 className='text-white'>
-              Applications are open for the residential coaching program
-              2023-24.
-              <span
-                className='text-blue-800 cursor-pointer'
-                onClick={() => router.push('/admin/profile')}
-              >
-                {' '}
-                Click Here.
-              </span>
-            </h1>
-          </div>
-        )}
         <Layout.Header
           style={{ backgroundColor: colorBgContainer }}
           className='px-4'

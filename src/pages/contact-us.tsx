@@ -16,6 +16,7 @@ const ContactUs: React.FC<IProps> = () => {
         <div className='lg:py-12 md:px-8 xl:px-32 md:relative md:z-10 px-4 text-xl'>
           <Typography.Title level={2}>Emails</Typography.Title>
           <p>shiblirca@gmail.com</p>
+          <p> admissionsatshiblirca@gmail.com</p>
 
           <br />
 

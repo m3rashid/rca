@@ -4,6 +4,9 @@ import React from 'react';
 import { Form, Input } from 'antd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import debounce from 'lodash.debounce';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 
 interface IProps {
   quillValue: string;
@@ -11,6 +14,10 @@ interface IProps {
 }
 
 const NoticeForm: React.FC<IProps> = ({ quillValue, setValue }) => {
+  const onChange = debounce((val) => setValue(val), 200);
+
+  const { isMobile } = useRecoilValue(uiAtom);
+
   return (
     <>
       <Form.Item
@@ -18,18 +25,21 @@ const NoticeForm: React.FC<IProps> = ({ quillValue, setValue }) => {
         name='title'
         rules={[{ required: true, message: 'Please enter title' }]}
       >
-        <Input />
+        <Input placeholder='Enter Title' size={isMobile ? 'middle' : 'large'} />
       </Form.Item>
 
       <Form.Item label='Issued By' name='issuedBy'>
-        <Input placeholder='Enter Issued By' />
+        <Input
+          placeholder='Enter Issued By'
+          size={isMobile ? 'middle' : 'large'}
+        />
       </Form.Item>
 
       <Form.Item label='Description' name='description'>
         <ReactQuill
           theme='snow'
           value={quillValue}
-          onChange={setValue}
+          onChange={onChange}
           style={{
             height: '100px',
             marginBottom: '40px',

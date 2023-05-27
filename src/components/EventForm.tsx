@@ -1,9 +1,12 @@
 'use client';
 
-import { DatePicker, Form, Input } from 'antd';
 import React from 'react';
 import ReactQuill from 'react-quill';
+import debounce from 'lodash.debounce';
+import { useRecoilValue } from 'recoil';
+import { uiAtom } from 'rca/utils/atoms';
 import 'react-quill/dist/quill.snow.css';
+import { DatePicker, Form, Input } from 'antd';
 
 interface IProps {
   quillValue: string;
@@ -11,6 +14,9 @@ interface IProps {
 }
 
 const EventForm: React.FC<IProps> = ({ quillValue, setValue }) => {
+  const onChange = debounce((val) => setValue(val), 200);
+
+  const { isMobile } = useRecoilValue(uiAtom);
   return (
     <>
       <Form.Item
@@ -18,7 +24,10 @@ const EventForm: React.FC<IProps> = ({ quillValue, setValue }) => {
         name='name'
         rules={[{ required: true, message: 'Please enter event name' }]}
       >
-        <Input />
+        <Input
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Event Name'
+        />
       </Form.Item>
 
       <Form.Item
@@ -26,14 +35,17 @@ const EventForm: React.FC<IProps> = ({ quillValue, setValue }) => {
         name='location'
         rules={[{ required: true, message: 'Please enter event location' }]}
       >
-        <Input />
+        <Input
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Event Location'
+        />
       </Form.Item>
 
       <Form.Item label='Details' name='description'>
         <ReactQuill
           theme='snow'
           value={quillValue}
-          onChange={setValue}
+          onChange={onChange}
           style={{
             height: '100px',
             marginBottom: '40px',
@@ -51,7 +63,11 @@ const EventForm: React.FC<IProps> = ({ quillValue, setValue }) => {
           },
         ]}
       >
-        <DatePicker showTime />
+        <DatePicker
+          showTime
+          size={isMobile ? 'middle' : 'large'}
+          className='w-full'
+        />
       </Form.Item>
 
       <Form.Item
@@ -64,11 +80,18 @@ const EventForm: React.FC<IProps> = ({ quillValue, setValue }) => {
           },
         ]}
       >
-        <DatePicker showTime />
+        <DatePicker
+          showTime
+          size={isMobile ? 'middle' : 'large'}
+          className='w-full'
+        />
       </Form.Item>
 
       <Form.Item label='Contact' name='contact'>
-        <Input />
+        <Input
+          size={isMobile ? 'middle' : 'large'}
+          placeholder='Enter Contact for Event'
+        />
       </Form.Item>
     </>
   );
