@@ -1,12 +1,22 @@
-# RCA - Shibli Residential Coaching Academy
+<div align="center">
 
-Website for a coaching academy: pages, animations, contact/quote flows.
+# 🎓 RCA - Shibli Residential Coaching Academy
 
-## Tech
+**Website for a coaching academy** — pages, animations, contact/quote flows.
 
-Next.js · TypeScript · Tailwind
+[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Quick start
+</div>
+
+---
+
+## 🛠 Tech
+
+`Next.js` · `TypeScript` · `Tailwind`
+
+## 📦 Quick start
 
 ```bash
 git clone https://github.com/m3rashid/rca.git
@@ -15,6 +25,6 @@ pnpm install
 pnpm dev
 ```
 
-## License
+## 📄 License
 
 MIT
